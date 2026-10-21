@@ -78,16 +78,19 @@ keep `SITE_ADDRESS=:80`, set `HTTPS=True`, and forward the proxy to port 80.
 ## 2b. Email (forgot password and task notices)
 
 Until SMTP is set, emails are only written to the log (`docker compose logs web`).
-For Microsoft 365, use a mailbox with SMTP AUTH enabled, then in `.env`:
+For Microsoft 365, the sending mailbox needs SMTP AUTH enabled
+(`Set-CASMailbox -Identity no-reply@telediexodos.com -SmtpClientAuthenticationDisabled $false`),
+no MFA on that account, and must not be blocked by Security Defaults or Conditional Access.
+Microsoft disables SMTP AUTH by default at the end of December 2026; re-enable it per mailbox if needed. Then in `.env`:
 
 ```
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=smtp.office365.com
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER=risk@yourdomain.com
+EMAIL_HOST_USER=no-reply@telediexodos.com
 EMAIL_HOST_PASSWORD=the-mailbox-password
-DEFAULT_FROM_EMAIL=risk@yourdomain.com
+DEFAULT_FROM_EMAIL=no-reply@telediexodos.com
 ```
 
 Then `docker compose up -d`. Reset links expire after `PASSWORD_RESET_MINUTES` (default 60).
