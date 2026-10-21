@@ -1,0 +1,14 @@
+{% load i18n %}{% comment %}Likelihood + consequence sliders. Pass: prefix, l_val, c_val, disabled.{% endcomment %}
+<div class="sliders" data-score="{{ prefix }}">
+  <div class="slider-row">
+    <div class="head"><span>{% translate "Likelihood" %}</span><b data-out="l"></b></div>
+    <input type="range" name="{{ prefix }}_l" min="0" max="{{ lmax }}" step="1" value="{{ l_val }}" {% if disabled %}disabled{% endif %} aria-label="{% translate 'Likelihood' %}">
+    <div class="ticks">{% for x in likelihoods %}<span>{{ forloop.counter }}</span>{% endfor %}</div>
+  </div>
+  <div class="slider-row">
+    <div class="head"><span>{% translate "Consequence" %}</span><b data-out="c"></b></div>
+    <input type="range" name="{{ prefix }}_c" min="0" max="{{ cmax }}" step="1" value="{{ c_val }}" {% if disabled %}disabled{% endif %} aria-label="{% translate 'Consequence' %}">
+    <div class="ticks">{% for x in consequences %}<span>{{ forloop.counter }}</span>{% endfor %}</div>
+  </div>
+  <div class="result" aria-live="polite"></div>
+</div>

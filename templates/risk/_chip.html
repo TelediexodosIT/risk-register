@@ -1,1 +1,1 @@
-{% comment %}Rating chip. Pass r (RiskRating), l (likelihood), c (consequence).{% endcomment %}{% if r %}<span class="risk" style="--rc:{{ r.color }}"><b>{{ l.code }}-{{ c.code }}</b>{{ r.label }}</span>{% else %}<span class="risk none">Not scored</span>{% endif %}
+{% load risk_tags i18n %}{% comment %}Rating chip. Pass r (RiskRating), l (likelihood), c (consequence).{% endcomment %}{% if r %}<span class="risk" style="--rc:{{ r.color }}"><b>{{ l.code }}-{{ c.code }}</b>{{ r|tr }}</span>{% else %}<span class="risk none">{% translate "Not scored" %}</span>{% endif %}

@@ -3,17 +3,19 @@ Data model, in the order a consultant works:
 
   Scoring method   LikelihoodLevel, ConsequenceLevel, RiskRating, MatrixCell
                    (all editable in the admin panel, so the method can change without code)
-  Hazard library   HazardTemplate, with ControlTemplate and MeasureTemplate (shared by all companies)
+  Pick lists       ListItem: hazards, who is involved, consequences, controls, measures (shared, edited in admin)
   Assessment       one register for a company area/activity, versioned (v1, v2 ...)
-    Hazard         one row of the register: who is affected, inherent risk, controls, residual risk
+    Hazard         one "risk assessment task": hazard, who is involved, consequences, inherent risk,
+                   existing controls, residual risk
       Control      an existing control already in place
-      Task         an additional measure, assigned to a person with a deadline
+      Task         an additional measure ("action"), assigned to a person with a deadline and reminder
         TaskUpdate progress note, comment or photo evidence
     HistoryEntry   dated log of what happened to the assessment
 """
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models import Company
 
@@ -23,6 +25,7 @@ from accounts.models import Company
 class LikelihoodLevel(models.Model):
     code = models.CharField(max_length=5, unique=True, help_text="e.g. A")
     label = models.CharField(max_length=60, help_text="e.g. Very likely")
+    label_el = models.CharField("Label (Greek)", max_length=60, blank=True)
     order = models.PositiveSmallIntegerField(default=0, help_text="Lower comes first (most likely first).")
 
     class Meta:
@@ -35,6 +38,7 @@ class LikelihoodLevel(models.Model):
 class ConsequenceLevel(models.Model):
     code = models.CharField(max_length=5, unique=True, help_text="e.g. 1")
     label = models.CharField(max_length=60, help_text="e.g. Major / fatal")
+    label_el = models.CharField("Label (Greek)", max_length=60, blank=True)
     order = models.PositiveSmallIntegerField(default=0, help_text="Lower comes first (most severe first).")
 
     class Meta:
@@ -47,9 +51,11 @@ class ConsequenceLevel(models.Model):
 class RiskRating(models.Model):
     code = models.CharField(max_length=5, unique=True, help_text="e.g. H")
     label = models.CharField(max_length=40, help_text="e.g. High")
+    label_el = models.CharField("Label (Greek)", max_length=40, blank=True)
     severity = models.PositiveSmallIntegerField(help_text="0 = lowest. Used to tell if risk went up or down.")
     color = models.CharField(max_length=7, default="#888888", help_text="Hex colour, e.g. #c94c1a")
     action = models.TextField(blank=True, help_text="What this rating means for the work.")
+    action_el = models.TextField("Meaning (Greek)", blank=True)
 
     class Meta:
         ordering = ["severity"]
@@ -80,48 +86,41 @@ def rating_for(likelihood, consequence):
     return cell.rating if cell else None
 
 
-# --- Hazard library (shared by every company) -------------------------------
+# --- Pick lists (shared by every company, edited in the admin panel) ---------
 
-class HazardTemplate(models.Model):
-    name = models.CharField(max_length=150, unique=True)
-    category = models.CharField(max_length=150, blank=True)
-    consequences = models.TextField(blank=True)
+class ListItem(models.Model):
+    """One entry of a dropdown list on the risk task form. Add/remove/reorder in Admin → List items."""
 
-    class Meta:
-        ordering = ["name"]
+    class Kind(models.TextChoices):
+        HAZARD = "hazard", _("Hazard")
+        AFFECTED = "affected", _("Who is involved")
+        CONSEQUENCE = "consequence", _("Consequence")
+        CONTROL = "control", _("Existing control measure")
+        MEASURE = "measure", _("Additional measure")
 
-    def __str__(self):
-        return self.name
-
-
-class ControlTemplate(models.Model):
-    hazard = models.ForeignKey(HazardTemplate, on_delete=models.CASCADE, related_name="controls")
-    text = models.CharField(max_length=300)
-
-    class Meta:
-        ordering = ["id"]
-
-    def __str__(self):
-        return self.text
-
-
-class MeasureTemplate(models.Model):
-    hazard = models.ForeignKey(HazardTemplate, on_delete=models.CASCADE, related_name="measures")
-    text = models.CharField(max_length=300)
+    kind = models.CharField(max_length=20, choices=Kind.choices, db_index=True)
+    text = models.CharField("Text (English)", max_length=300)
+    text_el = models.CharField("Text (Greek)", max_length=300, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True, help_text="Untick to hide it from the dropdown without deleting it.")
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["kind", "order", "text"]
+        unique_together = [("kind", "text")]
 
     def __str__(self):
         return self.text
+
+    def label(self, lang="en"):
+        return self.text_el if lang == "el" and self.text_el else self.text
 
 
 # --- Assessments ---------------------------------------------------------------
 
 class Assessment(models.Model):
     class Status(models.TextChoices):
-        ACTIVE = "active", "Active"
-        SUPERSEDED = "superseded", "Superseded"
+        ACTIVE = "active", _("Active")
+        SUPERSEDED = "superseded", _("Superseded")
 
     company = models.ForeignKey(Company, on_delete=models.PROTECT, related_name="assessments")
     title = models.CharField(max_length=150, help_text="Area or activity, e.g. Production floor")
@@ -162,12 +161,10 @@ class Assessment(models.Model):
 
 class Hazard(models.Model):
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name="hazards")
-    template = models.ForeignKey(HazardTemplate, null=True, blank=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=150)
     category = models.CharField(max_length=150, blank=True)
-    affects_operator = models.BooleanField("Operator", default=True)
-    affects_employees = models.BooleanField("Other employees", default=False)
-    affects_third_parties = models.BooleanField("Third parties", default=False)
+    # Multi-value fields are stored one entry per line.
+    affected = models.TextField("Who is involved", blank=True)
     consequences = models.TextField(blank=True)
     inherent_likelihood = models.ForeignKey(LikelihoodLevel, null=True, blank=True, on_delete=models.PROTECT, related_name="+")
     inherent_consequence = models.ForeignKey(ConsequenceLevel, null=True, blank=True, on_delete=models.PROTECT, related_name="+")
@@ -198,12 +195,12 @@ class Hazard(models.Model):
         return rating_for(self.previous_likelihood, self.previous_consequence)
 
     @property
-    def affected_labels(self):
-        return [label for flag, label in (
-            (self.affects_operator, "Operator"),
-            (self.affects_employees, "Other employees"),
-            (self.affects_third_parties, "Third parties"),
-        ) if flag]
+    def affected_list(self):
+        return [x for x in self.affected.splitlines() if x.strip()]
+
+    @property
+    def consequence_list(self):
+        return [x for x in self.consequences.splitlines() if x.strip()]
 
 
 class Control(models.Model):
@@ -233,6 +230,10 @@ class Task(models.Model):
     status = models.CharField(max_length=12, choices=Status.choices, default=Status.OPEN)
     progress = models.PositiveSmallIntegerField(default=0)
     completed_at = models.DateField(null=True, blank=True)
+    remind_days = models.PositiveSmallIntegerField(
+        default=3, help_text="Send a reminder this many days before the deadline (0 = no reminder).")
+    reminder_sent_on = models.DateField(null=True, blank=True)
+    overdue_sent_on = models.DateField(null=True, blank=True)
     # Set when a new version was created while this task was still open; the copy lives in the new version.
     carried_to = models.ForeignKey(Assessment, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,14 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Hazard library{% endblock %}
+{% extends "base.html" %}{% load i18n risk_tags %}
+{% block title %}{% translate "Lists" %}{% endblock %}
 {% block content %}
-<header class="page-h"><div><p class="eyebrow">Shared across all companies</p><h1>Hazard library</h1>
-  <p class="sub">Pick from these when building an assessment. Controls and measures come pre-filled and can be adjusted for each company.</p></div>
-  {% if user.is_staff %}<a class="btn primary" href="{% url 'admin:risk_hazardtemplate_add' %}">+ Add to library</a>{% endif %}</header>
-<div class="lib">{% for h in items %}
-  <details class="libcard"><summary><b>{{ h.name }}</b><span class="tag">{{ h.category }}</span><small>{{ h.controls.all|length }} controls · {{ h.measures.all|length }} measures</small></summary>
-  <div class="libbody"><p><span class="lbl">Typical consequences</span>{{ h.consequences }}</p>
-    <div class="two"><div><span class="lbl">Existing controls</span><ul>{% for c in h.controls.all %}<li>{{ c }}</li>{% endfor %}</ul></div>
-    <div><span class="lbl">Additional measures</span><ul>{% for m in h.measures.all %}<li>{{ m }}</li>{% endfor %}</ul></div></div>
-    {% if user.is_staff %}<p><a href="{% url 'admin:risk_hazardtemplate_change' h.id %}">Edit in admin</a></p>{% endif %}</div></details>
-{% empty %}<p class="empty">The library is empty.</p>{% endfor %}</div>
+<header class="page-h"><div><p class="eyebrow">{% translate "Shared by all tenants" %}</p><h1>{% translate "Lists" %}</h1>
+  <p class="sub">{% translate "The dropdown options on the risk task form. Add, rename, reorder or hide entries in the admin panel; each entry can have a Greek and an English text." %}</p></div>
+  {% if user.is_staff %}<a class="btn primary" href="{% url 'admin:risk_listitem_add' %}">+ {% translate "Add entry" %}</a>{% endif %}</header>
+<div class="lib">{% for g in groups %}
+  <details class="libcard" {% if forloop.first %}open{% endif %}><summary><b>{% translate g.label %}</b><small>{{ g.items|length }}</small></summary>
+  <div class="libbody"><ul style="margin:12px 0;padding-left:18px">{% for i in g.items %}<li>{{ i|tr }}</li>{% empty %}<li class="muted">{% translate "Empty" %}</li>{% endfor %}</ul>
+    {% if user.is_staff %}<p><a href="{% url 'admin:risk_listitem_changelist' %}?kind__exact={{ g.kind }}">{% translate "Edit in admin" %}</a></p>{% endif %}</div></details>
+{% endfor %}</div>
 {% endblock %}

@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 from django_otp import login as otp_login
 from django_otp.plugins.otp_totp.models import TOTPDevice
@@ -45,7 +46,7 @@ def login_view(request):
             has_device = TOTPDevice.objects.filter(user=user, confirmed=True).exists()
             return redirect("otp_verify" if has_device else "otp_setup")
         # Same message whether the email exists or not, so accounts can't be guessed.
-        error = "Email or password is incorrect."
+        error = _("Email or password is incorrect.")
     return render(request, "accounts/login.html", {"error": error, "email": email, "next": request.GET.get("next", "")})
 
 
@@ -65,14 +66,14 @@ def otp_verify(request):
         return redirect("otp_setup")
     error = None
     if request.method == "POST":
-        allowed, _ = device.verify_is_allowed()
+        allowed, _info = device.verify_is_allowed()
         if not allowed:
-            error = "Too many wrong codes. Wait a moment and try again."
+            error = _("Too many wrong codes. Wait a moment and try again.")
         else:
             done = _verify_and_finish(request, device, request.POST.get("token", "").replace(" ", ""))
             if done:
                 return done
-            error = "That code is not valid. Check your authenticator app and try again."
+            error = _("That code is not valid. Check your authenticator app and try again.")
     return render(request, "accounts/otp_verify.html", {"error": error})
 
 
@@ -82,22 +83,22 @@ def otp_setup(request):
         return redirect("login")
     if TOTPDevice.objects.filter(user=request.user, confirmed=True).exists():
         return redirect("otp_verify")
-    device, _ = TOTPDevice.objects.get_or_create(
+    device, _created = TOTPDevice.objects.get_or_create(
         user=request.user, confirmed=False, defaults={"name": "Authenticator app"}
     )
     error = None
     if request.method == "POST":
-        allowed, _ = device.verify_is_allowed()
+        allowed, _info = device.verify_is_allowed()
         if not allowed:
-            error = "Too many wrong codes. Wait a few seconds and try again."
+            error = _("Too many wrong codes. Wait a few seconds and try again.")
         elif device.verify_token(request.POST.get("token", "").replace(" ", "")):
             device.confirmed = True
             device.save()
             otp_login(request, device)
-            messages.success(request, "Two-step verification is set up.")
+            messages.success(request, _("Two-step verification is set up."))
             return redirect(request.session.pop("next", "home"))
         else:
-            error = "That code did not match. Make sure your phone's clock is correct and try again."
+            error = _("That code did not match. Make sure your phone's clock is correct and try again.")
 
     img = qrcode.make(device.config_url, image_factory=qrcode.image.svg.SvgPathImage, box_size=8)
     buf = io.BytesIO()
@@ -112,5 +113,5 @@ def otp_setup(request):
 
 def logout_view(request):
     logout(request)
-    messages.info(request, "You have been signed out.")
+    messages.info(request, _("You have been signed out."))
     return redirect("login")

@@ -1,8 +1,9 @@
-{% load static %}<!doctype html>
-<html lang="en">
+{% load static i18n %}{% get_current_language as LANG %}<!doctype html>
+<html lang="{{ LANG }}">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ APP_NAME }}{% endblock %} · {{ APP_NAME }}</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{% static 'css/app.css' %}">
 <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
@@ -10,29 +11,45 @@
 <body>
 {% with nav=request.resolver_match.url_name %}
 <header class="top">
-  <a class="brand" href="{% url 'home' %}"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small>by BrainerTek · {{ current_company.name }}</small></span></a>
+  <button class="iconbtn menu-btn" type="button" data-menu aria-label="{% translate 'Menu' %}" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <a class="brand" href="{% url 'home' %}"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small>by BrainerTek</small></span></a>
+  <form class="search d-only" method="get" action="{% url 'search' %}" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="{% translate 'Search tasks, actions, people…' %}" aria-label="{% translate 'Search' %}">
+  </form>
   <div class="top-ctl">
-    {% if companies.count > 1 %}
-    <form method="get" action="{% url 'assessment_list' %}">
-      <label class="sr" for="company-switch">Company</label>
-      <select id="company-switch" name="company" onchange="this.form.submit()">
-        {% for c in companies %}<option value="{{ c.id }}" {% if c.id == current_company.id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
-      </select>
-    </form>
-    {% endif %}
-    <a class="bell" href="{% url 'updates' %}" aria-label="Updates: {{ update_count }}"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>{% if update_count %}<i>{{ update_count }}</i>{% endif %}</a>
-    <div class="user"><span class="avatar">{{ user.initials }}</span><span><b>{{ user }}</b><small>{{ user.get_role_display }}</small></span></div>
-    {% if user.is_staff %}<a class="btn sm" href="{% url 'admin:index' %}">Admin</a>{% endif %}
-    <a class="btn sm" href="{% url 'logout' %}">Sign out</a>
+    <div class="d-only" style="display:flex;gap:10px;align-items:center">{% include "_tenant_switch.html" %}</div>
+    <span class="d-only" style="display:flex;gap:6px">{% include "_toggles.html" %}</span>
+    <a class="iconbtn" href="{% url 'updates' %}" aria-label="{% translate 'Updates' %}: {{ update_count }}" style="position:relative"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>{% if update_count %}<i class="badge">{{ update_count }}</i>{% endif %}</a>
+    <div class="user d-only"><span class="avatar">{{ user.initials }}</span><span><b>{{ user }}</b><small>{% translate user.get_role_display %}</small></span></div>
+    {% if user.is_staff %}<a class="btn sm d-only" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>{% endif %}
+    <a class="btn sm d-only" href="{% url 'logout' %}">{% translate "Sign out" %}</a>
   </div>
 </header>
+<div class="scrim" data-menu></div>
 <div class="shell">
-  <nav class="side" aria-label="Sections">
-    {% if user.can_manage %}<a class="nav {% if nav in 'assessment_list assessment_detail assessment_create hazard_create hazard_edit' %}on{% endif %}" href="{% url 'assessment_list' %}">Assessments</a>{% endif %}
-    <a class="nav {% if nav in 'task_list task_detail' %}on{% endif %}" href="{% url 'task_list' %}">{% if user.can_manage %}Tasks{% else %}My tasks{% endif %}</a>
-    {% if user.can_manage %}<a class="nav {% if nav == 'library' %}on{% endif %}" href="{% url 'library' %}">Hazard library</a>{% endif %}
-    <a class="nav {% if nav == 'matrix' %}on{% endif %}" href="{% url 'matrix' %}">Risk matrix</a>
-    {% if user.can_manage %}<a class="nav {% if nav in 'report report_detail' %}on{% endif %}" href="{% url 'report' %}">Reports</a>{% endif %}
+  <nav class="side" aria-label="{% translate 'Sections' %}">
+    <div class="side-extra">
+      <div class="user"><span class="avatar">{{ user.initials }}</span><span><b>{{ user }}</b><small>{% translate user.get_role_display %}</small></span></div>
+      <form class="search" method="get" action="{% url 'search' %}" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" name="q" placeholder="{% translate 'Search…' %}" aria-label="{% translate 'Search' %}">
+      </form>
+      {% include "_tenant_switch.html" %}
+      <div class="row">{% include "_toggles.html" %}</div>
+    </div>
+    {% if user.can_manage %}
+    <a class="nav {% if nav in 'risk_tasks risk_task_new hazard_create hazard_edit' %}on{% endif %}" href="{% url 'risk_tasks' %}">{% translate "Risk Assessment Tasks" %}</a>
+    <a class="nav {% if nav in 'assessment_list assessment_detail assessment_create' %}on{% endif %}" href="{% url 'assessment_list' %}">{% translate "Assessments" %}</a>
+    {% endif %}
+    <a class="nav {% if nav in 'task_list task_detail' %}on{% endif %}" href="{% url 'task_list' %}">{% if user.can_manage %}{% translate "Actions" %}{% else %}{% translate "My actions" %}{% endif %}</a>
+    {% if user.can_manage %}<a class="nav {% if nav == 'library' %}on{% endif %}" href="{% url 'library' %}">{% translate "Lists" %}</a>{% endif %}
+    <a class="nav {% if nav == 'matrix' %}on{% endif %}" href="{% url 'matrix' %}">{% translate "Risk matrix" %}</a>
+    {% if user.can_manage %}<a class="nav {% if nav in 'report report_detail' %}on{% endif %}" href="{% url 'report' %}">{% translate "Reports" %}</a>{% endif %}
+    <div class="side-extra" style="margin-top:auto;border:0;padding-top:12px">
+      {% if user.is_staff %}<a class="btn" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>{% endif %}
+      <a class="btn" href="{% url 'logout' %}">{% translate "Sign out" %}</a>
+    </div>
   </nav>
   <main class="main">
     {% if messages %}<div class="messages">{% for m in messages %}<div class="banner {% if m.tags == 'success' %}good{% elif m.tags == 'error' %}bad{% endif %}">{{ m }}</div>{% endfor %}</div>{% endif %}

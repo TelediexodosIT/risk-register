@@ -9,6 +9,8 @@ urlpatterns = [
     path("assessments/<int:pk>/", views.assessment_detail, name="assessment_detail"),
     path("assessments/<int:pk>/rule/", views.assessment_rule, name="assessment_rule"),
     path("assessments/<int:pk>/reassess/", views.assessment_reassess, name="assessment_reassess"),
+    path("risk-tasks/", views.risk_tasks, name="risk_tasks"),
+    path("risk-tasks/new/", views.hazard_create, name="risk_task_new"),
     path("assessments/<int:pk>/hazards/new/", views.hazard_create, name="hazard_create"),
     path("assessments/<int:pk>/hazards/<int:hazard_id>/", views.hazard_edit, name="hazard_edit"),
     path("tasks/", views.task_list, name="task_list"),
@@ -19,4 +21,5 @@ urlpatterns = [
     path("reports/", views.report, name="report"),
     path("reports/<int:pk>/", views.report, name="report_detail"),
     path("updates/", views.updates, name="updates"),
+    path("search/", views.search, name="search"),
 ]

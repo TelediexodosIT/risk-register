@@ -29,6 +29,18 @@ services:
       db:
         condition: service_healthy
 
+  # Sends deadline reminders and overdue notices once an hour (each email is sent only once).
+  scheduler:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://riskregister:${DB_PASSWORD}@db:5432/riskregister
+    entrypoint: ["sh", "-c", "sleep 60; while true; do python manage.py send_reminders; sleep 3600; done"]
+    depends_on:
+      db:
+        condition: service_healthy
+
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped

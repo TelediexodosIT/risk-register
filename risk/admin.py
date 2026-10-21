@@ -1,33 +1,41 @@
 """
 Admin panel at /admin/. Use it to:
+  - edit the dropdown lists on the risk task form (List items)
   - change the scoring method (likelihood/consequence levels, ratings, matrix cells)
-  - maintain the shared hazard library
-  - fix data by hand (assessments, hazards, tasks)
+  - fix data by hand (assessments, risk tasks, actions)
 """
 from django.contrib import admin
 
 from .models import (
-    Assessment, ConsequenceLevel, Control, ControlTemplate, Hazard, HazardTemplate, HistoryEntry,
-    LikelihoodLevel, MatrixCell, MeasureTemplate, RiskRating, Task, TaskUpdate,
+    Assessment, ConsequenceLevel, Control, Hazard, HistoryEntry, LikelihoodLevel, ListItem,
+    MatrixCell, RiskRating, Task, TaskUpdate,
 )
+
+
+@admin.register(ListItem)
+class ListItemAdmin(admin.ModelAdmin):
+    list_display = ("text", "text_el", "kind", "order", "is_active")
+    list_editable = ("text_el", "order", "is_active")
+    list_filter = ("kind", "is_active")
+    search_fields = ("text", "text_el")
 
 
 @admin.register(LikelihoodLevel)
 class LikelihoodAdmin(admin.ModelAdmin):
-    list_display = ("code", "label", "order")
-    list_editable = ("label", "order")
+    list_display = ("code", "label", "label_el", "order")
+    list_editable = ("label", "label_el", "order")
 
 
 @admin.register(ConsequenceLevel)
 class ConsequenceAdmin(admin.ModelAdmin):
-    list_display = ("code", "label", "order")
-    list_editable = ("label", "order")
+    list_display = ("code", "label", "label_el", "order")
+    list_editable = ("label", "label_el", "order")
 
 
 @admin.register(RiskRating)
 class RiskRatingAdmin(admin.ModelAdmin):
-    list_display = ("code", "label", "severity", "color")
-    list_editable = ("label", "severity", "color")
+    list_display = ("code", "label", "label_el", "severity", "color")
+    list_editable = ("label", "label_el", "severity", "color")
 
 
 @admin.register(MatrixCell)
@@ -35,27 +43,6 @@ class MatrixCellAdmin(admin.ModelAdmin):
     list_display = ("likelihood", "consequence", "rating")
     list_editable = ("rating",)
     list_filter = ("likelihood", "rating")
-
-
-class ControlTemplateInline(admin.TabularInline):
-    model = ControlTemplate
-    extra = 2
-    verbose_name = "Existing control"
-    verbose_name_plural = "Common existing controls"
-
-
-class MeasureTemplateInline(admin.TabularInline):
-    model = MeasureTemplate
-    extra = 2
-    verbose_name = "Additional measure"
-    verbose_name_plural = "Suggested additional measures"
-
-
-@admin.register(HazardTemplate)
-class HazardTemplateAdmin(admin.ModelAdmin):
-    list_display = ("name", "category")
-    search_fields = ("name", "category")
-    inlines = [ControlTemplateInline, MeasureTemplateInline]
 
 
 class HazardInline(admin.TabularInline):
@@ -87,7 +74,7 @@ class ControlInline(admin.TabularInline):
 class TaskInline(admin.TabularInline):
     model = Task
     extra = 0
-    fields = ("text", "owner", "due_date", "status", "progress", "carried_to")
+    fields = ("text", "owner", "due_date", "remind_days", "status", "progress", "carried_to")
 
 
 @admin.register(Hazard)

@@ -1,0 +1,7 @@
+{% load i18n risk_tags %}{% comment %}
+Multi-select list with "manual add". Pass: name, items (ListItem list), selected (list of texts), extra (manual texts), disabled.
+{% endcomment %}<div class="picklist">
+  <div class="chips">{% for item in items %}<label class="chip"><input type="checkbox" name="{{ name }}" value="{{ item.text }}" {% if item.text in selected %}checked{% endif %} {% if disabled %}disabled{% endif %}><span>{{ item|tr }}</span></label>{% endfor %}</div>
+  <label class="manual"><small>{% translate "Manual add (one per line)" %}</small><textarea name="{{ name }}_manual" rows="2" {% if disabled %}disabled{% endif %}>{% for x in extra %}{{ x }}
+{% endfor %}</textarea></label>
+</div>

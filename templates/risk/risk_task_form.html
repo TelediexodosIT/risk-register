@@ -1,0 +1,116 @@
+{% extends "base.html" %}{% load i18n risk_tags %}
+{% block title %}{% if hazard %}{{ hazard.name|ltr }}{% else %}{% translate "New risk assessment task" %}{% endif %}{% endblock %}
+{% block content %}
+{% if a %}<a class="back" href="{% url 'assessment_detail' a.id %}">← {{ a }}</a>{% else %}<a class="back" href="{% url 'risk_tasks' %}">← {% translate "Risk Assessment Tasks" %}</a>{% endif %}
+<header class="page-h"><div><p class="eyebrow">{{ company.name }}{% if a %} · {{ a }}{% endif %}</p>
+  <h1>{% if hazard %}{{ hazard.name|ltr }}{% else %}{% translate "New risk assessment task" %}{% endif %}</h1></div></header>
+{% for e in errors %}<div class="banner bad">{{ e }}</div>{% endfor %}
+
+<form method="post" class="formpage" id="risk-task-form">
+  {% csrf_token %}
+  {% if assessments is not None %}
+  <div class="step">
+    <label class="f"><span>{% translate "Assessment" %}</span>
+      <select name="assessment" required>
+        {% for x in assessments %}<option value="{{ x.id }}" {% if x.id|stringformat:'s' == request.POST.assessment %}selected{% endif %}>{{ x }} · {{ x.site }}</option>
+        {% empty %}<option value="">{% translate "No active assessment yet" %}</option>{% endfor %}
+      </select></label>
+    {% if not assessments %}<small><a href="{% url 'assessment_create' %}">{% translate "Create an assessment first" %}</a></small>{% endif %}
+  </div>
+  {% endif %}
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>1</span>{% translate "Hazard" %}</h2>
+    <label class="f"><span class="sr">{% translate "Hazard" %}</span>
+      <select name="hazard">
+        <option value="">{% translate "Choose a hazard…" %}</option>
+        {% for item in lists.hazard %}<option value="{{ item.text }}" {% if hazard and item.text == hazard.name %}selected{% endif %}>{{ item|tr }}</option>{% endfor %}
+        <option value="__manual__" {% if hazard_manual %}selected{% endif %}>{% translate "Manual add…" %}</option>
+      </select></label>
+    <label class="f" id="hazard-manual-box"><span>{% translate "Hazard (manual)" %}</span><input type="text" name="hazard_manual" value="{{ hazard_manual }}"></label>
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>2</span>{% translate "Who is involved" %}</h2>
+    {% include "risk/_picklist.html" with name="affected" items=lists.affected selected=affected_sel extra=affected_extra %}
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>3</span>{% translate "Consequences" %}</h2>
+    {% include "risk/_picklist.html" with name="consequence" items=lists.consequence selected=cons_sel extra=cons_extra %}
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>4</span>{% translate "Inherent risk" %}</h2>
+    <small>{% translate "The risk before any controls: slide likelihood and consequence, the rating is calculated." %}</small>
+    {% include "risk/_sliders.html" with prefix="inherent" l_val=inh_l c_val=inh_c %}
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>5</span>{% translate "Existing control measures" %}</h2>
+    {% include "risk/_picklist.html" with name="control" items=lists.control selected=ctrl_sel extra=ctrl_extra %}
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>6</span>{% translate "Residual risk" %}</h2>
+    <small>{% translate "The risk with the existing controls in place." %}</small>
+    {% if hazard.previous_rating %}<p class="sub" style="margin:0">{% translate "Previous version" %}: {% include "risk/_chip.html" with r=hazard.previous_rating l=hazard.previous_likelihood c=hazard.previous_consequence %}</p>{% endif %}
+    {% include "risk/_sliders.html" with prefix="residual" l_val=res_l c_val=res_c %}
+  </fieldset>
+
+  <div class="step">
+    <h2><span>7</span>{% translate "Additional measures" %}</h2>
+    {% for t in tasks %}
+      <a class="mtask" href="{% url 'task_detail' t.id %}"><span class="dot {% if t.status == 'done' %}done{% elif t.is_overdue %}late{% else %}{{ t.status }}{% endif %}"></span>
+        <span>{{ t.text|ltr }}<small>{{ t.owner }} · {% translate "due" %} {{ t.due_date|date:"d/m/Y"|default:"—" }} · {% include "risk/_task_pill.html" %}</small></span></a>
+    {% endfor %}
+    <ul class="pending" id="pending-actions" hidden></ul>
+    {% if can_edit %}
+      <div><button type="button" class="btn ghost" data-open-action>+ {% translate "Add measure" %}</button></div>
+      <small>{% translate "Each measure is assigned to a person, who gets an email and reminders before the deadline." %}</small>
+    {% elif not tasks %}<small>{% translate "No measures." %}</small>{% endif %}
+  </div>
+
+  {% if can_edit %}
+  {% if user.is_staff %}<label class="ck"><input type="checkbox" name="save_to_lists"> {% translate "Also save my manual entries to the dropdown lists" %}</label>{% endif %}
+  <div class="actions sticky-actions">
+    <a class="btn" href="{% if a %}{% url 'assessment_detail' a.id %}{% else %}{% url 'risk_tasks' %}{% endif %}">{% translate "Cancel" %}</a>
+    <button class="btn primary">{% translate "Save task" %}</button>
+  </div>
+  {% endif %}
+
+  <template id="pending-row"><li>
+    <span><b data-text></b><small data-meta></small></span>
+    <input type="hidden" name="m_text"><input type="hidden" name="m_owner"><input type="hidden" name="m_due"><input type="hidden" name="m_remind">
+    <button type="button" class="btn sm" data-remove aria-label="{% translate 'Remove' %}">×</button>
+  </li></template>
+</form>
+
+<dialog class="modal" id="action-dialog" aria-labelledby="action-dialog-title">
+  <div class="modal-h"><h2 id="action-dialog-title">{% translate "Add measure" %}</h2><button type="button" class="iconbtn" data-close aria-label="{% translate 'Close' %}">×</button></div>
+  <div class="modal-b">
+    <label class="f"><span>{% translate "Measure" %}</span>
+      <select name="d_measure">
+        <option value="">{% translate "Choose a measure…" %}</option>
+        {% for item in lists.measure %}<option value="{{ item.text }}">{{ item|tr }}</option>{% endfor %}
+        <option value="__manual__">{% translate "Manual add…" %}</option>
+      </select></label>
+    <label class="f" id="d-manual-box" hidden><span>{% translate "Measure (manual)" %}</span><input type="text" name="d_manual"></label>
+    <label class="f"><span>{% translate "Assigned user" %}</span>
+      <select name="d_owner">{% for p in people %}<option value="{{ p.id }}">{{ p }}{% if p.job_title %} · {{ p.job_title }}{% endif %}</option>{% endfor %}</select></label>
+    <div class="row2">
+      <label class="f"><span>{% translate "Deadline" %}</span><input type="date" name="d_due" value="{{ default_due }}"></label>
+      <label class="f"><span>{% translate "Reminder" %}</span>
+        <select name="d_remind">
+          <option value="0">{% translate "No reminder" %}</option>
+          <option value="1">{% translate "1 day before" %}</option>
+          <option value="3" selected>{% translate "3 days before" %}</option>
+          <option value="7">{% translate "1 week before" %}</option>
+        </select></label>
+    </div>
+    <p class="err" hidden>{% translate "Choose or type a measure and pick a person." %}</p>
+  </div>
+  <div class="modal-f"><button type="button" class="btn" data-close>{% translate "Cancel" %}</button><button type="button" class="btn primary" data-add>{% translate "Add" %}</button></div>
+</dialog>
+{{ rt_data|json_script:"rt-data" }}
+{% endblock %}

@@ -1,19 +1,19 @@
-{% extends "base_auth.html" %}
-{% block title %}Set up two-step verification{% endblock %}
+{% extends "base_auth.html" %}{% load i18n %}
+{% block title %}{% translate "Set up two-step verification" %}{% endblock %}
 {% block card %}
-<div><h2>Set up two-step verification</h2><p class="sub">Every account needs this. It takes a minute and only happens once.</p></div>
+<div><h2>{% translate "Set up two-step verification" %}</h2><p class="sub">{% translate "Every account needs this. It takes a minute and only happens once." %}</p></div>
 <ol class="sub" style="padding-left:18px;margin:0;display:grid;gap:6px">
-  <li>Open Microsoft Authenticator, Google Authenticator or any authenticator app.</li>
-  <li>Add an account and scan this code.</li>
-  <li>Type the 6-digit code the app shows.</li>
+  <li>{% translate "Open Microsoft Authenticator, Google Authenticator or any authenticator app." %}</li>
+  <li>{% translate "Add an account and scan this code." %}</li>
+  <li>{% translate "Type the 6-digit code the app shows." %}</li>
 </ol>
 <div class="qr">{{ qr_svg|safe }}</div>
-<details><summary class="muted">Can't scan? Enter this key instead</summary><p class="secret">{{ secret }}</p></details>
+<details><summary class="muted">{% translate "Can't scan? Enter this key instead" %}</summary><p class="secret">{{ secret }}</p></details>
 <form method="post" class="lform" novalidate>
   {% csrf_token %}
-  <label class="f"><span>6-digit code</span><input name="token" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" required></label>
+  <label class="f"><span>{% translate "6-digit code" %}</span><input name="token" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" required></label>
   {% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
-  <button class="btn primary wide" type="submit">Confirm and sign in</button>
-  <a class="link" href="{% url 'logout' %}">Cancel</a>
+  <button class="btn primary wide" type="submit">{% translate "Confirm and sign in" %}</button>
+  <a class="link" href="{% url 'logout' %}">{% translate "Cancel" %}</a>
 </form>
 {% endblock %}

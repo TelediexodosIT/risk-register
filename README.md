@@ -162,7 +162,7 @@ To undo a change that broke something: `git log --oneline`, then `git revert <co
 | You want to change… | Edit |
 |---|---|
 | The risk matrix, likelihood/consequence labels, rating colours and meanings | **No code.** Admin → Risk → Matrix cells / Likelihood levels / Consequence levels / Risk ratings |
-| The hazard library | **No code.** Admin → Hazard templates (or "Hazard library" page → Edit in admin) |
+| Dropdown lists on the risk task form (hazards, who is involved, consequences, existing controls, additional measures), in English and Greek | **No code.** Admin → List items (or the "Lists" page → Edit in admin). Untick "Is active" to hide an entry |
 | Companies and users | **No code.** Admin → Companies / Users |
 | Text and layout of a page | `templates/risk/<page>.html` (sign-in pages: `templates/accounts/`) |
 | Colours, fonts, spacing | `static/css/app.css` (colour tokens are at the top) |
@@ -171,7 +171,9 @@ To undo a change that broke something: `git log --oneline`, then `git revert <co
 | Rules: status, "ready for reassessment", new version, notifications, emails | `risk/services.py` |
 | What each page does | `risk/views.py` (one function per page; URLs in `risk/urls.py`) |
 | Database fields | `risk/models.py`, then `docker compose exec web python manage.py makemigrations` and rebuild |
-| Default matrix/library for new installs | `risk/defaults.py` |
+| Default matrix/lists for new installs | `risk/defaults.py` |
+| Greek wording of the screens | `locale/el/LC_MESSAGES/django.po` (edit the `msgstr` lines, then rebuild). After adding new `{% translate %}` text: `docker compose exec web python manage.py makemessages -l el` |
+| Reminder timing (how often the check runs) | `scheduler` service in `docker-compose.yml` |
 | Sign-in, two-step, lockout | `accounts/views.py`, settings in `config/settings.py` ("Login protection") |
 | Session timeout, lockout limits, email server | `.env` |
 
@@ -206,6 +208,22 @@ Uses SQLite when `DATABASE_URL` isn't set. Open http://127.0.0.1:8000.
 - **Notifications are restrained**: managers see assessment-level updates (ready, overdue); individual task
   changes roll up into the assessment instead of producing alerts.
 - **Reports** page → *Save as PDF* uses the browser's print-to-PDF.
+
+## 6b. Risk assessment tasks, actions and reminders
+
+- **Risk Assessment Tasks** (menu) lists every risk entry of the tenant. **+ New task** opens the form:
+  hazard, who is involved, consequences and existing control measures each come from a dropdown list
+  (managed in Admin → List items) with a **manual add** box; inherent and residual risk use
+  likelihood and consequence **sliders** and the rating is calculated live from the matrix.
+- **Add measure** opens a pop-up: measure (list or manual), assigned user (only that tenant's people),
+  deadline and reminder. The person gets an email straight away (English + Greek).
+- **Reminders**: the `scheduler` container checks every hour and emails a reminder before the deadline
+  (1, 3 or 7 days, chosen per action) and an overdue notice (then weekly). Each is sent once.
+  Run it by hand: `docker compose exec web python manage.py send_reminders`.
+- **Status is automatic**: Draft → Open → In progress → Complete, or Overdue / Needs measures,
+  worked out from scores, actions, progress and deadlines (`hazard_lifecycle` in `risk/services.py`).
+- **Top bar**: search (tasks, actions, assessments, people), tenant switch, light/dark toggle,
+  EN/ΕΛ language toggle. On phones these move into the ☰ menu.
 
 ## 7. Security summary
 

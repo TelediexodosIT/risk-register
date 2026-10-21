@@ -47,6 +47,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -141,7 +142,12 @@ EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "risk-register@localhost")
 SITE_URL = env("SITE_URL", "http://localhost")
 
-LANGUAGE_CODE = "en-gb"
+# Languages: English and Greek. Users switch with the EN/EL button (stored in a cookie).
+# Translations live in locale/el/LC_MESSAGES/django.po (edit, then compile: see README).
+LANGUAGE_CODE = "en"
+LANGUAGES = [("en", "English"), ("el", "Ελληνικά")]
+LOCALE_PATHS = [BASE_DIR / "locale"]
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
 TIME_ZONE = env("TIME_ZONE", "Asia/Nicosia")
 USE_I18N = True
 USE_TZ = True
@@ -162,6 +168,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
     "version": 1,
+    "disable_existing_loggers": False,
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": env("LOG_LEVEL", "INFO")},
 }

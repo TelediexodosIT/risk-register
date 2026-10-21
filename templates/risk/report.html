@@ -1,41 +1,41 @@
-{% extends "base.html" %}
-{% block title %}Report{% endblock %}
+{% extends "base.html" %}{% load i18n risk_tags %}
+{% block title %}{% translate "Report" %}{% endblock %}
 {% block content %}
-<header class="page-h noprint"><div><p class="eyebrow">Client summary</p><h1>Reports</h1></div>
+<header class="page-h noprint"><div><p class="eyebrow">{% translate "Client summary" %}</p><h1>{% translate "Reports" %}</h1></div>
   {% if a %}<div class="actions">
     <form method="get" onchange="location='{% url 'report' %}'+this.elements.a.value+'/'" style="margin:0">
-      <label class="sr" for="rep">Assessment</label>
-      <select id="rep" name="a">{% for x in assessments %}<option value="{{ x.id }}" {% if x.id == a.id %}selected{% endif %}>{{ x }}{% if not x.is_active %} (superseded){% endif %}</option>{% endfor %}</select>
+      <label class="sr" for="rep">{% translate "Assessment" %}</label>
+      <select id="rep" name="a">{% for x in assessments %}<option value="{{ x.id }}" {% if x.id == a.id %}selected{% endif %}>{{ x }}{% if not x.is_active %} ({% translate "superseded" %}){% endif %}</option>{% endfor %}</select>
     </form>
-    <button class="btn primary" type="button" onclick="window.print()">Save as PDF</button></div>{% endif %}
+    <button class="btn primary" type="button" onclick="window.print()">{% translate "Save as PDF" %}</button></div>{% endif %}
 </header>
-{% if not a %}<p class="empty">No assessments yet.</p>{% else %}
+{% if not a %}<p class="empty">{% translate "No assessments yet." %}</p>{% else %}
 <article class="sheet">
   <header class="sheet-h">
-    <div><h2>Risk assessment summary</h2><p>{{ company.name }} · {{ a.title }} · {{ a.site }}</p></div>
-    <dl><div><dt>Version</dt><dd>{{ a.version }}</dd></div><div><dt>Date</dt><dd>{{ a.created_at|date:"j M Y" }}</dd></div><div><dt>Status</dt><dd>{% include "risk/_state.html" %}</dd></div></dl>
+    <div><h2>{% translate "Risk assessment summary" %}</h2><p>{{ company.name }} · {{ a.title }} · {{ a.site }}</p></div>
+    <dl><div><dt>{% translate "Version" %}</dt><dd>{{ a.version }}</dd></div><div><dt>{% translate "Date" %}</dt><dd>{{ a.created_at|date:"d/m/Y" }}</dd></div><div><dt>{% translate "Status" %}</dt><dd>{% include "risk/_state.html" %}</dd></div></dl>
   </header>
   <section class="sheet-sum">
-    <div><span class="lbl">Residual risk profile</span>{% include "risk/_dist.html" with counts=residual %}</div>
-    <div><span class="lbl">Measures completed</span><b>{{ state.done }} of {{ state.total }}</b></div>
-    <div><span class="lbl">Overdue</span><b class="{% if state.overdue %}bad{% endif %}">{{ state.overdue }}</b></div>
+    <div><span class="lbl">{% translate "Residual risk profile" %}</span>{% include "risk/_dist.html" with counts=residual %}</div>
+    <div><span class="lbl">{% translate "Actions completed" %}</span><b>{{ state.done }} / {{ state.total }}</b></div>
+    <div><span class="lbl">{% translate "Overdue" %}</span><b class="{% if state.overdue %}bad{% endif %}">{{ state.overdue }}</b></div>
   </section>
   <div class="table-wrap"><table>
-    <thead><tr><th>Hazard</th><th>Inherent</th><th>Residual</th><th>Measure</th><th>Responsible</th><th>Deadline</th><th>Status</th></tr></thead>
+    <thead><tr><th>{% translate "Hazard" %}</th><th>{% translate "Inherent" %}</th><th>{% translate "Residual" %}</th><th>{% translate "Measure" %}</th><th>{% translate "Assigned user" %}</th><th>{% translate "Deadline" %}</th><th>{% translate "Status" %}</th></tr></thead>
     <tbody>{% for r in rows %}{% with h=r.h %}
       {% for t in r.tasks %}<tr>
-        {% if forloop.first %}<td rowspan="{{ r.span }}"><b>{{ h.name }}</b></td>
+        {% if forloop.first %}<td rowspan="{{ r.span }}"><b>{{ h.name|ltr }}</b></td>
           <td rowspan="{{ r.span }}">{% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}</td>
           <td rowspan="{{ r.span }}">{% include "risk/_chip.html" with r=h.residual_rating l=h.residual_likelihood c=h.residual_consequence %}</td>{% endif %}
-        <td>{{ t.text }}</td><td>{{ t.owner }}</td><td>{{ t.due_date|date:"j M Y"|default:"—" }}</td><td>{% include "risk/_task_pill.html" %}</td></tr>
-      {% empty %}<tr><td><b>{{ h.name }}</b></td>
+        <td>{{ t.text|ltr }}</td><td>{{ t.owner }}</td><td>{{ t.due_date|date:"d/m/Y"|default:"—" }}</td><td>{% include "risk/_task_pill.html" %}</td></tr>
+      {% empty %}<tr><td><b>{{ h.name|ltr }}</b></td>
         <td>{% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}</td>
         <td>{% include "risk/_chip.html" with r=h.residual_rating l=h.residual_likelihood c=h.residual_consequence %}</td>
-        <td colspan="4" class="muted">No additional measures required</td></tr>{% endfor %}
+        <td colspan="4" class="muted">{% translate "No additional measures required" %}</td></tr>{% endfor %}
     {% endwith %}{% endfor %}</tbody>
   </table></div>
   {% if a.previous %}{% include "risk/_compare.html" %}{% endif %}
-  <small>Generated {{ today|date:"j M Y" }} by {{ user }}.</small>
+  <small>{% blocktranslate with d=today|date:"d/m/Y" u=user %}Generated {{ d }} by {{ u }}.{% endblocktranslate %}</small>
 </article>
 {% endif %}
 {% endblock %}

@@ -1,16 +1,16 @@
-{% extends "base_auth.html" %}
+{% extends "base_auth.html" %}{% load i18n %}
 {% block card %}
-<div><h2>Sign in</h2><p class="sub">Use your work email address.</p></div>
+<div><h2>{% translate "Sign in" %}</h2><p class="sub">{% translate "Use your work email address." %}</p></div>
 <form method="post" class="lform" novalidate>
   {% csrf_token %}
   <input type="hidden" name="next" value="{{ next }}">
-  <label class="f"><span>Work email</span><input type="email" name="username" value="{{ email }}" autocomplete="username" required autofocus></label>
-  <label class="f"><span>Password</span>
+  <label class="f"><span>{% translate "Work email" %}</span><input type="email" name="username" value="{{ email }}" autocomplete="username" required autofocus></label>
+  <label class="f"><span>{% translate "Password" %}</span>
     <span class="pw"><input type="password" name="password" id="pw" autocomplete="current-password" required>
-    <button type="button" class="link" onclick="const i=document.getElementById('pw');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></span>
+    <button type="button" class="link" data-show="{% translate 'Show' %}" data-hide="{% translate 'Hide' %}" onclick="const i=document.getElementById('pw');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?this.dataset.show:this.dataset.hide">{% translate "Show" %}</button></span>
   </label>
   {% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
-  <button class="btn primary wide" type="submit">Continue</button>
-  <a class="link" href="{% url 'password_reset' %}">Forgot password?</a>
+  <button class="btn primary wide" type="submit">{% translate "Continue" %}</button>
+  <a class="link" href="{% url 'password_reset' %}">{% translate "Forgot password?" %}</a>
 </form>
 {% endblock %}

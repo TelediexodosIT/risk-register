@@ -1,25 +1,25 @@
-{% extends "base.html" %}
-{% block title %}Assessments{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Assessments" %}{% endblock %}
 {% block content %}
 <header class="page-h">
   <div><p class="eyebrow">{{ company.sector }}</p><h1>{{ company.name }}</h1></div>
-  {% if user.can_manage %}<a class="btn primary" href="{% url 'assessment_create' %}">+ New assessment</a>{% endif %}
+  {% if user.can_manage %}<a class="btn primary" href="{% url 'assessment_create' %}">+ {% translate "New assessment" %}</a>{% endif %}
 </header>
 <div class="cards">
 {% for r in active %}
   <a class="card" href="{% url 'assessment_detail' r.a.id %}">
     <div class="card-top"><span class="ver">v{{ r.a.version }}</span>{% include "risk/_state.html" with state=r.state %}</div>
-    <div><h2>{{ r.a.title }}</h2><small>{{ r.a.site }} · {{ r.hazard_count }} hazard{{ r.hazard_count|pluralize }} · {{ r.a.created_at|date:"j M Y" }}</small></div>
-    <div><span class="lbl">Residual risk</span>{% include "risk/_dist.html" with counts=r.residual %}</div>
-    <div><span class="lbl">Measures {{ r.state.done }} of {{ r.state.total }} done{% if r.state.overdue %} · <span class="bad">{{ r.state.overdue }} overdue</span>{% endif %}</span>
+    <div><h2>{{ r.a.title }}</h2><small>{{ r.a.site }} · {% blocktranslate count n=r.hazard_count %}{{ n }} risk task{% plural %}{{ n }} risk tasks{% endblocktranslate %} · {{ r.a.created_at|date:"d/m/Y" }}</small></div>
+    <div><span class="lbl">{% translate "Residual risk" %}</span>{% include "risk/_dist.html" with counts=r.residual %}</div>
+    <div><span class="lbl">{% blocktranslate with d=r.state.done t=r.state.total %}Actions {{ d }} of {{ t }} done{% endblocktranslate %}{% if r.state.overdue %} · <span class="bad">{% blocktranslate with n=r.state.overdue %}{{ n }} overdue{% endblocktranslate %}</span>{% endif %}</span>
       <div class="prog"><i style="width:{% widthratio r.state.done r.state.total|default:1 100 %}%"></i></div></div>
   </a>
 {% empty %}
-  <p class="empty">No assessments yet. Start one with “New assessment”.</p>
+  <p class="empty">{% translate "No assessments yet. Start one with “New assessment”." %}</p>
 {% endfor %}
 </div>
 {% if older %}
-<h3 class="h3">Earlier versions</h3>
-<ul class="oldlist">{% for r in older %}<li><a href="{% url 'assessment_detail' r.a.id %}">{{ r.a.title }} · v{{ r.a.version }}</a><small>{{ r.a.created_at|date:"j M Y" }}</small>{% include "risk/_state.html" with state=r.state %}</li>{% endfor %}</ul>
+<h3 class="h3">{% translate "Earlier versions" %}</h3>
+<ul class="oldlist">{% for r in older %}<li><a href="{% url 'assessment_detail' r.a.id %}">{{ r.a.title }} · v{{ r.a.version }}</a><small>{{ r.a.created_at|date:"d/m/Y" }}</small>{% include "risk/_state.html" with state=r.state %}</li>{% endfor %}</ul>
 {% endif %}
 {% endblock %}

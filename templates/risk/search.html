@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% load i18n risk_tags %}
+{% block title %}{% translate "Search" %}{% endblock %}
+{% block content %}
+<header class="page-h"><div><p class="eyebrow">{{ company.name }}</p><h1>{% translate "Search" %}</h1></div></header>
+<form method="get" class="formpage" role="search" style="margin-bottom:20px">
+  <div class="search" style="max-width:none"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+  <input type="search" name="q" value="{{ q }}" placeholder="{% translate 'Search tasks, actions, people…' %}" aria-label="{% translate 'Search' %}" autofocus></div>
+</form>
+{% if q|length < 2 %}<p class="empty">{% translate "Type at least 2 characters." %}</p>
+{% elif not total %}<p class="empty">{% blocktranslate %}Nothing found for “{{ q }}”.{% endblocktranslate %}</p>
+{% else %}
+<div class="results">
+  {% if risk_tasks %}<section><h2>{% translate "Risk Assessment Tasks" %}</h2><ul class="rtasks">{% for h in risk_tasks %}
+    <li><a class="rtask" href="{% url 'hazard_edit' h.assessment_id h.id %}"><span><b>{{ h.name|ltr }}</b><small>{{ h.assessment }}</small></span><span class="pill p-{{ h.life_css }}">{{ h.life_label }}</span></a></li>{% endfor %}</ul></section>{% endif %}
+  {% if actions %}<section><h2>{% translate "Actions" %}</h2>{% include "risk/_task_rows.html" with tasks=actions show_assessment=True %}</section>{% endif %}
+  {% if assessments %}<section><h2>{% translate "Assessments" %}</h2><ul class="tasks">{% for x in assessments %}
+    <li><a class="trow simple" href="{% url 'assessment_detail' x.id %}"><span><b>{{ x }}</b><small>{{ x.site }}{% if not x.is_active %} · {% translate "Superseded" %}{% endif %}</small></span></a></li>{% endfor %}</ul></section>{% endif %}
+  {% if people %}<section><h2>{% translate "People" %}</h2><ul class="tasks">{% for p in people %}
+    <li><div class="trow simple"><span><b>{{ p }}</b><small>{{ p.job_title }} · {{ p.email }}</small></span></div></li>{% endfor %}</ul></section>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

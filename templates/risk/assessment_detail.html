@@ -1,71 +1,72 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load i18n risk_tags %}
 {% block title %}{{ a }}{% endblock %}
 {% block content %}
-<a class="back" href="{% url 'assessment_list' %}">← All assessments</a>
+<a class="back" href="{% url 'assessment_list' %}">← {% translate "All assessments" %}</a>
 <header class="page-h">
-  <div><p class="eyebrow">{{ a.site }} · created {{ a.created_at|date:"j M Y" }}</p>
+  <div><p class="eyebrow">{{ a.site }} · {% translate "created" %} {{ a.created_at|date:"d/m/Y" }}</p>
     <h1>{{ a.title }} <span class="ver">v{{ a.version }}</span></h1>
-    {% if a.previous %}<p class="sub">Follows <a href="{% url 'assessment_detail' a.previous.id %}">version {{ a.previous.version }}</a>, which is kept unchanged.</p>{% endif %}</div>
+    {% if a.previous %}<p class="sub">{% translate "Follows" %} <a href="{% url 'assessment_detail' a.previous.id %}">{% translate "version" %} {{ a.previous.version }}</a>{% translate ", which is kept unchanged." %}</p>{% endif %}</div>
   {% include "risk/_state.html" %}
 </header>
-{% if not a.is_active and a.next_version %}<div class="banner">This version is read-only. It was replaced by <a href="{% url 'assessment_detail' a.next_version.id %}">version {{ a.next_version.version }}</a>.</div>{% endif %}
-{% if state.rescore and a.is_active %}<div class="banner warn">Completed measures from version {{ a.previous.version }} now count as existing controls. Open each hazard marked <b>Re-score</b> and confirm its residual risk.</div>{% endif %}
+{% if not a.is_active and a.next_version %}<div class="banner">{% translate "This version is read-only. It was replaced by" %} <a href="{% url 'assessment_detail' a.next_version.id %}">{% translate "version" %} {{ a.next_version.version }}</a>.</div>{% endif %}
+{% if state.rescore and a.is_active %}<div class="banner warn">{% translate "Completed actions from the previous version now count as existing controls. Open each risk task marked “Re-score” and confirm its residual risk." %}</div>{% endif %}
 
 <section class="strip">
-  <div class="stat"><span>Hazards</span><b>{{ hazards|length }}</b></div>
-  <div class="stat wide"><span>Inherent risk</span>{% include "risk/_dist.html" with counts=inherent %}</div>
-  <div class="stat wide"><span>Residual risk</span>{% include "risk/_dist.html" with counts=residual %}</div>
-  <div class="stat"><span>Measures done</span><b>{{ state.done }}/{{ state.total }}</b><div class="prog"><i style="width:{% widthratio state.done state.total|default:1 100 %}%"></i></div></div>
-  <div class="stat"><span>Overdue</span><b class="{% if state.overdue %}bad{% endif %}">{{ state.overdue }}</b></div>
+  <div class="stat"><span>{% translate "Risk tasks" %}</span><b>{{ hazards|length }}</b></div>
+  <div class="stat wide"><span>{% translate "Inherent risk" %}</span>{% include "risk/_dist.html" with counts=inherent %}</div>
+  <div class="stat wide"><span>{% translate "Residual risk" %}</span>{% include "risk/_dist.html" with counts=residual %}</div>
+  <div class="stat"><span>{% translate "Actions done" %}</span><b>{{ state.done }}/{{ state.total }}</b><div class="prog"><i style="width:{% widthratio state.done state.total|default:1 100 %}%"></i></div></div>
+  <div class="stat"><span>{% translate "Overdue" %}</span><b class="{% if state.overdue %}bad{% endif %}">{{ state.overdue }}</b></div>
 </section>
 
 <section class="rule">
   <form method="post" action="{% url 'assessment_rule' a.id %}">
     {% csrf_token %}
-    <label for="rule">Reassess a hazard when</label>
+    <label for="rule">{% translate "Reassess a risk task when" %}</label>
     <select id="rule" name="rule_percent" onchange="this.form.submit()" {% if not can_edit %}disabled{% endif %}>
-      {% for v in rule_choices %}<option value="{{ v }}" {% if v == a.rule_percent %}selected{% endif %}>{% if v == 100 %}all{% else %}{{ v }}%{% endif %} of its measures are complete</option>{% endfor %}
+      {% for v in rule_choices %}<option value="{{ v }}" {% if v == a.rule_percent %}selected{% endif %}>{% if v == 100 %}{% translate "all of its actions are complete" %}{% else %}{% blocktranslate with p=v %}{{ p }}% of its actions are complete{% endblocktranslate %}{% endif %}</option>{% endfor %}
     </select>
-    <noscript><button class="btn sm">Save</button></noscript>
+    <noscript><button class="btn sm">{% translate "Save" %}</button></noscript>
   </form>
   <form method="post" action="{% url 'assessment_reassess' a.id %}">
     {% csrf_token %}
-    <button class="btn {% if state.ready and can_edit %}primary{% endif %}" {% if not state.ready or not can_edit %}disabled{% endif %}>Start version {{ a.version|add:1 }}</button>
+    <button class="btn {% if state.ready and can_edit %}primary{% endif %}" {% if not state.ready or not can_edit %}disabled{% endif %}>{% blocktranslate with n=a.version|add:1 %}Start version {{ n }}{% endblocktranslate %}</button>
   </form>
-  <small>{% if not a.is_active %}Superseded versions cannot be reassessed.{% elif state.ready %}Every hazard with measures has met the rule. Starting a new version keeps this one as a record.{% else %}Available once every hazard with measures meets this rule. Status updates automatically as tasks are completed.{% endif %}</small>
+  <small>{% if not a.is_active %}{% translate "Superseded versions cannot be reassessed." %}{% elif state.ready %}{% translate "Every risk task with actions has met the rule. Starting a new version keeps this one as a record." %}{% else %}{% translate "Available once every risk task with actions meets this rule. The status updates automatically as actions are completed." %}{% endif %}</small>
 </section>
 
 <nav class="tabs">
-  <a class="tab {% if tab == 'register' %}on{% endif %}" href="?tab=register">Register</a>
-  <a class="tab {% if tab == 'tasks' %}on{% endif %}" href="?tab=tasks">Tasks</a>
-  <a class="tab {% if tab == 'history' %}on{% endif %}" href="?tab=history">History</a>
+  <a class="tab {% if tab == 'register' %}on{% endif %}" href="?tab=register">{% translate "Register" %}</a>
+  <a class="tab {% if tab == 'tasks' %}on{% endif %}" href="?tab=tasks">{% translate "Actions" %}</a>
+  <a class="tab {% if tab == 'history' %}on{% endif %}" href="?tab=history">{% translate "History" %}</a>
 </nav>
 
 {% if tab == 'tasks' %}
   {% include "risk/_task_rows.html" %}
 {% elif tab == 'history' %}
   <ol class="versions">{% for v in chain %}
-    <li class="{% if v.id == a.id %}on{% endif %}"><a href="{% url 'assessment_detail' v.id %}?tab=history"><b>Version {{ v.version }}</b></a> · {{ v.get_status_display }}
-      <ul>{% for e in v.history.all %}<li><time>{{ e.created_at|date:"j M Y" }}</time>{{ e.text }}</li>{% endfor %}</ul></li>
+    <li class="{% if v.id == a.id %}on{% endif %}"><a href="{% url 'assessment_detail' v.id %}?tab=history"><b>{% translate "Version" %} {{ v.version }}</b></a> · {% translate v.get_status_display %}
+      <ul>{% for e in v.history.all %}<li><time>{{ e.created_at|date:"d/m/Y" }}</time>{{ e.text }}</li>{% endfor %}</ul></li>
   {% endfor %}</ol>
-  {% if a.previous %}{% include "risk/_compare.html" %}{% else %}<p class="sub">This is the first version. A before-and-after comparison appears once a newer version exists.</p>{% endif %}
+  {% if a.previous %}{% include "risk/_compare.html" %}{% else %}<p class="sub">{% translate "This is the first version. A before-and-after comparison appears once a newer version exists." %}</p>{% endif %}
 {% else %}
-  <div class="table-wrap"><table class="reg">
-    <thead><tr><th>Hazard</th><th>Who is affected</th><th>Inherent</th><th>Existing controls</th><th>Residual</th><th>Additional measures</th></tr></thead>
+  <div class="table-wrap cards-wrap"><table class="reg cards-sm">
+    <thead><tr><th>{% translate "Hazard" %}</th><th>{% translate "Who is involved" %}</th><th>{% translate "Inherent" %}</th><th>{% translate "Existing controls" %}</th><th>{% translate "Residual" %}</th><th>{% translate "Actions" %}</th><th>{% translate "Status" %}</th></tr></thead>
     <tbody>{% for h in hazards %}
       <tr>
-        <td><a href="{% url 'hazard_edit' a.id h.id %}">{{ h.name }}</a><small>{{ h.category }}</small></td>
-        <td><div class="aff">{% for x in h.affected_labels %}<span>{{ x }}</span>{% endfor %}</div></td>
-        <td>{% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}</td>
-        <td><span class="count">{{ h.controls.all|length }}</span> in place</td>
-        <td>{% if h.previous_rating %}<div class="was">was {{ h.previous_likelihood.code }}-{{ h.previous_consequence.code }}</div>{% endif %}
+        <td><a href="{% url 'hazard_edit' a.id h.id %}">{{ h.name|ltr }}</a><small>{% for x in h.consequence_list %}{{ x|ltr }}{% if not forloop.last %}, {% endif %}{% endfor %}</small></td>
+        <td data-label="{% translate 'Who is involved' %}"><div><div class="aff">{% for x in h.affected_list %}<span>{{ x|ltr }}</span>{% endfor %}</div></div></td>
+        <td data-label="{% translate 'Inherent' %}"><div>{% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}</div></td>
+        <td data-label="{% translate 'Existing controls' %}"><div><span class="count">{{ h.controls.all|length }}</span> {% translate "in place" %}</div></td>
+        <td data-label="{% translate 'Residual' %}"><div>{% if h.previous_rating %}<div class="was">{% translate "was" %} {{ h.previous_likelihood.code }}-{{ h.previous_consequence.code }}</div>{% endif %}
           {% include "risk/_chip.html" with r=h.residual_rating l=h.residual_likelihood c=h.residual_consequence %}
-          {% if h.needs_rescore %} <span class="pill p-warn">Re-score</span>{% endif %}</td>
-        <td>{% if h.state.total %}<div class="prog"><i style="width:{% widthratio h.state.done h.state.total 100 %}%"></i></div>
-          <small>{{ h.state.done }} of {{ h.state.total }} done{% if h.state.state == 'ready' %} · <b class="good">rule met</b>{% endif %}</small>{% else %}<small>None set</small>{% endif %}</td>
+          {% if h.needs_rescore %} <span class="pill p-warn">{% translate "Re-score" %}</span>{% endif %}</div></td>
+        <td data-label="{% translate 'Actions' %}"><div>{% if h.state.total %}<div class="prog"><i style="width:{% widthratio h.state.done h.state.total 100 %}%"></i></div>
+          <small>{% blocktranslate with done=h.state.done total=h.state.total %}{{ done }} of {{ total }} done{% endblocktranslate %}</small>{% else %}<small>{% translate "None set" %}</small>{% endif %}</div></td>
+        <td data-label="{% translate 'Status' %}"><div><span class="pill p-{{ h.life_css }}">{{ h.life_label }}</span></div></td>
       </tr>
-    {% empty %}<tr><td colspan="6" class="muted">No hazards yet.</td></tr>{% endfor %}</tbody>
+    {% empty %}<tr><td colspan="7" class="muted">{% translate "No risk tasks yet." %}</td></tr>{% endfor %}</tbody>
   </table></div>
-  {% if can_edit %}<p><a class="btn" href="{% url 'hazard_create' a.id %}">+ Add hazard</a></p>{% endif %}
+  {% if can_edit %}<p><a class="btn" href="{% url 'hazard_create' a.id %}">+ {% translate "New task" %}</a></p>{% endif %}
 {% endif %}
 {% endblock %}

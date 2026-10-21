@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% load i18n risk_tags %}
+{% block title %}{% translate "Risk Assessment Tasks" %}{% endblock %}
+{% block content %}
+<header class="page-h">
+  <div><p class="eyebrow">{{ company.name }}</p><h1>{% translate "Risk Assessment Tasks" %}</h1>
+    <p class="sub">{% translate "Every risk entry of this tenant's active assessments. The status updates by itself as actions are completed." %}</p></div>
+  <a class="btn primary" href="{% url 'risk_task_new' %}">+ {% translate "New task" %}</a>
+</header>
+<div class="filters">{% for key, label, n in filters %}<a class="fchip {% if f == key %}on{% endif %}" href="?f={{ key }}">{{ label }}<span class="count-chip">{{ n }}</span></a>{% endfor %}</div>
+{% if hazards %}
+<ul class="rtasks">{% for h in hazards %}
+  <li><a class="rtask" href="{% url 'hazard_edit' h.assessment_id h.id %}">
+    <span><b>{{ h.name|ltr }}</b><small>{{ h.assessment }}{% if h.affected_list %} · {% for x in h.affected_list %}{{ x|ltr }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</small></span>
+    <span class="pill p-{{ h.life_css }}">{{ h.life_label }}</span>
+    <span class="meta">
+      {% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}
+      <span aria-hidden="true">→</span>
+      {% include "risk/_chip.html" with r=h.residual_rating l=h.residual_likelihood c=h.residual_consequence %}
+      {% if h.state.total %}<small>· {% blocktranslate with done=h.state.done total=h.state.total %}{{ done }} of {{ total }} actions done{% endblocktranslate %}</small>{% endif %}
+    </span>
+  </a></li>{% endfor %}
+</ul>
+{% else %}<p class="empty">{% translate "No risk assessment tasks here yet." %} <a href="{% url 'risk_task_new' %}">{% translate "Create the first one" %}</a>.</p>{% endif %}
+{% endblock %}

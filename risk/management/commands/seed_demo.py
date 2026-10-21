@@ -13,8 +13,9 @@ from django.db import transaction
 from django.utils import timezone
 
 from accounts.models import Company, User
+from risk import defaults
 from risk.models import (
-    Assessment, ConsequenceLevel, Control, Hazard, HazardTemplate, HistoryEntry, LikelihoodLevel, Task, TaskUpdate,
+    Assessment, ConsequenceLevel, Control, Hazard, HistoryEntry, LikelihoodLevel, Task, TaskUpdate,
 )
 
 COMPANIES = [
@@ -69,17 +70,34 @@ class Command(BaseCommand):
         consultant.save()
         consultant.managed_companies.set(companies.values())
 
-        def hazard(a, template_name, aff, inh, res, n_controls, extra_controls=(), prev=None, rescore=False):
-            t = HazardTemplate.objects.get(name=template_name)
+        # Typical consequences and controls per hazard, taken from the default lists.
+        demo_content = {
+            "Slips, trips and falls": (["Falls and injury", "Sprains and fractures"],
+                                       [x for x, _ in defaults.LISTS["control"][0:5]]),
+            "Unsuitable work environment": (["Fatigue and loss of concentration", "Heat stress / heatstroke"],
+                                            [x for x, _ in defaults.LISTS["control"][5:12]]),
+            "Delayed first aid": (["Worsened injury or death", "Stress and low morale"],
+                                  [x for x, _ in defaults.LISTS["control"][12:14]]),
+            "Manual handling": (["Back injury and musculoskeletal strain"], [x for x, _ in defaults.LISTS["control"][14:16]]),
+            "Electrical equipment": (["Electric shock and burns"], [x for x, _ in defaults.LISTS["control"][16:18]]),
+            "Server room working conditions": (["Hearing damage", "Falls and injury"],
+                                               [x for x, _ in defaults.LISTS["control"][20:22]]),
+            "Display screen equipment": (["Eye strain", "Back injury and musculoskeletal strain"],
+                                         [defaults.LISTS["control"][22][0]]),
+            "Low morale and work stress": (["Stress and low morale"], [defaults.LISTS["control"][23][0]]),
+        }
+        who = {"op": "Operator", "emp": "Other employees", "third": "Third parties"}
+
+        def hazard(a, name, aff, inh, res, n_controls, extra_controls=(), prev=None, rescore=False):
+            cons, controls = demo_content[name]
             il, ic = lvl(*inh)
             rl, rc = lvl(*res)
             pl, pc = lvl(*prev) if prev else (None, None)
             h = Hazard.objects.create(
-                assessment=a, template=t, name=t.name, category=t.category, consequences=t.consequences,
-                affects_operator="op" in aff, affects_employees="emp" in aff, affects_third_parties="third" in aff,
+                assessment=a, name=name, consequences="\n".join(cons), affected="\n".join(who[x] for x in aff),
                 inherent_likelihood=il, inherent_consequence=ic, residual_likelihood=rl, residual_consequence=rc,
                 previous_likelihood=pl, previous_consequence=pc, needs_rescore=rescore, order=a.hazards.count())
-            texts = [c.text for c in t.controls.all()[:n_controls]] + list(extra_controls)
+            texts = controls[:n_controls] + list(extra_controls)
             Control.objects.bulk_create([Control(hazard=h, text=x) for x in texts])
             return h
 

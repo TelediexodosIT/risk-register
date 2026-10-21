@@ -1,8 +1,9 @@
-{% load static %}<!doctype html>
-<html lang="en">
+{% load static i18n %}{% get_current_language as LANG %}<!doctype html>
+<html lang="{{ LANG }}">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block title %}Sign in{% endblock %} · {{ APP_NAME }}</title>
+<title>{% block title %}{% translate "Sign in" %}{% endblock %} · {{ APP_NAME }}</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{% static 'css/app.css' %}">
 <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
@@ -11,21 +12,23 @@
 <div class="login">
   <section class="login-brand">
     <div class="brand"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small class="by">by BrainerTek</small></span></div>
-    <h1>Risk assessments, measures and evidence in one place.</h1>
+    <h1>{% translate "Risk assessments, measures and evidence in one place." %}</h1>
     <ul class="sec">
-      <li>Two-step verification on every account</li>
-      <li>Sign-in is paused after repeated failed attempts</li>
-      <li>Each company sees only its own data</li>
-      <li>Sessions end automatically when idle</li>
+      <li>{% translate "Two-step verification on every account" %}</li>
+      <li>{% translate "Sign-in is paused after repeated failed attempts" %}</li>
+      <li>{% translate "Each tenant sees only its own data" %}</li>
+      <li>{% translate "Sessions end automatically when idle" %}</li>
     </ul>
-    <footer>Authorised users only. Sign-in attempts are logged.</footer>
+    <footer>{% translate "Authorised users only. Sign-in attempts are logged." %}</footer>
   </section>
   <section class="login-panel">
     <div class="login-card">
+      <div class="actions" style="justify-content:flex-end">{% include "_toggles.html" %}</div>
       {% if messages %}<div class="messages">{% for m in messages %}<div class="banner {{ m.tags }}">{{ m }}</div>{% endfor %}</div>{% endif %}
       {% block card %}{% endblock %}
     </div>
   </section>
 </div>
+<script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

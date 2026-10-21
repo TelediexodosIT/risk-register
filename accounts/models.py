@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Company(models.Model):
@@ -44,9 +45,9 @@ class User(AbstractUser):
     """People sign in with their email address. There is no username."""
 
     class Role(models.TextChoices):
-        CONSULTANT = "consultant", "Consultant"
-        SAFETY_OFFICER = "safety_officer", "Safety officer"
-        MEMBER = "member", "Staff member"
+        CONSULTANT = "consultant", _("Consultant")
+        SAFETY_OFFICER = "safety_officer", _("Safety officer")
+        MEMBER = "member", _("Staff member")
 
     username = None
     email = models.EmailField(unique=True)

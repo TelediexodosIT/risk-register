@@ -1,0 +1,7 @@
+{% load i18n %}{% if companies.count > 1 %}<form class="tenant" method="get" action="{% url 'home' %}">
+  <span>{% translate "Tenant" %}</span>
+  <select name="company" onchange="this.form.submit()" aria-label="{% translate 'Tenant' %}">
+    {% for c in companies %}<option value="{{ c.id }}" {% if c.id == current_company.id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+  </select>
+  <noscript><button class="btn sm">{% translate "Switch" %}</button></noscript>
+</form>{% elif current_company %}<div class="tenant"><span>{% translate "Tenant" %}</span><b>{{ current_company.name }}</b></div>{% endif %}

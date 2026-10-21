@@ -1,39 +1,39 @@
-{% extends "base.html" %}
-{% block title %}Task{% endblock %}
+{% extends "base.html" %}{% load i18n risk_tags %}
+{% block title %}{% translate "Action" %}{% endblock %}
 {% block content %}
-{% if user.can_manage %}<a class="back" href="{% url 'assessment_detail' a.id %}?tab=tasks">← {{ a }}</a>{% else %}<a class="back" href="{% url 'task_list' %}">← My tasks</a>{% endif %}
-<header class="page-h"><div><p class="eyebrow">Task · {{ a }}</p><h1>{{ task.text }}</h1></div>{% include "risk/_task_pill.html" with t=task %}</header>
+{% if user.can_manage %}<a class="back" href="{% url 'hazard_edit' a.id task.hazard_id %}">← {{ task.hazard.name|ltr }}</a>{% else %}<a class="back" href="{% url 'task_list' %}">← {% translate "My actions" %}</a>{% endif %}
+<header class="page-h"><div><p class="eyebrow">{% translate "Action" %} · {{ a }}</p><h1>{{ task.text|ltr }}</h1></div>{% include "risk/_task_pill.html" with t=task %}</header>
 <div class="formpage">
   <div class="ctx">
-    <div><span>Hazard</span><b>{{ task.hazard.name }}</b></div>
-    <div><span>Risk before → after controls</span>{% include "risk/_chip.html" with r=task.hazard.inherent_rating l=task.hazard.inherent_likelihood c=task.hazard.inherent_consequence %} {% include "risk/_chip.html" with r=task.hazard.residual_rating l=task.hazard.residual_likelihood c=task.hazard.residual_consequence %}</div>
-    <div><span>Responsible</span><b>{{ task.owner }}</b><small>{{ task.owner.job_title }}</small></div>
-    <div><span>Deadline</span><b class="{% if task.is_overdue %}bad{% endif %}">{{ task.due_date|date:"j M Y"|default:"—" }}</b></div>
-    {% if task.completed_at %}<div><span>Completed</span><b>{{ task.completed_at|date:"j M Y" }}</b></div>{% endif %}
+    <div><span>{% translate "Hazard" %}</span><b>{{ task.hazard.name|ltr }}</b></div>
+    <div><span>{% translate "Risk before → after controls" %}</span>{% include "risk/_chip.html" with r=task.hazard.inherent_rating l=task.hazard.inherent_likelihood c=task.hazard.inherent_consequence %} {% include "risk/_chip.html" with r=task.hazard.residual_rating l=task.hazard.residual_likelihood c=task.hazard.residual_consequence %}</div>
+    <div><span>{% translate "Assigned user" %}</span><b>{{ task.owner }}</b><small>{{ task.owner.job_title }}</small></div>
+    <div><span>{% translate "Deadline" %}</span><b class="{% if task.is_overdue %}bad{% endif %}">{{ task.due_date|date:"d/m/Y"|default:"—" }}</b>{% if task.remind_days %}<small>{% blocktranslate count n=task.remind_days %}Reminder {{ n }} day before{% plural %}Reminder {{ n }} days before{% endblocktranslate %}</small>{% endif %}</div>
+    {% if task.completed_at %}<div><span>{% translate "Completed" %}</span><b>{{ task.completed_at|date:"d/m/Y" }}</b></div>{% endif %}
   </div>
 
   <div class="step">
-    <h2>Evidence and comments</h2>
+    <h2>{% translate "Evidence and comments" %}</h2>
     <ul class="comments">{% for u in updates %}
-      <li><div><b>{{ u.author }}</b><small>{{ u.created_at|date:"j M Y, H:i" }}</small></div>
+      <li><div><b>{{ u.author }}</b><small>{{ u.created_at|date:"d/m/Y H:i" }}</small></div>
         {% if u.text %}<p>{{ u.text }}</p>{% endif %}
-        {% if u.photo %}<a href="{% url 'evidence_photo' u.id %}" target="_blank" rel="noopener"><img src="{% url 'evidence_photo' u.id %}" alt="Evidence photo"></a>{% endif %}</li>
-    {% empty %}<li class="muted">No evidence yet.</li>{% endfor %}</ul>
+        {% if u.photo %}<a href="{% url 'evidence_photo' u.id %}" target="_blank" rel="noopener"><img src="{% url 'evidence_photo' u.id %}" alt="{% translate 'Evidence photo' %}"></a>{% endif %}</li>
+    {% empty %}<li class="muted">{% translate "No evidence yet." %}</li>{% endfor %}</ul>
   </div>
 
   {% if can_update %}
   <form method="post" enctype="multipart/form-data" class="step">
     {% csrf_token %}
-    <h2>Update</h2>
-    {% if task.status != 'done' %}<label class="f"><span>Progress: <output id="progress-out">{{ task.progress }}%</output></span><input type="range" id="progress" name="progress" min="0" max="100" step="10" value="{{ task.progress }}"></label>{% endif %}
-    <label class="f"><span>Comment</span><textarea name="text" rows="3" placeholder="What was done?"></textarea></label>
-    <label class="f"><span>Photo</span><input type="file" name="photo" accept="image/*">{{ form.photo.errors }}</label>
+    <h2>{% translate "Update" %}</h2>
+    {% if task.status != 'done' %}<label class="f"><span>{% translate "Progress" %}: <output id="progress-out">{{ task.progress }}%</output></span><input type="range" id="progress" name="progress" min="0" max="100" step="10" value="{{ task.progress }}"></label>{% endif %}
+    <label class="f"><span>{% translate "Comment" %}</span><textarea name="text" rows="3" placeholder="{% translate 'What was done?' %}"></textarea></label>
+    <label class="f"><span>{% translate "Photo" %}</span><input type="file" name="photo" accept="image/*" capture="environment">{{ form.photo.errors }}</label>
     <div class="actions">
-      <button class="btn" name="action" value="save">Save update</button>
-      {% if task.status != 'done' %}<button class="btn primary" name="action" value="complete">Mark complete</button>{% else %}<button class="btn" name="action" value="reopen">Reopen</button>{% endif %}
+      <button class="btn" name="action" value="save">{% translate "Save update" %}</button>
+      {% if task.status != 'done' %}<button class="btn primary" name="action" value="complete">{% translate "Mark complete" %}</button>{% else %}<button class="btn" name="action" value="reopen">{% translate "Reopen" %}</button>{% endif %}
     </div>
   </form>
-  {% elif task.carried_to %}<p class="banner">This task was carried forward to <a href="{% url 'assessment_detail' task.carried_to.id %}">version {{ task.carried_to.version }}</a>. Update it there.</p>
+  {% elif task.carried_to %}<p class="banner">{% translate "This action was carried forward to" %} <a href="{% url 'assessment_detail' task.carried_to.id %}">{% translate "version" %} {{ task.carried_to.version }}</a>. {% translate "Update it there." %}</p>
   {% endif %}
 </div>
 {% endblock %}

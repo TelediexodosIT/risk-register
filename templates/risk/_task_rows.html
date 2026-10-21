@@ -1,11 +1,11 @@
-{% if tasks %}
+{% load i18n risk_tags %}{% if tasks %}
 <ul class="tasks">{% for t in tasks %}
   <li><a class="trow" href="{% url 'task_detail' t.id %}">
     <span class="dot {% if t.status == 'done' %}done{% elif t.is_overdue %}late{% else %}{{ t.status }}{% endif %}" aria-hidden="true"></span>
-    <span><b>{{ t.text }}</b><small>{{ t.hazard.name }}{% if show_assessment %} · {{ t.hazard.assessment }}{% endif %}</small></span>
+    <span><b>{{ t.text|ltr }}</b><small>{{ t.hazard.name|ltr }}{% if show_assessment %} · {{ t.hazard.assessment }}{% endif %}</small></span>
     <span class="tcol">{{ t.owner }}</span>
-    <span class="tcol tdue {% if t.is_overdue %}bad{% endif %}">{{ t.due_date|date:"j M Y"|default:"—" }}</span>
+    <span class="tcol tdue {% if t.is_overdue %}bad{% endif %}">{{ t.due_date|date:"d/m/Y"|default:"—" }}</span>
     <span class="tcol">{% include "risk/_task_pill.html" %}</span>
   </a></li>{% endfor %}
 </ul>
-{% else %}<p class="empty">Nothing here. Tasks appear when a hazard gets additional measures.</p>{% endif %}
+{% else %}<p class="empty">{% translate "Nothing here. Actions appear when a risk task gets additional measures." %}</p>{% endif %}
