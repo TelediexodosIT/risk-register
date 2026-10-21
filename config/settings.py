@@ -140,6 +140,10 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "risk-register@localhost")
 SITE_URL = env("SITE_URL", "http://localhost")
+# Microsoft 365 sending via Graph (EMAIL_BACKEND=config.graph_email.GraphEmailBackend)
+GRAPH_TENANT_ID = env("GRAPH_TENANT_ID", "")
+GRAPH_CLIENT_ID = env("GRAPH_CLIENT_ID", "")
+GRAPH_CLIENT_SECRET = env("GRAPH_CLIENT_SECRET", "")
 
 LANGUAGE_CODE = "en-gb"
 TIME_ZONE = env("TIME_ZONE", "Asia/Nicosia")

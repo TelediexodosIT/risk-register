@@ -77,20 +77,36 @@ keep `SITE_ADDRESS=:80`, set `HTTPS=True`, and forward the proxy to port 80.
 
 ## 2b. Email (forgot password and task notices)
 
-Until SMTP is set, emails are only written to the log (`docker compose logs web`).
-For Microsoft 365, use a mailbox with SMTP AUTH enabled, then in `.env`:
+Until email is set up, messages are only written to the log (`docker compose logs web`).
+The app sends through **Microsoft Graph** (Microsoft is retiring password-based SMTP for Exchange Online).
+
+**One-time setup in Microsoft 365** (the app may only send as the one mailbox):
+
+1. Entra admin center → App registrations → New registration, name `Risk Register mail`. Note the
+   **Application (client) ID** and **Directory (tenant) ID**. Do **not** add any API permissions.
+2. Certificates & secrets → New client secret (24 months). Copy the **Value**.
+3. Enterprise applications → `Risk Register mail` → note its **Object ID**.
+4. Exchange Online PowerShell (`Connect-ExchangeOnline`):
+
+```powershell
+New-ServicePrincipal -AppId <client-id> -ObjectId <enterprise-app-object-id> -DisplayName "Risk Register mail"
+New-ManagementScope -Name "RiskRegister-NoReply" -RecipientRestrictionFilter "PrimarySmtpAddress -eq 'no-reply@telediexodos.com'"
+New-ManagementRoleAssignment -App <client-id> -Role "Application Mail.Send" -CustomResourceScope "RiskRegister-NoReply"
+Test-ServicePrincipalAuthorization -Identity <client-id> -Resource no-reply@telediexodos.com
+```
+
+Then in `.env`:
 
 ```
-EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-EMAIL_HOST=smtp.office365.com
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER=risk@yourdomain.com
-EMAIL_HOST_PASSWORD=the-mailbox-password
-DEFAULT_FROM_EMAIL=risk@yourdomain.com
+EMAIL_BACKEND=config.graph_email.GraphEmailBackend
+GRAPH_TENANT_ID=<tenant-id>
+GRAPH_CLIENT_ID=<client-id>
+GRAPH_CLIENT_SECRET=<secret-value>
+DEFAULT_FROM_EMAIL=no-reply@telediexodos.com
 ```
 
-Then `docker compose up -d`. Reset links expire after `PASSWORD_RESET_MINUTES` (default 60).
+`docker compose up -d`, then test with **Forgot password?** on the sign-in page. Errors appear in
+`docker compose logs web | grep Graph`. The secret expires: set a reminder to renew it.
 
 ## 3. One container set per customer
 
