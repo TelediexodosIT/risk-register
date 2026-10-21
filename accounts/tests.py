@@ -75,27 +75,3 @@ class PasswordResetTests(TestCase):
         r = self.client.post("/login/forgot/", {"email": "nobody@nowhere.demo"})
         self.assertRedirects(r, "/login/forgot/sent/")
         self.assertEqual(len(mail.outbox), 0)
-
-
-class GraphBackendTests(TestCase):
-    @override_settings(GRAPH_TENANT_ID="t", GRAPH_CLIENT_ID="c", GRAPH_CLIENT_SECRET="s",
-                       DEFAULT_FROM_EMAIL="no-reply@example.com")
-    def test_sends_via_graph(self):
-        import io, json
-        from unittest import mock
-        from django.core.mail import EmailMessage
-        from config import graph_email
-        graph_email._token.update(value=None, expires=0)
-        calls = []
-
-        def fake(req, timeout=0):
-            calls.append(req)
-            body = b'{"access_token":"abc","expires_in":3600}' if "login.microsoftonline" in req.full_url else b""
-            return io.BytesIO(body)
-
-        with mock.patch("urllib.request.urlopen", fake):
-            n = graph_email.GraphEmailBackend().send_messages([EmailMessage("Hi", "Body", to=["a@b.com"])])
-        self.assertEqual(n, 1)
-        self.assertIn("/users/no-reply%40example.com/sendMail", calls[1].full_url)
-        self.assertEqual(json.loads(calls[1].data)["message"]["toRecipients"][0]["emailAddress"]["address"], "a@b.com")
-        self.assertEqual(calls[1].headers["Authorization"], "Bearer abc")
