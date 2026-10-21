@@ -11,6 +11,6 @@
   </label>
   {% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
   <button class="btn primary wide" type="submit">Continue</button>
-  <small>Forgot your password? Ask your safety officer or administrator to reset it.</small>
+  <a class="link" href="{% url 'password_reset' %}">Forgot password?</a>
 </form>
 {% endblock %}

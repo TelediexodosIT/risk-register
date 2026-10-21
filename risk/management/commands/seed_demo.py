@@ -25,7 +25,7 @@ COMPANIES = [
 
 # email, first, last, job title, role, company
 USERS = [
-    ("elena.markou@mindthegap.demo", "Elena", "Markou", "Lead consultant", "consultant", "Mindthegap"),
+    ("ca@jupiterzone.com", "Christodoulos", "Andronikou", "Network & Systems Engineer", "consultant", "Jupiterzone"),
     ("sofia.ioannou@mindthegap.demo", "Sofia", "Ioannou", "Office manager", "safety_officer", "Mindthegap"),
     ("nikos.georgiou@mindthegap.demo", "Nikos", "Georgiou", "Administrator", "member", "Mindthegap"),
     ("andreas.pavlou@telediexodos.demo", "Andreas", "Pavlou", "Health & safety officer", "safety_officer", "Telediexodos"),
@@ -63,11 +63,11 @@ class Command(BaseCommand):
             u = User.objects.create_user(email=email, password=password, first_name=first, last_name=last,
                                          job_title=title, role=role, company=companies[company])
             users[first] = u
-        elena = users["Elena"]
-        elena.is_staff = True
-        elena.is_superuser = True
-        elena.save()
-        elena.managed_companies.set(companies.values())
+        consultant = users["Christodoulos"]
+        consultant.is_staff = True
+        consultant.is_superuser = True
+        consultant.save()
+        consultant.managed_companies.set(companies.values())
 
         def hazard(a, template_name, aff, inh, res, n_controls, extra_controls=(), prev=None, rescore=False):
             t = HazardTemplate.objects.get(name=template_name)
@@ -92,7 +92,7 @@ class Command(BaseCommand):
 
         def assessment(company, title, site, version, created_days_ago, rule=100, previous=None, status="active"):
             a = Assessment.objects.create(company=company, title=title, site=site, version=version, previous=previous,
-                                          rule_percent=rule, status=status, created_at=ago(created_days_ago), created_by=elena)
+                                          rule_percent=rule, status=status, created_at=ago(created_days_ago), created_by=consultant)
             return a
 
         # Telediexodos: one active assessment, partly done
@@ -146,4 +146,4 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(
             f"Demo data created: {len(COMPANIES)} companies, {len(USERS)} users. "
-            f"Sign in as elena.markou@mindthegap.demo (consultant + admin) with the password you chose."))
+            f"Sign in as ca@jupiterzone.com (consultant + admin) with the password you chose."))

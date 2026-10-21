@@ -167,3 +167,6 @@ LOGGING = {
 }
 
 AXES_LOCKOUT_TEMPLATE = "accounts/locked.html"
+
+# Password reset links expire after this many seconds (default 1 hour).
+PASSWORD_RESET_TIMEOUT = int(env("PASSWORD_RESET_MINUTES", 60)) * 60

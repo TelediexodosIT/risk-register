@@ -37,7 +37,7 @@ docker compose exec web python manage.py seed_demo --password 'Pick-A-Demo-Pass1
 ```
 
 Creates Telediexodos, Jupiterzone and Mindthegap with 8 users. Sign in as
-`elena.markou@mindthegap.demo` (consultant, sees all three, has admin access).
+`ca@jupiterzone.com` (consultant, sees all three, has admin access).
 Other users: see `risk/management/commands/seed_demo.py`.
 
 Every user sets up two-step verification (Microsoft/Google Authenticator) on first sign-in.
@@ -75,6 +75,23 @@ keep `SITE_ADDRESS=:80`, set `HTTPS=True`, and forward the proxy to port 80.
 
 ---
 
+## 2b. Email (forgot password and task notices)
+
+Until SMTP is set, emails are only written to the log (`docker compose logs web`).
+For Microsoft 365, use a mailbox with SMTP AUTH enabled, then in `.env`:
+
+```
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.office365.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=risk@yourdomain.com
+EMAIL_HOST_PASSWORD=the-mailbox-password
+DEFAULT_FROM_EMAIL=risk@yourdomain.com
+```
+
+Then `docker compose up -d`. Reset links expire after `PASSWORD_RESET_MINUTES` (default 60).
+
 ## 3. One container set per customer
 
 Each customer is a separate copy of this folder with its own `.env`, database and files:
@@ -103,7 +120,8 @@ client companies in the same instance), so you can choose per customer.
 | Django shell | `docker compose exec web python manage.py shell` |
 | Unlock a locked-out user | `docker compose exec web python manage.py axes_reset_username user@example.com` |
 | Reset someone's two-step (lost phone) | Admin → OTP_TOTP → TOTP devices → delete their device. They set it up again at next sign-in. |
-| Reset a password | Admin → Users → user → "this form" link under Password |
+| Reset a password | Users click **Forgot password?** on the sign-in page (needs email set up, see below). Or: `docker compose exec web python manage.py changepassword user@example.com` |
+| Add a user from the command line | `docker compose exec web python manage.py createsuperuser` (admin) or Admin → Users → Add |
 | Run the tests | `docker compose exec web python manage.py test` |
 
 ### Backups

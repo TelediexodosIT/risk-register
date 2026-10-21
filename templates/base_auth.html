@@ -5,11 +5,12 @@
 <title>{% block title %}Sign in{% endblock %} · {{ APP_NAME }}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{% static 'css/app.css' %}">
+<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
 </head>
 <body>
 <div class="login">
   <section class="login-brand">
-    <div class="brand"><span class="mark" aria-hidden="true">RR</span><b>{{ APP_NAME }}</b></div>
+    <div class="brand"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small class="by">by BrainerTek</small></span></div>
     <h1>Risk assessments, measures and evidence in one place.</h1>
     <ul class="sec">
       <li>Two-step verification on every account</li>

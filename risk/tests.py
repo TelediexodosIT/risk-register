@@ -17,7 +17,7 @@ class RiskFlowTests(TestCase):
         self.client.force_login(User.objects.get(email=email))
 
     def test_every_page_renders_for_consultant(self):
-        self.login("elena.markou@mindthegap.demo")
+        self.login("ca@jupiterzone.com")
         for a in Assessment.objects.all():
             for tab in ("register", "tasks", "history"):
                 self.assertEqual(self.client.get(f"/assessments/{a.id}/?tab={tab}").status_code, 200)

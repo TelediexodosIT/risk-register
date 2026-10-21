@@ -50,3 +50,28 @@ class LoginTests(TestCase):
         r = self.client.post("/login/", {"username": "andreas.pavlou@telediexodos.demo", "password": PW})
         self.assertEqual(r.status_code, 302)
         self.assertEqual(self.client.get("/tasks/").status_code, 200)
+
+
+class PasswordResetTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command("seed_demo", password=PW, stdout=open("/dev/null", "w"))
+
+    def test_reset_flow_sends_link_and_changes_password(self):
+        import re
+        from django.core import mail
+        self.assertContains(self.client.get("/login/"), "Forgot password?")
+        r = self.client.post("/login/forgot/", {"email": "andreas.pavlou@telediexodos.demo"})
+        self.assertRedirects(r, "/login/forgot/sent/")
+        self.assertEqual(len(mail.outbox), 1)
+        link = re.search(r"http://testserver(\S+)", mail.outbox[0].body).group(1)
+        r = self.client.get(link, follow=True)
+        r = self.client.post(r.redirect_chain[-1][0], {"new_password1": "BrandNew-Pass-77", "new_password2": "BrandNew-Pass-77"})
+        self.assertRedirects(r, "/login/reset/done/")
+        self.assertTrue(User.objects.get(email="andreas.pavlou@telediexodos.demo").check_password("BrandNew-Pass-77"))
+
+    def test_unknown_email_gives_same_answer(self):
+        from django.core import mail
+        r = self.client.post("/login/forgot/", {"email": "nobody@nowhere.demo"})
+        self.assertRedirects(r, "/login/forgot/sent/")
+        self.assertEqual(len(mail.outbox), 0)

@@ -30,6 +30,9 @@ code{font-family:var(--mono);background:var(--sunk);padding:1px 5px;border-radiu
 .top{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:space-between;background:var(--surface);border-bottom:1px solid var(--line);padding:10px 16px}
 .brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:inherit}
 .brand b{font-size:15px}
+.logo{height:36px;width:auto;flex:none}
+.login-brand .logo{height:52px}
+.login-brand .by{color:var(--brand-fg);opacity:.7}
 .mark{width:34px;height:34px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-family:var(--mono)}
 .top-ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .top-ctl form{margin:0}

@@ -5,11 +5,12 @@
 <title>{% block title %}{{ APP_NAME }}{% endblock %} · {{ APP_NAME }}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{% static 'css/app.css' %}">
+<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
 </head>
 <body>
 {% with nav=request.resolver_match.url_name %}
 <header class="top">
-  <a class="brand" href="{% url 'home' %}"><span class="mark" aria-hidden="true">RR</span><span><b>{{ APP_NAME }}</b><small>{{ current_company.name }}</small></span></a>
+  <a class="brand" href="{% url 'home' %}"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small>by BrainerTek · {{ current_company.name }}</small></span></a>
   <div class="top-ctl">
     {% if companies.count > 1 %}
     <form method="get" action="{% url 'assessment_list' %}">
