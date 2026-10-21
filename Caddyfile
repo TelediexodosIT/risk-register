@@ -1,7 +1,25 @@
-# Caddy sits in front of the app. With SITE_ADDRESS set to a real domain
-# (e.g. risk.example.com) it gets and renews an HTTPS certificate automatically.
-# With SITE_ADDRESS=:80 it serves plain HTTP (for testing on the LAN only).
+# Caddy sits in front of the app. Settings come from .env:
+#   SITE_ADDRESS  where the app is reached:
+#                   risk.example.com                    -> real HTTPS certificate from Let's Encrypt (TLS_MODE=auto)
+#                   https://<public-ip>, https://<lan-ip> -> HTTPS with Caddy's own certificate (TLS_MODE=internal)
+#                   :80                                  -> plain HTTP, LAN testing only (TLS_MODE=auto)
+#   TLS_MODE      auto | internal
+#   DEFAULT_SNI   when using an IP address: the public IP (browsers send no name for IPs)
+#   ALLOWED_IPS   who may connect, space-separated IPs/ranges. Everyone else gets 403.
+(tls-auto) {
+}
+(tls-internal) {
+	tls internal
+}
+
+{
+	default_sni {$DEFAULT_SNI}
+}
+
 {$SITE_ADDRESS} {
+	import tls-{$TLS_MODE}
+	@outsiders not remote_ip {$ALLOWED_IPS}
+	respond @outsiders "Access denied" 403
 	encode gzip
 	header {
 		Strict-Transport-Security "max-age=31536000"
