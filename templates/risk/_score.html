@@ -1,0 +1,7 @@
+<div class="score" data-score="{{ prefix }}">
+  <label class="f"><span>Likelihood</span><select name="{{ prefix }}_likelihood"><option value="">Select…</option>
+    {% for x in likelihoods %}<option value="{{ x.id }}" {% if x.id|stringformat:"s" == l_val|stringformat:"s" %}selected{% endif %}>{{ x.code }} · {{ x.label }}</option>{% endfor %}</select></label>
+  <label class="f"><span>Consequence</span><select name="{{ prefix }}_consequence"><option value="">Select…</option>
+    {% for x in consequences %}<option value="{{ x.id }}" {% if x.id|stringformat:"s" == c_val|stringformat:"s" %}selected{% endif %}>{{ x.code }} · {{ x.label }}</option>{% endfor %}</select></label>
+  <div class="result" aria-live="polite"></div>
+</div>

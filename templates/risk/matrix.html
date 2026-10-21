@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Risk matrix{% endblock %}
+{% block content %}
+<header class="page-h"><div><p class="eyebrow">Scoring method</p><h1>Risk matrix</h1>
+  <p class="sub">Likelihood and consequence are picked separately; the rating comes from this grid.</p></div>
+  {% if user.is_staff %}<a class="btn" href="{% url 'admin:risk_matrixcell_changelist' %}">Edit in admin</a>{% endif %}</header>
+<div class="table-wrap"><table class="matrix">
+  <thead><tr><th>Likelihood ↓ · Consequence →</th>{% for c in consequences %}<th>{{ c.code }}<small>{{ c.label }}</small></th>{% endfor %}</tr></thead>
+  <tbody>{% for row in rows %}<tr><th>{{ row.level.code }}<small>{{ row.level.label }}</small></th>
+    {% for cell in row.cells %}<td class="cell" style="--rc:{{ cell.rating.color|default:'#888' }}"><b>{{ row.level.code }}-{{ cell.c.code }}</b>{{ cell.rating.label|default:"—" }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+</table></div>
+<dl class="legend">{% for r in ratings %}<div><dt><span class="risk" style="--rc:{{ r.color }}"><b>{{ r.code }}</b>{{ r.label }}</span></dt><dd>{{ r.action }}</dd></div>{% endfor %}</dl>
+{% endblock %}

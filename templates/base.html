@@ -1,0 +1,45 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ APP_NAME }}{% endblock %} · {{ APP_NAME }}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+{% with nav=request.resolver_match.url_name %}
+<header class="top">
+  <a class="brand" href="{% url 'home' %}"><span class="mark" aria-hidden="true">RR</span><span><b>{{ APP_NAME }}</b><small>{{ current_company.name }}</small></span></a>
+  <div class="top-ctl">
+    {% if companies.count > 1 %}
+    <form method="get" action="{% url 'assessment_list' %}">
+      <label class="sr" for="company-switch">Company</label>
+      <select id="company-switch" name="company" onchange="this.form.submit()">
+        {% for c in companies %}<option value="{{ c.id }}" {% if c.id == current_company.id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+      </select>
+    </form>
+    {% endif %}
+    <a class="bell" href="{% url 'updates' %}" aria-label="Updates: {{ update_count }}"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>{% if update_count %}<i>{{ update_count }}</i>{% endif %}</a>
+    <div class="user"><span class="avatar">{{ user.initials }}</span><span><b>{{ user }}</b><small>{{ user.get_role_display }}</small></span></div>
+    {% if user.is_staff %}<a class="btn sm" href="{% url 'admin:index' %}">Admin</a>{% endif %}
+    <a class="btn sm" href="{% url 'logout' %}">Sign out</a>
+  </div>
+</header>
+<div class="shell">
+  <nav class="side" aria-label="Sections">
+    {% if user.can_manage %}<a class="nav {% if nav in 'assessment_list assessment_detail assessment_create hazard_create hazard_edit' %}on{% endif %}" href="{% url 'assessment_list' %}">Assessments</a>{% endif %}
+    <a class="nav {% if nav in 'task_list task_detail' %}on{% endif %}" href="{% url 'task_list' %}">{% if user.can_manage %}Tasks{% else %}My tasks{% endif %}</a>
+    {% if user.can_manage %}<a class="nav {% if nav == 'library' %}on{% endif %}" href="{% url 'library' %}">Hazard library</a>{% endif %}
+    <a class="nav {% if nav == 'matrix' %}on{% endif %}" href="{% url 'matrix' %}">Risk matrix</a>
+    {% if user.can_manage %}<a class="nav {% if nav in 'report report_detail' %}on{% endif %}" href="{% url 'report' %}">Reports</a>{% endif %}
+  </nav>
+  <main class="main">
+    {% if messages %}<div class="messages">{% for m in messages %}<div class="banner {% if m.tags == 'success' %}good{% elif m.tags == 'error' %}bad{% endif %}">{{ m }}</div>{% endfor %}</div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% endwith %}
+<script src="{% static 'js/app.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

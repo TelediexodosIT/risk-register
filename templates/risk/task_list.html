@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<header class="page-h"><div><p class="eyebrow">{{ company.name }}</p><h1>{% if user.can_manage and not mine %}Tasks{% else %}My tasks{% endif %}</h1>
+  <p class="sub">{% if user.can_manage %}Every additional measure, linked back to its hazard and assessment.{% else %}Measures assigned to you. Open one to update progress or add evidence.{% endif %}</p></div></header>
+<div class="filters">
+  {% for key, label in filters %}<a class="fchip {% if f == key %}on{% endif %}" href="?f={{ key }}{% if mine %}&mine=1{% endif %}">{{ label }}</a>{% endfor %}
+  {% if user.can_manage %}<a class="fchip {% if mine %}on{% endif %}" href="?f={{ f }}{% if not mine %}&mine=1{% endif %}">Only mine</a>{% endif %}
+</div>
+{% include "risk/_task_rows.html" with show_assessment=True %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base_auth.html" %}
+{% block title %}Verification code{% endblock %}
+{% block card %}
+<div><h2>Two-step verification</h2><p class="sub">Enter the 6-digit code from your authenticator app for <b>{{ user.email }}</b>.</p></div>
+<form method="post" class="lform" novalidate>
+  {% csrf_token %}
+  <label class="f"><span>Verification code</span><input name="token" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" required autofocus></label>
+  {% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
+  <button class="btn primary wide" type="submit">Verify and sign in</button>
+  <a class="link" href="{% url 'logout' %}">Use a different account</a>
+</form>
+{% endblock %}

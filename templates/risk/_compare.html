@@ -1,0 +1,10 @@
+<h3 class="h3">Residual risk, version {{ a.previous.version }} → version {{ a.version }}</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Hazard</th><th>v{{ a.previous.version }}</th><th>v{{ a.version }}</th><th>Change</th></tr></thead>
+  <tbody>{% for h in hazards %}{% with old=h.previous_rating new=h.residual_rating %}
+    <tr><td>{{ h.name }}</td>
+      <td>{% if old %}{% include "risk/_chip.html" with r=old l=h.previous_likelihood c=h.previous_consequence %}{% else %}—{% endif %}</td>
+      <td>{% include "risk/_chip.html" with r=new l=h.residual_likelihood c=h.residual_consequence %}</td>
+      <td>{% if not old %}<span class="muted">New hazard</span>{% elif not new %}—{% elif new.severity < old.severity %}<b class="good">Reduced</b>{% elif new.severity > old.severity %}<b class="bad">Increased</b>{% else %}No change{% endif %}</td></tr>
+  {% endwith %}{% endfor %}</tbody>
+</table></div>

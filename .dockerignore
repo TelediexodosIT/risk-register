@@ -1,0 +1,7 @@
+.env
+.git
+db.sqlite3
+media
+staticfiles
+backups
+**/__pycache__

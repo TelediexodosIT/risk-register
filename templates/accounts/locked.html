@@ -1,0 +1,6 @@
+{% extends "base_auth.html" %}
+{% block title %}Sign-in paused{% endblock %}
+{% block card %}
+<div><h2>Sign-in paused</h2><p class="sub">There were too many failed attempts for this account. Wait {{ cooloff_time|default:"a few minutes" }} and try again, or ask your administrator to unlock it.</p></div>
+<a class="btn wide" href="{% url 'login' %}">Back to sign in</a>
+{% endblock %}

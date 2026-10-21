@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Updates{% endblock %}
+{% block content %}
+<header class="page-h"><div><h1>Updates</h1><p class="sub">{% if user.can_manage %}You get assessment-level updates. Individual task changes roll up into each assessment instead of sending an alert each time.{% else %}Tasks assigned to you.{% endif %}</p></div></header>
+{% if items %}<ul class="tasks">{% for i in items %}<li><a class="trow simple" href="{{ i.url }}"><span><b>{{ i.title }}</b><small>{{ i.detail }}</small></span></a></li>{% endfor %}</ul>
+{% else %}<p class="empty">Nothing new.</p>{% endif %}
+{% endblock %}

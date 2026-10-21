@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Report{% endblock %}
+{% block content %}
+<header class="page-h noprint"><div><p class="eyebrow">Client summary</p><h1>Reports</h1></div>
+  {% if a %}<div class="actions">
+    <form method="get" onchange="location='{% url 'report' %}'+this.elements.a.value+'/'" style="margin:0">
+      <label class="sr" for="rep">Assessment</label>
+      <select id="rep" name="a">{% for x in assessments %}<option value="{{ x.id }}" {% if x.id == a.id %}selected{% endif %}>{{ x }}{% if not x.is_active %} (superseded){% endif %}</option>{% endfor %}</select>
+    </form>
+    <button class="btn primary" type="button" onclick="window.print()">Save as PDF</button></div>{% endif %}
+</header>
+{% if not a %}<p class="empty">No assessments yet.</p>{% else %}
+<article class="sheet">
+  <header class="sheet-h">
+    <div><h2>Risk assessment summary</h2><p>{{ company.name }} · {{ a.title }} · {{ a.site }}</p></div>
+    <dl><div><dt>Version</dt><dd>{{ a.version }}</dd></div><div><dt>Date</dt><dd>{{ a.created_at|date:"j M Y" }}</dd></div><div><dt>Status</dt><dd>{% include "risk/_state.html" %}</dd></div></dl>
+  </header>
+  <section class="sheet-sum">
+    <div><span class="lbl">Residual risk profile</span>{% include "risk/_dist.html" with counts=residual %}</div>
+    <div><span class="lbl">Measures completed</span><b>{{ state.done }} of {{ state.total }}</b></div>
+    <div><span class="lbl">Overdue</span><b class="{% if state.overdue %}bad{% endif %}">{{ state.overdue }}</b></div>
+  </section>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Hazard</th><th>Inherent</th><th>Residual</th><th>Measure</th><th>Responsible</th><th>Deadline</th><th>Status</th></tr></thead>
+    <tbody>{% for r in rows %}{% with h=r.h %}
+      {% for t in r.tasks %}<tr>
+        {% if forloop.first %}<td rowspan="{{ r.span }}"><b>{{ h.name }}</b></td>
+          <td rowspan="{{ r.span }}">{% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}</td>
+          <td rowspan="{{ r.span }}">{% include "risk/_chip.html" with r=h.residual_rating l=h.residual_likelihood c=h.residual_consequence %}</td>{% endif %}
+        <td>{{ t.text }}</td><td>{{ t.owner }}</td><td>{{ t.due_date|date:"j M Y"|default:"—" }}</td><td>{% include "risk/_task_pill.html" %}</td></tr>
+      {% empty %}<tr><td><b>{{ h.name }}</b></td>
+        <td>{% include "risk/_chip.html" with r=h.inherent_rating l=h.inherent_likelihood c=h.inherent_consequence %}</td>
+        <td>{% include "risk/_chip.html" with r=h.residual_rating l=h.residual_likelihood c=h.residual_consequence %}</td>
+        <td colspan="4" class="muted">No additional measures required</td></tr>{% endfor %}
+    {% endwith %}{% endfor %}</tbody>
+  </table></div>
+  {% if a.previous %}{% include "risk/_compare.html" %}{% endif %}
+  <small>Generated {{ today|date:"j M Y" }} by {{ user }}.</small>
+</article>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{% if hazard %}{{ hazard.name }}{% else %}New hazard{% endif %}{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'assessment_detail' a.id %}">← {{ a }}</a>
+<header class="page-h"><div><p class="eyebrow">{% if hazard %}Hazard{% else %}New hazard{% endif %} · {{ a }}</p><h1>{{ hazard.name|default:"Add a hazard" }}</h1></div></header>
+
+{% if library is not None %}
+<form method="get" class="formpage" style="margin-bottom:16px">
+  <label class="f"><span>Start from the hazard library</span>
+    <select name="template" onchange="this.form.submit()">
+      <option value="">Custom hazard (not in library)</option>
+      {% for t in library %}<option value="{{ t.id }}" {% if template and t.id == template.id %}selected{% endif %}>{{ t.name }}</option>{% endfor %}
+    </select></label>
+  <noscript><button class="btn sm">Load</button></noscript>
+</form>
+{% endif %}
+
+<form method="post" class="formpage" id="hazard-form">
+  {% csrf_token %}
+  {% if template and not hazard %}<input type="hidden" name="template_id" value="{{ template.id }}">{% endif %}
+  {{ form.non_field_errors }}
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <div class="row2">
+      <label class="f"><span>Hazard</span><input type="text" name="name" value="{{ form.name.value|default:'' }}" required placeholder="e.g. Working at height">{{ form.name.errors }}</label>
+      <label class="f"><span>Category</span><input type="text" name="category" value="{{ form.category.value|default:'' }}"></label>
+    </div>
+    <div class="f"><span>Who is affected</span><div class="checks">
+      <label class="ck"><input type="checkbox" name="affects_operator" {% if form.affects_operator.value %}checked{% endif %}> Operator</label>
+      <label class="ck"><input type="checkbox" name="affects_employees" {% if form.affects_employees.value %}checked{% endif %}> Other employees</label>
+      <label class="ck"><input type="checkbox" name="affects_third_parties" {% if form.affects_third_parties.value %}checked{% endif %}> Third parties</label>
+    </div></div>
+    <label class="f"><span>Consequences</span><textarea name="consequences" rows="2">{{ form.consequences.value|default:'' }}</textarea></label>
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>1</span>Inherent risk</h2>
+    {% include "risk/_score.html" with prefix="inherent" l_val=form.inherent_likelihood.value c_val=form.inherent_consequence.value %}
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>2</span>Existing controls</h2>
+    <div class="checks col">
+      {% for c in control_options %}<label class="ck"><input type="checkbox" name="control" value="{{ c }}" {% if c in checked_controls %}checked{% endif %}> {{ c }}</label>
+      {% empty %}<small>No preset controls for this hazard. List them below.</small>{% endfor %}
+    </div>
+    <label class="f"><span>Other controls in place (one per line)</span><textarea name="other_controls" rows="2">{{ other_controls }}</textarea></label>
+  </fieldset>
+
+  <fieldset class="step" {% if not can_edit %}disabled{% endif %} style="margin:0">
+    <h2><span>3</span>Residual risk</h2>
+    {% if hazard.previous_rating %}<p class="sub" style="margin:0">Previous version: {% include "risk/_chip.html" with r=hazard.previous_rating l=hazard.previous_likelihood c=hazard.previous_consequence %}</p>{% endif %}
+    {% include "risk/_score.html" with prefix="residual" l_val=form.residual_likelihood.value c_val=form.residual_consequence.value %}
+  </fieldset>
+
+  <div class="step">
+    <h2><span>4</span>Additional measures</h2>
+    {% for t in tasks %}
+      <a class="mtask" href="{% url 'task_detail' t.id %}"><span class="dot {% if t.status == 'done' %}done{% elif t.is_overdue %}late{% else %}{{ t.status }}{% endif %}"></span>
+        <span>{{ t.text }}<small>{{ t.owner }} · due {{ t.due_date|date:"j M Y"|default:"—" }} · {% include "risk/_task_pill.html" %}</small></span></a>
+    {% endfor %}
+    {% if can_edit %}
+      <div id="new-measures"></div>
+      {% if suggested_measures %}<div class="sugg"><small>Suggested from the library</small>
+        {% for m in suggested_measures %}<button type="button" class="chipbtn" data-measure="{{ m }}">+ {{ m }}</button>{% endfor %}</div>{% endif %}
+      <div><button type="button" class="btn ghost" data-measure="">+ Custom measure</button></div>
+      <small>Each measure becomes a task for the person responsible, who gets an email.</small>
+      <template id="measure-row"><div class="newm">
+        <input type="text" name="m_text" placeholder="Describe the measure" aria-label="Measure">
+        <select name="m_owner" aria-label="Responsible">{% for p in people %}<option value="{{ p.id }}" {% if p.role == 'safety_officer' %}selected{% endif %}>{{ p }}</option>{% endfor %}</select>
+        <input type="date" name="m_due" value="{{ default_due }}" aria-label="Deadline">
+        <button type="button" class="btn sm" data-remove aria-label="Remove measure">×</button>
+      </div></template>
+    {% elif not tasks %}<small>No measures.</small>{% endif %}
+  </div>
+
+  {% if can_edit %}<div class="actions"><a class="btn" href="{% url 'assessment_detail' a.id %}">Cancel</a><button class="btn primary">Save hazard</button></div>{% endif %}
+</form>
+{{ matrix|json_script:"matrix-data" }}
+{% endblock %}

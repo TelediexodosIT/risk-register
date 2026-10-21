@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}New assessment{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'assessment_list' %}">← All assessments</a>
+<header class="page-h"><div><p class="eyebrow">{{ company.name }}</p><h1>New assessment</h1></div></header>
+<form method="post" class="formpage">
+  {% csrf_token %}
+  <div class="step">
+    <label class="f"><span>Area or activity</span><input type="text" name="title" value="{{ form.title.value|default:'' }}" placeholder="e.g. Kitchen and food preparation" required autofocus>{{ form.title.errors }}</label>
+    <label class="f"><span>Site</span><input type="text" name="site" value="{{ form.site.value|default:'' }}" placeholder="e.g. Head office"></label>
+    <label class="f"><span>Reassess a hazard when</span>
+      <select name="rule_percent">
+        <option value="100">all of its measures are complete</option><option value="80">80% of its measures are complete</option>
+        <option value="75">75% of its measures are complete</option><option value="50">50% of its measures are complete</option>
+      </select></label>
+  </div>
+  <div class="actions"><a class="btn" href="{% url 'assessment_list' %}">Cancel</a><button class="btn primary">Create assessment</button></div>
+</form>
+{% endblock %}

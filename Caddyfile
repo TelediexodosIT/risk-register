@@ -1,0 +1,13 @@
+# Caddy sits in front of the app. With SITE_ADDRESS set to a real domain
+# (e.g. risk.example.com) it gets and renews an HTTPS certificate automatically.
+# With SITE_ADDRESS=:80 it serves plain HTTP (for testing on the LAN only).
+{$SITE_ADDRESS} {
+	encode gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "same-origin"
+		-Server
+	}
+	reverse_proxy web:8000
+}

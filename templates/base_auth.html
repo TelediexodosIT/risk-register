@@ -1,0 +1,30 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Sign in{% endblock %} · {{ APP_NAME }}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+<div class="login">
+  <section class="login-brand">
+    <div class="brand"><span class="mark" aria-hidden="true">RR</span><b>{{ APP_NAME }}</b></div>
+    <h1>Risk assessments, measures and evidence in one place.</h1>
+    <ul class="sec">
+      <li>Two-step verification on every account</li>
+      <li>Sign-in is paused after repeated failed attempts</li>
+      <li>Each company sees only its own data</li>
+      <li>Sessions end automatically when idle</li>
+    </ul>
+    <footer>Authorised users only. Sign-in attempts are logged.</footer>
+  </section>
+  <section class="login-panel">
+    <div class="login-card">
+      {% if messages %}<div class="messages">{% for m in messages %}<div class="banner {{ m.tags }}">{{ m }}</div>{% endfor %}</div>{% endif %}
+      {% block card %}{% endblock %}
+    </div>
+  </section>
+</div>
+</body>
+</html>

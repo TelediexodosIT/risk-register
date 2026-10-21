@@ -1,0 +1,1 @@
+{% if t.carried_to %}<span class="pill p-muted">Carried to v{{ t.carried_to.version }}</span>{% elif t.status == 'done' %}<span class="pill p-good">Done</span>{% elif t.is_overdue %}<span class="pill p-bad">Overdue</span>{% elif t.status == 'in_progress' %}<span class="pill p-info">{{ t.progress }}% done</span>{% else %}<span class="pill p-muted">Open</span>{% endif %}
