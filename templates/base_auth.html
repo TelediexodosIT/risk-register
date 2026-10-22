@@ -11,15 +11,7 @@
 <body>
 <div class="login">
   <section class="login-brand">
-    <div class="brand"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small class="by">by BrainerTek</small></span></div>
-    <h1>{% translate "Risk assessments, measures and evidence in one place." %}</h1>
-    <ul class="sec">
-      <li>{% translate "Two-step verification on every account" %}</li>
-      <li>{% translate "Sign-in is paused after repeated failed attempts" %}</li>
-      <li>{% translate "Each tenant sees only its own data" %}</li>
-      <li>{% translate "Sessions end automatically when idle" %}</li>
-    </ul>
-    <footer>{% translate "Authorised users only. Sign-in attempts are logged." %}</footer>
+    <div class="brand-center"><img class="logo-xl" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><b>{{ APP_NAME }}</b><small class="by">by BrainerTek</small></div>
   </section>
   <section class="login-panel">
     <div class="login-card">
