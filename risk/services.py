@@ -4,7 +4,6 @@ Business rules in one place:
   - create_next_version: the "Start version N+1" button
   - notify_assignment: email to the person responsible for a new task
 """
-import math
 from dataclasses import dataclass
 
 from django.conf import settings
@@ -33,7 +32,7 @@ class HazardState:
 def hazard_state(hazard):
     tasks = [t for t in hazard.tasks.all() if t.is_live]
     done = sum(1 for t in tasks if t.status == Task.Status.DONE)
-    required = math.ceil(len(tasks) * hazard.assessment.rule_percent / 100)
+    required = len(tasks)  # every action counts; review of the risk level is always done by a person
     return HazardState(done=done, total=len(tasks), required=required)
 
 
@@ -57,7 +56,7 @@ class AssessmentState:
         if self.rescore:
             return ("warn", gettext_noop("Re-score needed"))
         if self.ready:
-            return ("good", gettext_noop("Ready for reassessment"))
+            return ("good", gettext_noop("Actions complete – review"))
         if self.total == 0:
             return ("muted", gettext_noop("No open actions"))
         return ("info", gettext_noop("Measures in progress"))
@@ -99,7 +98,7 @@ def create_next_version(old, user):
     """
     new = Assessment.objects.create(
         company=old.company, title=old.title, site=old.site, version=old.version + 1,
-        previous=old, rule_percent=old.rule_percent, created_by=user,
+        previous=old, created_by=user,
     )
     for h in old.hazards.all():
         tasks = list(h.tasks.filter(carried_to__isnull=True))
@@ -203,7 +202,7 @@ def hazard_lifecycle(hazard):
       draft        inherent risk not scored yet
       needs_action residual risk is High/Extreme and no additional measures are set
       overdue      at least one action is past its deadline
-      complete     no actions needed, or the reassessment rule is met
+      complete     no actions needed, or all actions done (the risk level is then reviewed by a person)
       in_progress  some actions done or started
       open         actions assigned, none started
     Returns (key, css class).
@@ -242,7 +241,7 @@ def notifications(user, company):
         for a in company.assessments.filter(status=Assessment.Status.ACTIVE):
             st = assessment_state(a)
             if st.ready:
-                items.append({"title": _("Ready for reassessment"), "detail": _("%(a)s: the required actions are complete.") % {"a": a},
+                items.append({"title": _("Actions complete – review"), "detail": _("%(a)s: all actions are complete. Review the risk levels.") % {"a": a},
                               "url": reverse("assessment_detail", args=[a.id])})
             if st.overdue:
                 items.append({"title": ngettext("%(n)d overdue action", "%(n)d overdue actions", st.overdue) % {"n": st.overdue},

@@ -130,7 +130,7 @@ class Assessment(models.Model):
         "self", null=True, blank=True, on_delete=models.PROTECT, related_name="next_version")
     status = models.CharField(max_length=12, choices=Status.choices, default=Status.ACTIVE)
     rule_percent = models.PositiveSmallIntegerField(
-        default=100, help_text="A hazard is ready for reassessment when this % of its measures are complete.")
+        default=100, help_text="Not used any more (kept for old data). Reassessment is always a manual decision.")
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="+")
 

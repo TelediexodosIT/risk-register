@@ -20,19 +20,11 @@
 </section>
 
 <section class="rule">
-  <form method="post" action="{% url 'assessment_rule' a.id %}">
-    {% csrf_token %}
-    <label for="rule">{% translate "Reassess a risk task when" %}</label>
-    <select id="rule" name="rule_percent" onchange="this.form.submit()" {% if not can_edit %}disabled{% endif %}>
-      {% for v in rule_choices %}<option value="{{ v }}" {% if v == a.rule_percent %}selected{% endif %}>{% if v == 100 %}{% translate "all of its actions are complete" %}{% else %}{% blocktranslate with p=v %}{{ p }}% of its actions are complete{% endblocktranslate %}{% endif %}</option>{% endfor %}
-    </select>
-    <noscript><button class="btn sm">{% translate "Save" %}</button></noscript>
-  </form>
   <form method="post" action="{% url 'assessment_reassess' a.id %}">
     {% csrf_token %}
-    <button class="btn {% if state.ready and can_edit %}primary{% endif %}" {% if not state.ready or not can_edit %}disabled{% endif %}>{% blocktranslate with n=a.version|add:1 %}Start version {{ n }}{% endblocktranslate %}</button>
+    <button class="btn {% if state.ready and can_edit %}primary{% endif %}" {% if not can_edit %}disabled{% endif %}>{% blocktranslate with n=a.version|add:1 %}Start version {{ n }}{% endblocktranslate %}</button>
   </form>
-  <small>{% if not a.is_active %}{% translate "Superseded versions cannot be reassessed." %}{% elif state.ready %}{% translate "Every risk task with actions has met the rule. Starting a new version keeps this one as a record." %}{% else %}{% translate "Available once every risk task with actions meets this rule. The status updates automatically as actions are completed." %}{% endif %}</small>
+  <small>{% if not a.is_active %}{% translate "Superseded versions cannot be reassessed." %}{% elif state.ready %}{% translate "All actions are complete. Review each risk task and decide its new risk level; starting a new version keeps this one as a record." %}{% else %}{% translate "Risk levels never change automatically. When you have reviewed the completed actions, start a new version and re-score each risk task." %}{% endif %}</small>
 </section>
 
 <nav class="tabs">

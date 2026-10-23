@@ -8,13 +8,6 @@
   <div class="step">
     <label class="f"><span>{% translate "Area or activity" %}</span><input type="text" name="title" value="{{ form.title.value|default:'' }}" placeholder="{% translate 'e.g. Kitchen and food preparation' %}" required autofocus>{{ form.title.errors }}</label>
     <label class="f"><span>{% translate "Site" %}</span><input type="text" name="site" value="{{ form.site.value|default:'' }}" placeholder="{% translate 'e.g. Head office' %}"></label>
-    <label class="f"><span>{% translate "Reassess a risk task when" %}</span>
-      <select name="rule_percent">
-        <option value="100">{% translate "all of its actions are complete" %}</option>
-        <option value="80">{% blocktranslate with p=80 %}{{ p }}% of its actions are complete{% endblocktranslate %}</option>
-        <option value="75">{% blocktranslate with p=75 %}{{ p }}% of its actions are complete{% endblocktranslate %}</option>
-        <option value="50">{% blocktranslate with p=50 %}{{ p }}% of its actions are complete{% endblocktranslate %}</option>
-      </select></label>
   </div>
   <div class="actions"><a class="btn" href="{% url 'assessment_list' %}">{% translate "Cancel" %}</a><button class="btn primary">{% translate "Create assessment" %}</button></div>
 </form>

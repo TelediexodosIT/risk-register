@@ -168,7 +168,7 @@ To undo a change that broke something: `git log --oneline`, then `git revert <co
 | Colours, fonts, spacing | `static/css/app.css` (colour tokens are at the top) |
 | App name in the top bar | `APP_NAME` in `.env` |
 | Who can see / edit what | `risk/access.py` |
-| Rules: status, "ready for reassessment", new version, notifications, emails | `risk/services.py` |
+| Rules: status, new version, notifications, emails | `risk/services.py` |
 | What each page does | `risk/views.py` (one function per page; URLs in `risk/urls.py`) |
 | Database fields | `risk/models.py`, then `docker compose exec web python manage.py makemigrations` and rebuild |
 | Default matrix/lists for new installs | `risk/defaults.py` |
@@ -199,10 +199,9 @@ Uses SQLite when `DATABASE_URL` isn't set. Open http://127.0.0.1:8000.
   consequences, inherent risk (likelihood × consequence), existing controls, residual risk, and additional measures.
 - **Additional measure** = a **task** with an owner and deadline. The owner gets an email, updates progress,
   adds comments or photos, and marks it complete. Photos are only viewable by people allowed to see the task.
-- **Status is derived**, not typed: when the required share of a hazard's measures is complete (the
-  "Reassess a hazard when…" setting: 100/80/75/50%), the hazard meets the rule. When every hazard with
-  measures meets it, the assessment shows *Ready for reassessment*.
-- **Start version N+1** locks the current version as read-only, copies hazards forward, turns completed
+- **Risk levels never change automatically.** Actions differ in seriousness, so completing them only
+  marks the risk task "Actions complete"; the consultant reviews it and re-scores the residual risk.
+- **Start version N+1** (consultant / safety officer, any time) locks the current version as read-only, copies hazards forward, turns completed
   measures into existing controls, carries open measures forward, and flags each hazard to be re-scored.
   History shows every version and a before/after comparison of residual risk.
 - **Notifications are restrained**: managers see assessment-level updates (ready, overdue); individual task

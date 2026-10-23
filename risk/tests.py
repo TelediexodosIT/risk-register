@@ -68,8 +68,6 @@ class RiskFlowTests(TestCase):
     def test_complete_actions_then_new_version(self):
         self.login("andreas.pavlou@telediexodos.demo")
         a = Assessment.objects.get(company__name="Telediexodos")
-        self.client.post(f"/assessments/{a.id}/reassess/")
-        self.assertEqual(Assessment.objects.filter(company=a.company).count(), 1)  # not ready yet
         for t in Task.objects.filter(hazard__assessment=a).exclude(status="done"):
             self.client.post(f"/tasks/{t.id}/", {"action": "complete", "text": "Done"})
         self.client.post(f"/assessments/{a.id}/reassess/")
@@ -146,3 +144,36 @@ class RiskFlowTests(TestCase):
         h2 = Hazard.objects.get(name="Manual handling", assessment__company__name="Telediexodos")
         self.assertEqual(hazard_lifecycle(h2)[0], "complete")
         self.assertEqual(LikelihoodLevel.objects.get(code="A").label_el, "Πολύ πιθανό")
+
+
+@override_settings(REQUIRE_TWO_STEP=False)
+class ManualReassessmentTests(TestCase):
+    """The client asked: completing actions must never lower a risk level by itself."""
+
+    @classmethod
+    def setUpTestData(cls):
+        call_command("seed_demo", password=PW, stdout=open("/dev/null", "w"))
+
+    def test_completing_all_actions_does_not_change_risk_levels(self):
+        self.client.force_login(User.objects.get(email="andreas.pavlou@telediexodos.demo"))
+        a = Assessment.objects.get(company__name="Telediexodos")
+        before = {h.id: (h.residual_likelihood_id, h.residual_consequence_id) for h in a.hazards.all()}
+        for t in Task.objects.filter(hazard__assessment=a).exclude(status="done"):
+            self.client.post(f"/tasks/{t.id}/", {"action": "complete"})
+        after = {h.id: (h.residual_likelihood_id, h.residual_consequence_id) for h in a.hazards.all()}
+        self.assertEqual(before, after)
+        a.refresh_from_db()
+        self.assertEqual(a.status, "active")  # no new version is created automatically
+
+    def test_consultant_can_start_new_version_any_time(self):
+        self.client.force_login(User.objects.get(email="andreas.pavlou@telediexodos.demo"))
+        a = Assessment.objects.get(company__name="Telediexodos")
+        self.assertTrue(Task.objects.filter(hazard__assessment=a).exclude(status="done").exists())
+        self.client.post(f"/assessments/{a.id}/reassess/")
+        a.refresh_from_db()
+        self.assertEqual(a.status, "superseded")
+
+    def test_staff_member_cannot_start_new_version(self):
+        self.client.force_login(User.objects.get(email="maria.kyriakou@telediexodos.demo"))
+        a = Assessment.objects.get(company__name="Telediexodos")
+        self.assertEqual(self.client.post(f"/assessments/{a.id}/reassess/").status_code, 404)

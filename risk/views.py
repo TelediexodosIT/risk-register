@@ -32,7 +32,7 @@ def lifecycle_label(key):
     # Translated at render time so the current language is used.
     return {
         "draft": _("Draft"), "needs_action": _("Needs measures"), "open": _("Open"),
-        "in_progress": _("In progress"), "overdue": _("Overdue"), "complete": _("Complete"),
+        "in_progress": _("In progress"), "overdue": _("Overdue"), "complete": _("Actions complete"),
         "archived": _("Archived"),
     }[key]
 
@@ -86,7 +86,7 @@ def assessment_create(request):
     company = current_company(request)
     if not request.user.can_manage or company is None:
         raise Http404
-    form = AssessmentForm(request.POST or None, initial={"rule_percent": 100})
+    form = AssessmentForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         a = form.save(commit=False)
         a.company = company
@@ -112,7 +112,6 @@ def assessment_detail(request, pk):
         "can_edit": can_edit_assessment(request.user, a),
         "inherent": services.rating_counts(hazards, "inherent"),
         "residual": services.rating_counts(hazards, "residual"),
-        "rule_choices": [100, 80, 75, 50],
     }
     if tab == "tasks":
         ctx["tasks"] = [t for h in hazards for t in h.tasks.all()]
@@ -123,24 +122,11 @@ def assessment_detail(request, pk):
 
 @login_required
 @require_POST
-def assessment_rule(request, pk):
-    a = get_assessment(request.user, pk)
-    if can_edit_assessment(request.user, a):
-        value = int(request.POST.get("rule_percent", 100))
-        if value in (100, 80, 75, 50):
-            a.rule_percent = value
-            a.save(update_fields=["rule_percent"])
-            a.log(f"Reassessment rule set to {value}% of measures complete")
-    return redirect("assessment_detail", a.id)
-
-
-@login_required
-@require_POST
 def assessment_reassess(request, pk):
     a = get_assessment(request.user, pk)
-    if not can_edit_assessment(request.user, a) or not services.assessment_state(a).ready:
-        messages.error(request, _("This assessment is not ready for a new version yet."))
-        return redirect("assessment_detail", a.id)
+    # The consultant decides when to reassess: actions differ in seriousness, so nothing is automatic.
+    if not can_edit_assessment(request.user, a):
+        raise Http404
     new = services.create_next_version(a, request.user)
     messages.success(request, _("Version %(new)s created. Version %(old)s is kept as a record. "
                                 "Re-score the risk tasks marked “Re-score”.") % {"new": new.version, "old": a.version})
@@ -383,7 +369,7 @@ def task_detail(request, pk):
             if action == "complete":
                 msg = _("Action marked complete.")
                 if services.assessment_state(a).ready:
-                    msg += " " + _("The assessment is now ready for reassessment.")
+                    msg += " " + _("All actions of this assessment are complete. Review the risk levels and start a new version when ready.")
                 messages.success(request, msg)
             else:
                 messages.success(request, _("Update saved."))

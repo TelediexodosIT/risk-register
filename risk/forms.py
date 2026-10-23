@@ -6,7 +6,7 @@ from .models import Assessment
 class AssessmentForm(forms.ModelForm):
     class Meta:
         model = Assessment
-        fields = ["title", "site", "rule_percent"]
+        fields = ["title", "site"]
 
 
 class TaskUpdateForm(forms.Form):

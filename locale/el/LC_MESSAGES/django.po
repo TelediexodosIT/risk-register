@@ -6,779 +6,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Risk Register VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 18:54+0300\n"
+"POT-Creation-Date: 2026-10-23 10:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: el <LL@li.org>\n"
 "Language: el\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: el <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: accounts/models.py:48
-msgid "Consultant"
-msgstr "Σύμβουλος"
-
-#: accounts/models.py:49
-msgid "Safety officer"
-msgstr "Υπεύθυνος ασφάλειας"
-
-#: accounts/models.py:50
-msgid "Staff member"
-msgstr "Εργαζόμενος"
-
-#: accounts/views.py:49
-msgid "Email or password is incorrect."
-msgstr "Λανθασμένο email ή κωδικός."
-
-#: accounts/views.py:71
-msgid "Too many wrong codes. Wait a moment and try again."
-msgstr "Πολλοί λανθασμένοι κωδικοί. Περιμένετε λίγο και δοκιμάστε ξανά."
-
-#: accounts/views.py:76
-msgid "That code is not valid. Check your authenticator app and try again."
-msgstr ""
-"Ο κωδικός δεν είναι έγκυρος. Ελέγξτε την εφαρμογή επαλήθευσης και δοκιμάστε "
-"ξανά."
-
-#: accounts/views.py:93
-msgid "Too many wrong codes. Wait a few seconds and try again."
-msgstr ""
-"Πολλοί λανθασμένοι κωδικοί. Περιμένετε λίγα δευτερόλεπτα και δοκιμάστε ξανά."
-
-#: accounts/views.py:98
-msgid "Two-step verification is set up."
-msgstr "Η επαλήθευση δύο βημάτων ρυθμίστηκε."
-
-#: accounts/views.py:101
-msgid ""
-"That code did not match. Make sure your phone's clock is correct and try "
-"again."
-msgstr ""
-"Ο κωδικός δεν ταιριάζει. Βεβαιωθείτε ότι η ώρα του κινητού είναι σωστή και "
-"δοκιμάστε ξανά."
-
-#: accounts/views.py:116
-msgid "You have been signed out."
-msgstr "Αποσυνδεθήκατε."
-
-#: risk/models.py:95 templates/risk/_compare.html:3
-#: templates/risk/assessment_detail.html:54 templates/risk/report.html:24
-#: templates/risk/risk_task_form.html:23 templates/risk/risk_task_form.html:24
-#: templates/risk/task_detail.html:8
-msgid "Hazard"
-msgstr "Κίνδυνος"
-
-#: risk/models.py:96 templates/risk/assessment_detail.html:54
-#: templates/risk/assessment_detail.html:58
-#: templates/risk/risk_task_form.html:34
-msgid "Who is involved"
-msgstr "Ποιος επηρεάζεται"
-
-#: risk/models.py:97 templates/risk/_sliders.html:10
-#: templates/risk/_sliders.html:11
-msgid "Consequence"
-msgstr "Συνέπειες"
-
-#: risk/models.py:98
-msgid "Existing control measure"
-msgstr "Υφιστάμενο μέτρο"
-
-#: risk/models.py:99
-msgid "Additional measure"
-msgstr "Επιπρόσθετο μέτρο"
-
-#: risk/models.py:122
-msgid "Active"
-msgstr "Ενεργή"
-
-#: risk/models.py:123 risk/services.py:56 templates/risk/search.html:17
-msgid "Superseded"
-msgstr "Αντικαταστάθηκε"
-
-#: risk/services.py:58
-msgid "Re-score needed"
-msgstr "Χρειάζεται επαναβαθμολόγηση"
-
-#: risk/services.py:60 risk/services.py:245
-msgid "Ready for reassessment"
-msgstr "Έτοιμη για επανεκτίμηση"
-
-#: risk/services.py:62
-msgid "No open actions"
-msgstr "Χωρίς ανοιχτές ενέργειες"
-
-#: risk/services.py:63
-msgid "Measures in progress"
-msgstr "Μέτρα σε εξέλιξη"
-
-#: risk/services.py:245
+#: risk/services.py:244
 #, python-format
-msgid "%(a)s: the required actions are complete."
-msgstr "%(a)s: οι απαιτούμενες ενέργειες ολοκληρώθηκαν."
+msgid "%(a)s: all actions are complete. Review the risk levels."
+msgstr "%(a)s: όλες οι ενέργειες ολοκληρώθηκαν. Επανεξετάστε τα επίπεδα επικινδυνότητας."
 
-#: risk/services.py:248
+#: templates/risk/risk_tasks.html:19
 #, python-format
-msgid "%(n)d overdue action"
-msgid_plural "%(n)d overdue actions"
-msgstr[0] "%(n)d εκπρόθεσμη ενέργεια"
-msgstr[1] "%(n)d εκπρόθεσμες ενέργειες"
+msgid "%(done)s of %(total)s actions done"
+msgstr "%(done)s από %(total)s ενέργειες ολοκληρώθηκαν"
 
-#: risk/services.py:253
-msgid "Overdue action"
-msgstr "Εκπρόθεσμη ενέργεια"
-
-#: risk/services.py:253
-msgid "Assigned to you"
-msgstr "Σας ανατέθηκε"
-
-#: risk/views.py:34
-msgid "Draft"
-msgstr "Πρόχειρο"
-
-#: risk/views.py:34
-msgid "Needs measures"
-msgstr "Χρειάζεται μέτρα"
-
-#: risk/views.py:34 risk/views.py:350 templates/risk/_task_pill.html:1
-msgid "Open"
-msgstr "Ανοιχτή"
-
-#: risk/views.py:35
-msgid "In progress"
-msgstr "Σε εξέλιξη"
-
-#: risk/views.py:35 risk/views.py:350 templates/risk/_task_pill.html:1
-#: templates/risk/assessment_detail.html:19 templates/risk/report.html:21
-msgid "Overdue"
-msgstr "Εκπρόθεσμη"
-
-#: risk/views.py:35
-msgid "Complete"
-msgstr "Ολοκληρωμένη"
-
-#: risk/views.py:36
-msgid "Archived"
-msgstr "Αρχειοθετημένη"
-
-#: risk/views.py:96
-msgid "Assessment created. Add the first risk task."
-msgstr "Η εκτίμηση δημιουργήθηκε. Προσθέστε την πρώτη εργασία κινδύνου."
-
-#: risk/views.py:142
-msgid "This assessment is not ready for a new version yet."
-msgstr "Η εκτίμηση δεν είναι ακόμα έτοιμη για νέα έκδοση."
-
-#: risk/views.py:145
+#: templates/risk/assessment_detail.html:57
 #, python-format
-msgid ""
-"Version %(new)s created. Version %(old)s is kept as a record. Re-score the "
-"risk tasks marked “Re-score”."
-msgstr ""
-"Δημιουργήθηκε η έκδοση %(new)s. Η έκδοση %(old)s διατηρείται ως αρχείο. "
-"Επαναβαθμολογήστε τις εργασίες με την ένδειξη «Επαναβαθμολόγηση»."
+msgid "%(done)s of %(total)s done"
+msgstr "%(done)s από %(total)s ολοκληρώθηκαν"
 
-#: risk/views.py:167 risk/views.py:350
-msgid "All"
-msgstr "Όλες"
-
-#: risk/views.py:235
-msgid "Choose the assessment this task belongs to."
-msgstr "Επιλέξτε την εκτίμηση στην οποία ανήκει η εργασία."
-
-#: risk/views.py:240
-msgid "Choose a hazard or type one in."
-msgstr "Επιλέξτε κίνδυνο ή πληκτρολογήστε έναν."
-
-#: risk/views.py:276
-msgid "Risk task saved."
-msgstr "Η εργασία κινδύνου αποθηκεύτηκε."
-
-#: risk/views.py:278
+#: risk/views.py:264
 #, python-format
 msgid "%(n)d action assigned; the person responsible was notified."
 msgid_plural "%(n)d actions assigned; the people responsible were notified."
 msgstr[0] "Ανατέθηκε %(n)d ενέργεια· ο υπεύθυνος ειδοποιήθηκε."
 msgstr[1] "Ανατέθηκαν %(n)d ενέργειες· οι υπεύθυνοι ειδοποιήθηκαν."
 
-#: risk/views.py:350 templates/risk/_task_pill.html:1
-msgid "Done"
-msgstr "Ολοκληρώθηκε"
-
-#: risk/views.py:384
-msgid "Action marked complete."
-msgstr "Η ενέργεια σημειώθηκε ως ολοκληρωμένη."
-
-#: risk/views.py:386
-msgid "The assessment is now ready for reassessment."
-msgstr "Η εκτίμηση είναι πλέον έτοιμη για επανεκτίμηση."
-
-#: risk/views.py:389
-msgid "Update saved."
-msgstr "Η ενημέρωση αποθηκεύτηκε."
-
-#: templates/_tenant_switch.html:2 templates/_tenant_switch.html:3
-#: templates/_tenant_switch.html:7
-msgid "Tenant"
-msgstr "Οργανισμός"
-
-#: templates/_tenant_switch.html:6
-msgid "Switch"
-msgstr "Αλλαγή"
-
-#: templates/_toggles.html:1
-msgid "Switch light / dark mode"
-msgstr "Αλλαγή φωτεινού / σκοτεινού θέματος"
-
-#: templates/_toggles.html:1
-msgid "Light / dark mode"
-msgstr "Φωτεινό / σκοτεινό θέμα"
-
-#: templates/accounts/locked.html:2 templates/accounts/locked.html:4
-msgid "Sign-in paused"
-msgstr "Η σύνδεση ανεστάλη"
-
-#: templates/accounts/locked.html:4
-msgid ""
-"There were too many failed attempts for this account. Wait 15 minutes and "
-"try again, or ask your administrator to unlock it."
-msgstr ""
-"Υπήρξαν πολλές αποτυχημένες προσπάθειες για αυτόν τον λογαριασμό. Περιμένετε "
-"15 λεπτά και δοκιμάστε ξανά ή ζητήστε ξεκλείδωμα από τον διαχειριστή."
-
-#: templates/accounts/locked.html:5
-#: templates/accounts/password_reset_done.html:5
-#: templates/accounts/password_reset_form.html:9
-msgid "Back to sign in"
-msgstr "Επιστροφή στη σύνδεση"
-
-#: templates/accounts/login.html:3
-#: templates/accounts/password_reset_complete.html:5 templates/base_auth.html:5
-msgid "Sign in"
-msgstr "Σύνδεση"
-
-#: templates/accounts/login.html:3
-msgid "Use your work email address."
-msgstr "Χρησιμοποιήστε το email εργασίας σας."
-
-#: templates/accounts/login.html:7
-#: templates/accounts/password_reset_form.html:7
-msgid "Work email"
-msgstr "Email εργασίας"
-
-#: templates/accounts/login.html:8
-msgid "Password"
-msgstr "Κωδικός"
-
-#: templates/accounts/login.html:10
-msgid "Show"
-msgstr "Εμφάνιση"
-
-#: templates/accounts/login.html:10
-msgid "Hide"
-msgstr "Απόκρυψη"
-
-#: templates/accounts/login.html:13
-msgid "Continue"
-msgstr "Συνέχεια"
-
-#: templates/accounts/login.html:14
-msgid "Forgot password?"
-msgstr "Ξεχάσατε τον κωδικό;"
-
-#: templates/accounts/otp_setup.html:2 templates/accounts/otp_setup.html:4
-msgid "Set up two-step verification"
-msgstr "Ρύθμιση επαλήθευσης δύο βημάτων"
-
-#: templates/accounts/otp_setup.html:4
-msgid "Every account needs this. It takes a minute and only happens once."
-msgstr ""
-"Απαιτείται για κάθε λογαριασμό. Χρειάζεται ένα λεπτό και γίνεται μόνο μία "
-"φορά."
-
-#: templates/accounts/otp_setup.html:6
-msgid ""
-"Open Microsoft Authenticator, Google Authenticator or any authenticator app."
-msgstr ""
-"Ανοίξτε το Microsoft Authenticator, το Google Authenticator ή οποιαδήποτε "
-"εφαρμογή επαλήθευσης."
-
-#: templates/accounts/otp_setup.html:7
-msgid "Add an account and scan this code."
-msgstr "Προσθέστε λογαριασμό και σαρώστε αυτόν τον κωδικό."
-
-#: templates/accounts/otp_setup.html:8
-msgid "Type the 6-digit code the app shows."
-msgstr "Πληκτρολογήστε τον εξαψήφιο κωδικό που εμφανίζει η εφαρμογή."
-
-#: templates/accounts/otp_setup.html:11
-msgid "Can't scan? Enter this key instead"
-msgstr "Δεν γίνεται σάρωση; Πληκτρολογήστε αυτό το κλειδί"
-
-#: templates/accounts/otp_setup.html:14
-msgid "6-digit code"
-msgstr "Εξαψήφιος κωδικός"
-
-#: templates/accounts/otp_setup.html:16
-msgid "Confirm and sign in"
-msgstr "Επιβεβαίωση και σύνδεση"
-
-#: templates/accounts/otp_setup.html:17 templates/risk/assessment_form.html:19
-#: templates/risk/risk_task_form.html:77 templates/risk/risk_task_form.html:113
-msgid "Cancel"
-msgstr "Ακύρωση"
-
-#: templates/accounts/otp_verify.html:2 templates/accounts/otp_verify.html:7
-msgid "Verification code"
-msgstr "Κωδικός επαλήθευσης"
-
-#: templates/accounts/otp_verify.html:4
-msgid "Two-step verification"
-msgstr "Επαλήθευση δύο βημάτων"
-
-#: templates/accounts/otp_verify.html:4
+#: risk/services.py:247
 #, python-format
-msgid ""
-"Enter the 6-digit code from your authenticator app for <b>%(email)s</b>."
-msgstr ""
-"Εισάγετε τον εξαψήφιο κωδικό από την εφαρμογή επαλήθευσης για <b>%(email)s</"
-"b>."
+msgid "%(n)d overdue action"
+msgid_plural "%(n)d overdue actions"
+msgstr[0] "%(n)d εκπρόθεσμη ενέργεια"
+msgstr[1] "%(n)d εκπρόθεσμες ενέργειες"
 
-#: templates/accounts/otp_verify.html:9
-msgid "Verify and sign in"
-msgstr "Επαλήθευση και σύνδεση"
-
-#: templates/accounts/otp_verify.html:10
-msgid "Use a different account"
-msgstr "Χρήση άλλου λογαριασμού"
-
-#: templates/accounts/password_reset_complete.html:2
-#: templates/accounts/password_reset_complete.html:4
-msgid "Password changed"
-msgstr "Ο κωδικός άλλαξε"
-
-#: templates/accounts/password_reset_complete.html:4
-msgid ""
-"Sign in with your new password. You'll still need the 6-digit code from your "
-"authenticator app."
-msgstr ""
-"Συνδεθείτε με τον νέο κωδικό. Θα χρειαστείτε ακόμα τον εξαψήφιο κωδικό από "
-"την εφαρμογή επαλήθευσης."
-
-#: templates/accounts/password_reset_confirm.html:2
-#: templates/accounts/password_reset_confirm.html:5
-msgid "Choose a new password"
-msgstr "Επιλέξτε νέο κωδικό"
-
-#: templates/accounts/password_reset_confirm.html:5
-msgid ""
-"At least 10 characters. Avoid common words and passwords you use elsewhere."
-msgstr ""
-"Τουλάχιστον 10 χαρακτήρες. Αποφύγετε κοινές λέξεις και κωδικούς που "
-"χρησιμοποιείτε αλλού."
-
-#: templates/accounts/password_reset_confirm.html:8
-msgid "New password"
-msgstr "Νέος κωδικός"
-
-#: templates/accounts/password_reset_confirm.html:9
-msgid "Repeat new password"
-msgstr "Επανάληψη νέου κωδικού"
-
-#: templates/accounts/password_reset_confirm.html:10
-msgid "Save new password"
-msgstr "Αποθήκευση νέου κωδικού"
-
-#: templates/accounts/password_reset_confirm.html:13
-msgid "Link no longer valid"
-msgstr "Ο σύνδεσμος δεν ισχύει πλέον"
-
-#: templates/accounts/password_reset_confirm.html:13
-msgid "This reset link has expired or was already used. Request a new one."
-msgstr "Ο σύνδεσμος έληξε ή έχει ήδη χρησιμοποιηθεί. Ζητήστε νέο."
-
-#: templates/accounts/password_reset_confirm.html:14
-msgid "Request a new link"
-msgstr "Νέος σύνδεσμος"
-
-#: templates/accounts/password_reset_done.html:2
-#: templates/accounts/password_reset_done.html:4
-msgid "Check your email"
-msgstr "Ελέγξτε το email σας"
-
-#: templates/accounts/password_reset_done.html:4
-msgid ""
-"If that address belongs to an account, a reset link is on its way. The link "
-"works once and expires in an hour. Check your spam folder if it doesn't "
-"arrive in a few minutes."
-msgstr ""
-"Αν η διεύθυνση αντιστοιχεί σε λογαριασμό, ο σύνδεσμος επαναφοράς έχει "
-"σταλεί. Λειτουργεί μία φορά και λήγει σε μία ώρα. Ελέγξτε και τα ανεπιθύμητα "
-"αν δεν φτάσει σε λίγα λεπτά."
-
-#: templates/accounts/password_reset_form.html:2
-#: templates/accounts/password_reset_form.html:4
-msgid "Forgot password"
-msgstr "Ξεχάσατε τον κωδικό"
-
-#: templates/accounts/password_reset_form.html:4
-msgid ""
-"Enter your work email. If it belongs to an account, we'll send a link to "
-"choose a new password."
-msgstr ""
-"Εισάγετε το email εργασίας. Αν αντιστοιχεί σε λογαριασμό, θα σας στείλουμε "
-"σύνδεσμο για νέο κωδικό."
-
-#: templates/accounts/password_reset_form.html:8
-msgid "Send reset link"
-msgstr "Αποστολή συνδέσμου"
-
-#: templates/base.html:14
-msgid "Menu"
-msgstr "Μενού"
-
-#: templates/base.html:18 templates/risk/search.html:7
-msgid "Search tasks, actions, people…"
-msgstr "Αναζήτηση εργασιών, ενεργειών, ατόμων…"
-
-#: templates/base.html:18 templates/base.html:36 templates/risk/search.html:2
-#: templates/risk/search.html:4 templates/risk/search.html:7
-msgid "Search"
-msgstr "Αναζήτηση"
-
-#: templates/base.html:23 templates/risk/updates.html:2
-#: templates/risk/updates.html:4
-msgid "Updates"
-msgstr "Ενημερώσεις"
-
-#: templates/base.html:25 templates/base.html:50
-msgid "Admin"
-msgstr "Διαχείριση"
-
-#: templates/base.html:26 templates/base.html:51
-msgid "Sign out"
-msgstr "Αποσύνδεση"
-
-#: templates/base.html:31
-msgid "Sections"
-msgstr "Ενότητες"
-
-#: templates/base.html:36
-msgid "Search…"
-msgstr "Αναζήτηση…"
-
-#: templates/base.html:42 templates/risk/risk_task_form.html:4
-#: templates/risk/risk_tasks.html:2 templates/risk/risk_tasks.html:5
-#: templates/risk/search.html:13
-msgid "Risk Assessment Tasks"
-msgstr "Εργασίες Εκτίμησης Κινδύνου"
-
-#: templates/base.html:43 templates/risk/assessment_list.html:2
-#: templates/risk/search.html:16
-msgid "Assessments"
-msgstr "Εκτιμήσεις"
-
-#: templates/base.html:45 templates/risk/assessment_detail.html:40
-#: templates/risk/assessment_detail.html:54
-#: templates/risk/assessment_detail.html:64 templates/risk/search.html:15
-#: templates/risk/task_list.html:2 templates/risk/task_list.html:4
-msgid "Actions"
-msgstr "Ενέργειες"
-
-#: templates/base.html:45 templates/risk/task_detail.html:4
-#: templates/risk/task_list.html:4
-msgid "My actions"
-msgstr "Οι ενέργειές μου"
-
-#: templates/base.html:46 templates/risk/library.html:2
-#: templates/risk/library.html:4
-msgid "Lists"
-msgstr "Λίστες"
-
-#: templates/base.html:47 templates/risk/matrix.html:2
-#: templates/risk/matrix.html:4
-msgid "Risk matrix"
-msgstr "Πίνακας επικινδυνότητας"
-
-#: templates/base.html:48 templates/risk/report.html:4
-msgid "Reports"
-msgstr "Αναφορές"
-
-#: templates/base_auth.html:15
-msgid "Risk assessments, measures and evidence in one place."
-msgstr "Εκτιμήσεις κινδύνου, μέτρα και τεκμήρια σε ένα σημείο."
-
-#: templates/base_auth.html:17
-msgid "Two-step verification on every account"
-msgstr "Επαλήθευση δύο βημάτων σε κάθε λογαριασμό"
-
-#: templates/base_auth.html:18
-msgid "Sign-in is paused after repeated failed attempts"
-msgstr ""
-"Η σύνδεση αναστέλλεται μετά από επανειλημμένες αποτυχημένες προσπάθειες"
-
-#: templates/base_auth.html:19
-msgid "Each tenant sees only its own data"
-msgstr "Κάθε οργανισμός βλέπει μόνο τα δικά του δεδομένα"
-
-#: templates/base_auth.html:20
-msgid "Sessions end automatically when idle"
-msgstr "Οι συνεδρίες λήγουν αυτόματα όταν είναι αδρανείς"
-
-#: templates/base_auth.html:22
-msgid "Authorised users only. Sign-in attempts are logged."
-msgstr ""
-"Μόνο για εξουσιοδοτημένους χρήστες. Οι προσπάθειες σύνδεσης καταγράφονται."
-
-#: templates/risk/_chip.html:2 templates/risk/_dist.html:1
-msgid "Not scored"
-msgstr "Χωρίς βαθμολογία"
-
-#: templates/risk/_compare.html:1
+#: templates/risk/assessment_list.html:14
 #, python-format
-msgid "Residual risk, version %(old)s → version %(new)s"
-msgstr "Υπολειπόμενη επικινδυνότητα, έκδοση %(old)s → έκδοση %(new)s"
-
-#: templates/risk/_compare.html:3 templates/risk/_compare.html:8
-msgid "Change"
-msgstr "Μεταβολή"
-
-#: templates/risk/_compare.html:8
-msgid "New"
-msgstr "Νέα"
-
-#: templates/risk/_compare.html:8
-msgid "Reduced"
-msgstr "Μειώθηκε"
-
-#: templates/risk/_compare.html:8
-msgid "Increased"
-msgstr "Αυξήθηκε"
-
-#: templates/risk/_compare.html:8
-msgid "No change"
-msgstr "Χωρίς μεταβολή"
-
-#: templates/risk/_picklist.html:5
-msgid "Manual add (one per line)"
-msgstr "Χειροκίνητη προσθήκη (μία ανά γραμμή)"
-
-#: templates/risk/_sliders.html:5 templates/risk/_sliders.html:6
-msgid "Likelihood"
-msgstr "Πιθανότητα"
-
-#: templates/risk/_task_pill.html:1
-#, python-format
-msgid "Carried to v%(v)s"
-msgstr "Μεταφέρθηκε στην έκδ. %(v)s"
-
-#: templates/risk/_task_pill.html:1
-#, python-format
-msgid "%(p)s%% done"
-msgstr "%(p)s%% ολοκληρωμένο"
-
-#: templates/risk/_task_rows.html:11
-msgid "Nothing here. Actions appear when a risk task gets additional measures."
-msgstr ""
-"Δεν υπάρχει τίποτα εδώ. Οι ενέργειες εμφανίζονται όταν μια εργασία κινδύνου "
-"αποκτήσει επιπρόσθετα μέτρα."
-
-#: templates/risk/assessment_detail.html:4
-#: templates/risk/assessment_form.html:4
-msgid "All assessments"
-msgstr "Όλες οι εκτιμήσεις"
-
-#: templates/risk/assessment_detail.html:6
-msgid "created"
-msgstr "δημιουργήθηκε"
-
-#: templates/risk/assessment_detail.html:8
-msgid "Follows"
-msgstr "Ακολουθεί την"
-
-#: templates/risk/assessment_detail.html:8
-#: templates/risk/assessment_detail.html:11 templates/risk/task_detail.html:36
-msgid "version"
-msgstr "έκδοση"
-
-#: templates/risk/assessment_detail.html:8
-msgid ", which is kept unchanged."
-msgstr ", η οποία διατηρείται αμετάβλητη."
-
-#: templates/risk/assessment_detail.html:11
-msgid "This version is read-only. It was replaced by"
-msgstr "Η έκδοση είναι μόνο για ανάγνωση. Αντικαταστάθηκε από την"
-
-#: templates/risk/assessment_detail.html:12
-msgid ""
-"Completed actions from the previous version now count as existing controls. "
-"Open each risk task marked “Re-score” and confirm its residual risk."
-msgstr ""
-"Οι ολοκληρωμένες ενέργειες της προηγούμενης έκδοσης θεωρούνται πλέον "
-"υφιστάμενα μέτρα. Ανοίξτε κάθε εργασία με την ένδειξη «Επαναβαθμολόγηση» και "
-"επιβεβαιώστε την υπολειπόμενη επικινδυνότητα."
-
-#: templates/risk/assessment_detail.html:15
-msgid "Risk tasks"
-msgstr "Εργασίες κινδύνου"
-
-#: templates/risk/assessment_detail.html:16
-#: templates/risk/risk_task_form.html:44
-msgid "Inherent risk"
-msgstr "Εκ φύσεως επικινδυνότητα"
-
-#: templates/risk/assessment_detail.html:17
-#: templates/risk/assessment_list.html:13 templates/risk/risk_task_form.html:55
-msgid "Residual risk"
-msgstr "Υπολειπόμενη επικινδυνότητα"
-
-#: templates/risk/assessment_detail.html:18
-msgid "Actions done"
-msgstr "Ολοκληρωμένες ενέργειες"
-
-#: templates/risk/assessment_detail.html:25
-#: templates/risk/assessment_form.html:11
-msgid "Reassess a risk task when"
-msgstr "Επανεκτίμηση εργασίας όταν"
-
-#: templates/risk/assessment_detail.html:27
-#: templates/risk/assessment_form.html:13
-msgid "all of its actions are complete"
-msgstr "ολοκληρωθούν όλες οι ενέργειές της"
-
-#: templates/risk/assessment_detail.html:27
-#: templates/risk/assessment_form.html:14
-#: templates/risk/assessment_form.html:15
-#: templates/risk/assessment_form.html:16
-#, python-format
-msgid "%(p)s%% of its actions are complete"
-msgstr "ολοκληρωθεί το %(p)s%% των ενεργειών της"
-
-#: templates/risk/assessment_detail.html:29
-msgid "Save"
-msgstr "Αποθήκευση"
-
-#: templates/risk/assessment_detail.html:33
-#, python-format
-msgid "Start version %(n)s"
-msgstr "Έναρξη έκδοσης %(n)s"
-
-#: templates/risk/assessment_detail.html:35
-msgid "Superseded versions cannot be reassessed."
-msgstr "Οι εκδόσεις που αντικαταστάθηκαν δεν επανεκτιμώνται."
-
-#: templates/risk/assessment_detail.html:35
-msgid ""
-"Every risk task with actions has met the rule. Starting a new version keeps "
-"this one as a record."
-msgstr ""
-"Όλες οι εργασίες με ενέργειες πληρούν τον κανόνα. Η νέα έκδοση διατηρεί την "
-"τρέχουσα ως αρχείο."
-
-#: templates/risk/assessment_detail.html:35
-msgid ""
-"Available once every risk task with actions meets this rule. The status "
-"updates automatically as actions are completed."
-msgstr ""
-"Διαθέσιμο όταν κάθε εργασία κινδύνου με ενέργειες πληροί αυτόν τον κανόνα. Η "
-"κατάσταση ενημερώνεται αυτόματα καθώς ολοκληρώνονται οι ενέργειες."
-
-#: templates/risk/assessment_detail.html:39
-msgid "Register"
-msgstr "Μητρώο"
-
-#: templates/risk/assessment_detail.html:41
-msgid "History"
-msgstr "Ιστορικό"
-
-#: templates/risk/assessment_detail.html:48 templates/risk/report.html:16
-msgid "Version"
-msgstr "Έκδοση"
-
-#: templates/risk/assessment_detail.html:51
-msgid ""
-"This is the first version. A before-and-after comparison appears once a "
-"newer version exists."
-msgstr ""
-"Αυτή είναι η πρώτη έκδοση. Η σύγκριση πριν/μετά εμφανίζεται όταν υπάρξει "
-"νεότερη έκδοση."
-
-#: templates/risk/assessment_detail.html:54
-#: templates/risk/assessment_detail.html:59 templates/risk/report.html:24
-msgid "Inherent"
-msgstr "Εκ φύσεως"
-
-#: templates/risk/assessment_detail.html:54
-#: templates/risk/assessment_detail.html:60
-msgid "Existing controls"
-msgstr "Υφιστάμενα μέτρα"
-
-#: templates/risk/assessment_detail.html:54
-#: templates/risk/assessment_detail.html:61 templates/risk/report.html:24
-msgid "Residual"
-msgstr "Υπολειπόμενη"
-
-#: templates/risk/assessment_detail.html:54
-#: templates/risk/assessment_detail.html:66 templates/risk/report.html:16
-#: templates/risk/report.html:24
-msgid "Status"
-msgstr "Κατάσταση"
-
-#: templates/risk/assessment_detail.html:60
-msgid "in place"
-msgstr "σε ισχύ"
-
-#: templates/risk/assessment_detail.html:61
-msgid "was"
-msgstr "ήταν"
-
-#: templates/risk/assessment_detail.html:63
-msgid "Re-score"
-msgstr "Επαναβαθμολόγηση"
-
-#: templates/risk/assessment_detail.html:65
-#, python-format
-msgid "%(done)s of %(total)s done"
-msgstr "%(done)s από %(total)s ολοκληρώθηκαν"
-
-#: templates/risk/assessment_detail.html:65
-msgid "None set"
-msgstr "Κανένα"
-
-#: templates/risk/assessment_detail.html:68
-msgid "No risk tasks yet."
-msgstr "Δεν υπάρχουν ακόμα εργασίες κινδύνου."
-
-#: templates/risk/assessment_detail.html:70 templates/risk/risk_tasks.html:7
-msgid "New task"
-msgstr "Νέα εργασία"
-
-#: templates/risk/assessment_form.html:2 templates/risk/assessment_form.html:5
-#: templates/risk/assessment_list.html:6
-msgid "New assessment"
-msgstr "Νέα εκτίμηση"
-
-#: templates/risk/assessment_form.html:9
-msgid "Area or activity"
-msgstr "Χώρος ή δραστηριότητα"
-
-#: templates/risk/assessment_form.html:9
-msgid "e.g. Kitchen and food preparation"
-msgstr "π.χ. Κουζίνα και προετοιμασία φαγητού"
-
-#: templates/risk/assessment_form.html:10
-msgid "Site"
-msgstr "Εγκατάσταση"
-
-#: templates/risk/assessment_form.html:10
-msgid "e.g. Head office"
-msgstr "π.χ. Κεντρικά γραφεία"
-
-#: templates/risk/assessment_form.html:19
-msgid "Create assessment"
-msgstr "Δημιουργία εκτίμησης"
+msgid "%(n)s overdue"
+msgstr "%(n)s εκπρόθεσμες"
 
 #: templates/risk/assessment_list.html:12
 #, python-format
@@ -787,312 +58,327 @@ msgid_plural "%(n)s risk tasks"
 msgstr[0] "%(n)s εργασία κινδύνου"
 msgstr[1] "%(n)s εργασίες κινδύνου"
 
+#: templates/risk/_task_pill.html:1
+#, python-format
+msgid "%(p)s%% done"
+msgstr "%(p)s%% ολοκληρωμένο"
+
+#: templates/risk/assessment_detail.html:8
+msgid ", which is kept unchanged."
+msgstr ", η οποία διατηρείται αμετάβλητη."
+
+#: templates/risk/risk_task_form.html:106
+msgid "1 day before"
+msgstr "1 ημέρα πριν"
+
+#: templates/risk/risk_task_form.html:108
+msgid "1 week before"
+msgstr "1 εβδομάδα πριν"
+
+#: templates/risk/risk_task_form.html:107
+msgid "3 days before"
+msgstr "3 ημέρες πριν"
+
+#: templates/accounts/otp_setup.html:14
+msgid "6-digit code"
+msgstr "Εξαψήφιος κωδικός"
+
+#: templates/risk/task_detail.html:2 templates/risk/task_detail.html:5
+msgid "Action"
+msgstr "Ενέργεια"
+
+#: risk/views.py:370
+msgid "Action marked complete."
+msgstr "Η ενέργεια σημειώθηκε ως ολοκληρωμένη."
+
+#: templates/base.html:45 templates/risk/assessment_detail.html:32
+#: templates/risk/assessment_detail.html:46
+#: templates/risk/assessment_detail.html:56 templates/risk/search.html:15
+#: templates/risk/task_list.html:2 templates/risk/task_list.html:4
+msgid "Actions"
+msgstr "Ενέργειες"
+
 #: templates/risk/assessment_list.html:14
 #, python-format
 msgid "Actions %(d)s of %(t)s done"
 msgstr "Ενέργειες: %(d)s από %(t)s ολοκληρώθηκαν"
 
-#: templates/risk/assessment_list.html:14
-#, python-format
-msgid "%(n)s overdue"
-msgstr "%(n)s εκπρόθεσμες"
+#: templates/risk/updates.html:4
+msgid "Actions assigned to you."
+msgstr "Ενέργειες που σας έχουν ανατεθεί."
 
-#: templates/risk/assessment_list.html:18
-msgid "No assessments yet. Start one with “New assessment”."
-msgstr "Δεν υπάρχουν ακόμα εκτιμήσεις. Ξεκινήστε με «Νέα εκτίμηση»."
+# | msgid "Actions completed"
+#: risk/views.py:35
+msgid "Actions complete"
+msgstr "Ενέργειες ολοκληρωμένες"
 
-#: templates/risk/assessment_list.html:22
-msgid "Earlier versions"
-msgstr "Προηγούμενες εκδόσεις"
-
-#: templates/risk/library.html:4
-msgid "Shared by all tenants"
-msgstr "Κοινές για όλους τους οργανισμούς"
-
-#: templates/risk/library.html:5
-msgid ""
-"The dropdown options on the risk task form. Add, rename, reorder or hide "
-"entries in the admin panel; each entry can have a Greek and an English text."
-msgstr ""
-"Οι επιλογές των λιστών στη φόρμα εργασίας κινδύνου. Προσθήκη, μετονομασία, "
-"ταξινόμηση ή απόκρυψη γίνεται στη διαχείριση· κάθε εγγραφή έχει ελληνικό και "
-"αγγλικό κείμενο."
-
-#: templates/risk/library.html:6
-msgid "Add entry"
-msgstr "Νέα εγγραφή"
-
-#: templates/risk/library.html:9
-msgid "Empty"
-msgstr "Κενή"
-
-#: templates/risk/library.html:10 templates/risk/matrix.html:6
-msgid "Edit in admin"
-msgstr "Επεξεργασία στη διαχείριση"
-
-#: templates/risk/matrix.html:4
-msgid "Scoring method"
-msgstr "Μεθοδολογία βαθμολόγησης"
-
-#: templates/risk/matrix.html:5
-msgid ""
-"Likelihood and consequence are scored separately; the rating comes from this "
-"grid."
-msgstr ""
-"Η πιθανότητα και οι συνέπειες βαθμολογούνται χωριστά· η επικινδυνότητα "
-"προκύπτει από αυτόν τον πίνακα."
-
-#: templates/risk/matrix.html:8
-msgid "Likelihood ↓ · Consequence →"
-msgstr "Πιθανότητα ↓ · Συνέπειες →"
-
-#: templates/risk/no_company.html:2
-msgid ""
-"Your account is not linked to a tenant yet. Ask your administrator to set it "
-"up."
-msgstr ""
-"Ο λογαριασμός σας δεν έχει συνδεθεί ακόμα με οργανισμό. Ζητήστε από τον "
-"διαχειριστή να τον ρυθμίσει."
-
-#: templates/risk/report.html:2
-msgid "Report"
-msgstr "Αναφορά"
-
-#: templates/risk/report.html:4
-msgid "Client summary"
-msgstr "Σύνοψη πελάτη"
-
-#: templates/risk/report.html:7 templates/risk/risk_task_form.html:13
-msgid "Assessment"
-msgstr "Εκτίμηση"
-
-#: templates/risk/report.html:8
-msgid "superseded"
-msgstr "αντικαταστάθηκε"
-
-#: templates/risk/report.html:10
-msgid "Save as PDF"
-msgstr "Αποθήκευση ως PDF"
-
-#: templates/risk/report.html:12
-msgid "No assessments yet."
-msgstr "Δεν υπάρχουν ακόμα εκτιμήσεις."
-
-#: templates/risk/report.html:15
-msgid "Risk assessment summary"
-msgstr "Σύνοψη εκτίμησης κινδύνου"
-
-#: templates/risk/report.html:16
-msgid "Date"
-msgstr "Ημερομηνία"
-
-#: templates/risk/report.html:19
-msgid "Residual risk profile"
-msgstr "Προφίλ υπολειπόμενης επικινδυνότητας"
+# | msgid "Actions completed"
+#: risk/services.py:59 risk/services.py:244
+msgid "Actions complete – review"
+msgstr "Ενέργειες ολοκληρωμένες – επανεξέταση"
 
 #: templates/risk/report.html:20
 msgid "Actions completed"
 msgstr "Ολοκληρωμένες ενέργειες"
 
-#: templates/risk/report.html:24 templates/risk/risk_task_form.html:92
-msgid "Measure"
-msgstr "Μέτρο"
+#: templates/risk/assessment_detail.html:18
+msgid "Actions done"
+msgstr "Ολοκληρωμένες ενέργειες"
+
+#: risk/models.py:122
+msgid "Active"
+msgstr "Ενεργή"
+
+#: templates/risk/risk_task_form.html:113
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: templates/accounts/otp_setup.html:7
+msgid "Add an account and scan this code."
+msgstr "Προσθέστε λογαριασμό και σαρώστε αυτόν τον κωδικό."
+
+#: templates/risk/library.html:6
+msgid "Add entry"
+msgstr "Νέα εγγραφή"
+
+#: templates/risk/risk_task_form.html:69 templates/risk/risk_task_form.html:90
+msgid "Add measure"
+msgstr "Προσθήκη μέτρου"
+
+#: risk/models.py:99
+msgid "Additional measure"
+msgstr "Επιπρόσθετο μέτρο"
+
+#: templates/risk/risk_task_form.html:62
+msgid "Additional measures"
+msgstr "Επιπρόσθετα μέτρα"
+
+#: templates/base.html:25 templates/base.html:50
+msgid "Admin"
+msgstr "Διαχείριση"
+
+#: risk/views.py:153 risk/views.py:336
+msgid "All"
+msgstr "Όλες"
+
+# | msgid ""
+# | "Every risk task with actions has met the rule. Starting a new version "
+# | "keeps this one as a record."
+#: templates/risk/assessment_detail.html:27
+msgid "All actions are complete. Review each risk task and decide its new risk level; starting a new version keeps this one as a record."
+msgstr "Όλες οι ενέργειες ολοκληρώθηκαν. Επανεξετάστε κάθε εργασία κινδύνου και αποφασίστε το νέο επίπεδο επικινδυνότητας· η νέα έκδοση διατηρεί την τρέχουσα ως αρχείο."
+
+#: risk/views.py:372
+msgid "All actions of this assessment are complete. Review the risk levels and start a new version when ready."
+msgstr "Όλες οι ενέργειες της εκτίμησης ολοκληρώθηκαν. Επανεξετάστε τα επίπεδα επικινδυνότητας και ξεκινήστε νέα έκδοση όταν είστε έτοιμοι."
+
+#: templates/risk/assessment_detail.html:4
+#: templates/risk/assessment_form.html:4
+msgid "All assessments"
+msgstr "Όλες οι εκτιμήσεις"
+
+#: templates/risk/risk_task_form.html:75
+msgid "Also save my manual entries to the dropdown lists"
+msgstr "Αποθήκευση των χειροκίνητων καταχωρίσεων και στις λίστες"
+
+#: risk/views.py:36
+msgid "Archived"
+msgstr "Αρχειοθετημένη"
+
+#: templates/risk/assessment_form.html:9
+msgid "Area or activity"
+msgstr "Χώρος ή δραστηριότητα"
+
+#: templates/risk/report.html:7 templates/risk/risk_task_form.html:13
+msgid "Assessment"
+msgstr "Εκτίμηση"
+
+#: risk/views.py:96
+msgid "Assessment created. Add the first risk task."
+msgstr "Η εκτίμηση δημιουργήθηκε. Προσθέστε την πρώτη εργασία κινδύνου."
+
+#: templates/base.html:43 templates/risk/assessment_list.html:2
+#: templates/risk/search.html:16
+msgid "Assessments"
+msgstr "Εκτιμήσεις"
+
+#: risk/services.py:252
+msgid "Assigned to you"
+msgstr "Σας ανατέθηκε"
 
 #: templates/risk/report.html:24 templates/risk/risk_task_form.html:99
 #: templates/risk/task_detail.html:10
 msgid "Assigned user"
 msgstr "Υπεύθυνος"
 
-#: templates/risk/report.html:24 templates/risk/risk_task_form.html:102
-#: templates/risk/task_detail.html:11
-msgid "Deadline"
-msgstr "Προθεσμία"
+#: templates/accounts/password_reset_confirm.html:5
+msgid "At least 10 characters. Avoid common words and passwords you use elsewhere."
+msgstr "Τουλάχιστον 10 χαρακτήρες. Αποφύγετε κοινές λέξεις και κωδικούς που χρησιμοποιείτε αλλού."
 
-#: templates/risk/report.html:34
-msgid "No additional measures required"
-msgstr "Δεν απαιτούνται επιπρόσθετα μέτρα"
+#: templates/accounts/locked.html:5
+#: templates/accounts/password_reset_done.html:5
+#: templates/accounts/password_reset_form.html:9
+msgid "Back to sign in"
+msgstr "Επιστροφή στη σύνδεση"
 
-#: templates/risk/report.html:38
+#: templates/accounts/otp_setup.html:11
+msgid "Can't scan? Enter this key instead"
+msgstr "Δεν γίνεται σάρωση; Πληκτρολογήστε αυτό το κλειδί"
+
+#: templates/accounts/otp_setup.html:17 templates/risk/assessment_form.html:12
+#: templates/risk/risk_task_form.html:77 templates/risk/risk_task_form.html:113
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: templates/risk/_task_pill.html:1
 #, python-format
-msgid "Generated %(d)s by %(u)s."
-msgstr "Δημιουργήθηκε %(d)s από %(u)s."
+msgid "Carried to v%(v)s"
+msgstr "Μεταφέρθηκε στην έκδ. %(v)s"
 
-#: templates/risk/risk_task_form.html:2 templates/risk/risk_task_form.html:6
-msgid "New risk assessment task"
-msgstr "Νέα εργασία εκτίμησης κινδύνου"
+#: templates/risk/_compare.html:3 templates/risk/_compare.html:8
+msgid "Change"
+msgstr "Μεταβολή"
 
-#: templates/risk/risk_task_form.html:16
-msgid "No active assessment yet"
-msgstr "Δεν υπάρχει ακόμα ενεργή εκτίμηση"
+#: templates/accounts/password_reset_done.html:2
+#: templates/accounts/password_reset_done.html:4
+msgid "Check your email"
+msgstr "Ελέγξτε το email σας"
 
-#: templates/risk/risk_task_form.html:18
-msgid "Create an assessment first"
-msgstr "Δημιουργήστε πρώτα μια εκτίμηση"
+#: risk/views.py:226
+msgid "Choose a hazard or type one in."
+msgstr "Επιλέξτε κίνδυνο ή πληκτρολογήστε έναν."
 
 #: templates/risk/risk_task_form.html:26
 msgid "Choose a hazard…"
 msgstr "Επιλέξτε κίνδυνο…"
 
-#: templates/risk/risk_task_form.html:28 templates/risk/risk_task_form.html:96
-msgid "Manual add…"
-msgstr "Χειροκίνητη προσθήκη…"
-
-#: templates/risk/risk_task_form.html:30
-msgid "Hazard (manual)"
-msgstr "Κίνδυνος (χειροκίνητα)"
-
-#: templates/risk/risk_task_form.html:39
-msgid "Consequences"
-msgstr "Συνέπειες"
-
-#: templates/risk/risk_task_form.html:45
-msgid ""
-"The risk before any controls: slide likelihood and consequence, the rating "
-"is calculated."
-msgstr ""
-"Η επικινδυνότητα πριν από οποιοδήποτε μέτρο: μετακινήστε πιθανότητα και "
-"συνέπειες, η βαθμολογία υπολογίζεται αυτόματα."
-
-#: templates/risk/risk_task_form.html:50
-msgid "Existing control measures"
-msgstr "Υφιστάμενα μέτρα"
-
-#: templates/risk/risk_task_form.html:56
-msgid "The risk with the existing controls in place."
-msgstr "Η επικινδυνότητα με τα υφιστάμενα μέτρα σε ισχύ."
-
-#: templates/risk/risk_task_form.html:57
-msgid "Previous version"
-msgstr "Προηγούμενη έκδοση"
-
-#: templates/risk/risk_task_form.html:62
-msgid "Additional measures"
-msgstr "Επιπρόσθετα μέτρα"
-
-#: templates/risk/risk_task_form.html:65
-msgid "due"
-msgstr "προθεσμία"
-
-#: templates/risk/risk_task_form.html:69 templates/risk/risk_task_form.html:90
-msgid "Add measure"
-msgstr "Προσθήκη μέτρου"
-
-#: templates/risk/risk_task_form.html:70
-msgid ""
-"Each measure is assigned to a person, who gets an email and reminders before "
-"the deadline."
-msgstr ""
-"Κάθε μέτρο ανατίθεται σε ένα άτομο, που λαμβάνει email και υπενθυμίσεις πριν "
-"την προθεσμία."
-
-#: templates/risk/risk_task_form.html:71
-msgid "No measures."
-msgstr "Χωρίς μέτρα."
-
-#: templates/risk/risk_task_form.html:75
-msgid "Also save my manual entries to the dropdown lists"
-msgstr "Αποθήκευση των χειροκίνητων καταχωρίσεων και στις λίστες"
-
-#: templates/risk/risk_task_form.html:78
-msgid "Save task"
-msgstr "Αποθήκευση εργασίας"
-
-#: templates/risk/risk_task_form.html:85
-msgid "Remove"
-msgstr "Αφαίρεση"
-
-#: templates/risk/risk_task_form.html:90
-msgid "Close"
-msgstr "Κλείσιμο"
-
 #: templates/risk/risk_task_form.html:94
 msgid "Choose a measure…"
 msgstr "Επιλέξτε μέτρο…"
 
-#: templates/risk/risk_task_form.html:98
-msgid "Measure (manual)"
-msgstr "Μέτρο (χειροκίνητα)"
-
-#: templates/risk/risk_task_form.html:103
-msgid "Reminder"
-msgstr "Υπενθύμιση"
-
-#: templates/risk/risk_task_form.html:105
-msgid "No reminder"
-msgstr "Χωρίς υπενθύμιση"
-
-#: templates/risk/risk_task_form.html:106
-msgid "1 day before"
-msgstr "1 ημέρα πριν"
-
-#: templates/risk/risk_task_form.html:107
-msgid "3 days before"
-msgstr "3 ημέρες πριν"
-
-#: templates/risk/risk_task_form.html:108
-msgid "1 week before"
-msgstr "1 εβδομάδα πριν"
+#: templates/accounts/password_reset_confirm.html:2
+#: templates/accounts/password_reset_confirm.html:5
+msgid "Choose a new password"
+msgstr "Επιλέξτε νέο κωδικό"
 
 #: templates/risk/risk_task_form.html:111
 msgid "Choose or type a measure and pick a person."
 msgstr "Επιλέξτε ή πληκτρολογήστε μέτρο και επιλέξτε υπεύθυνο."
 
-#: templates/risk/risk_task_form.html:113
-msgid "Add"
-msgstr "Προσθήκη"
+#: risk/views.py:221
+msgid "Choose the assessment this task belongs to."
+msgstr "Επιλέξτε την εκτίμηση στην οποία ανήκει η εργασία."
 
-#: templates/risk/risk_tasks.html:6
-msgid ""
-"Every risk entry of this tenant's active assessments. The status updates by "
-"itself as actions are completed."
-msgstr ""
-"Όλες οι καταχωρίσεις κινδύνου των ενεργών εκτιμήσεων του οργανισμού. Η "
-"κατάσταση ενημερώνεται αυτόματα καθώς ολοκληρώνονται οι ενέργειες."
+#: templates/risk/report.html:4
+msgid "Client summary"
+msgstr "Σύνοψη πελάτη"
 
-#: templates/risk/risk_tasks.html:19
-#, python-format
-msgid "%(done)s of %(total)s actions done"
-msgstr "%(done)s από %(total)s ενέργειες ολοκληρώθηκαν"
+#: templates/risk/risk_task_form.html:90
+msgid "Close"
+msgstr "Κλείσιμο"
 
-#: templates/risk/risk_tasks.html:23
-msgid "No risk assessment tasks here yet."
-msgstr "Δεν υπάρχουν ακόμα εργασίες εκτίμησης κινδύνου."
+#: templates/risk/task_detail.html:29
+msgid "Comment"
+msgstr "Σχόλιο"
+
+#: templates/risk/task_detail.html:12
+msgid "Completed"
+msgstr "Ολοκληρώθηκε"
+
+#: templates/risk/assessment_detail.html:12
+msgid "Completed actions from the previous version now count as existing controls. Open each risk task marked “Re-score” and confirm its residual risk."
+msgstr "Οι ολοκληρωμένες ενέργειες της προηγούμενης έκδοσης θεωρούνται πλέον υφιστάμενα μέτρα. Ανοίξτε κάθε εργασία με την ένδειξη «Επαναβαθμολόγηση» και επιβεβαιώστε την υπολειπόμενη επικινδυνότητα."
+
+#: templates/accounts/otp_setup.html:16
+msgid "Confirm and sign in"
+msgstr "Επιβεβαίωση και σύνδεση"
+
+#: risk/models.py:97 templates/risk/_sliders.html:10
+#: templates/risk/_sliders.html:11
+msgid "Consequence"
+msgstr "Συνέπειες"
+
+#: templates/risk/risk_task_form.html:39
+msgid "Consequences"
+msgstr "Συνέπειες"
+
+#: accounts/models.py:48
+msgid "Consultant"
+msgstr "Σύμβουλος"
+
+#: templates/accounts/login.html:13
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: templates/risk/risk_task_form.html:18
+msgid "Create an assessment first"
+msgstr "Δημιουργήστε πρώτα μια εκτίμηση"
+
+#: templates/risk/assessment_form.html:12
+msgid "Create assessment"
+msgstr "Δημιουργία εκτίμησης"
 
 #: templates/risk/risk_tasks.html:23
 msgid "Create the first one"
 msgstr "Δημιουργήστε την πρώτη"
 
-#: templates/risk/search.html:9
-msgid "Type at least 2 characters."
-msgstr "Πληκτρολογήστε τουλάχιστον 2 χαρακτήρες."
+#: templates/risk/report.html:16
+msgid "Date"
+msgstr "Ημερομηνία"
 
-#: templates/risk/search.html:10
-#, python-format
-msgid "Nothing found for “%(q)s”."
-msgstr "Δεν βρέθηκε τίποτα για «%(q)s»."
-
-#: templates/risk/search.html:18
-msgid "People"
-msgstr "Άτομα"
-
-#: templates/risk/task_detail.html:2 templates/risk/task_detail.html:5
-msgid "Action"
-msgstr "Ενέργεια"
-
-#: templates/risk/task_detail.html:9
-msgid "Risk before → after controls"
-msgstr "Επικινδυνότητα πριν → μετά τα μέτρα"
-
+#: templates/risk/report.html:24 templates/risk/risk_task_form.html:102
 #: templates/risk/task_detail.html:11
-#, python-format
-msgid "Reminder %(n)s day before"
-msgid_plural "Reminder %(n)s days before"
-msgstr[0] "Υπενθύμιση %(n)s ημέρα πριν"
-msgstr[1] "Υπενθύμιση %(n)s ημέρες πριν"
+msgid "Deadline"
+msgstr "Προθεσμία"
 
-#: templates/risk/task_detail.html:12
-msgid "Completed"
+#: risk/views.py:336 templates/risk/_task_pill.html:1
+msgid "Done"
 msgstr "Ολοκληρώθηκε"
+
+#: risk/views.py:34
+msgid "Draft"
+msgstr "Πρόχειρο"
+
+#: templates/risk/risk_task_form.html:70
+msgid "Each measure is assigned to a person, who gets an email and reminders before the deadline."
+msgstr "Κάθε μέτρο ανατίθεται σε ένα άτομο, που λαμβάνει email και υπενθυμίσεις πριν την προθεσμία."
+
+#: templates/risk/assessment_list.html:22
+msgid "Earlier versions"
+msgstr "Προηγούμενες εκδόσεις"
+
+#: templates/risk/library.html:10 templates/risk/matrix.html:6
+msgid "Edit in admin"
+msgstr "Επεξεργασία στη διαχείριση"
+
+#: accounts/views.py:49
+msgid "Email or password is incorrect."
+msgstr "Λανθασμένο email ή κωδικός."
+
+#: templates/risk/library.html:9
+msgid "Empty"
+msgstr "Κενή"
+
+#: templates/accounts/otp_verify.html:4
+#, python-format
+msgid "Enter the 6-digit code from your authenticator app for <b>%(email)s</b>."
+msgstr "Εισάγετε τον εξαψήφιο κωδικό από την εφαρμογή επαλήθευσης για <b>%(email)s</b>."
+
+#: templates/accounts/password_reset_form.html:4
+msgid "Enter your work email. If it belongs to an account, we'll send a link to choose a new password."
+msgstr "Εισάγετε το email εργασίας. Αν αντιστοιχεί σε λογαριασμό, θα σας στείλουμε σύνδεσμο για νέο κωδικό."
+
+#: templates/accounts/otp_setup.html:4
+msgid "Every account needs this. It takes a minute and only happens once."
+msgstr "Απαιτείται για κάθε λογαριασμό. Χρειάζεται ένα λεπτό και γίνεται μόνο μία φορά."
+
+#: templates/risk/task_list.html:5
+msgid "Every additional measure assigned to a person, linked back to its risk task."
+msgstr "Κάθε επιπρόσθετο μέτρο που έχει ανατεθεί, συνδεδεμένο με την εργασία κινδύνου του."
+
+#: templates/risk/risk_tasks.html:6
+msgid "Every risk entry of this tenant's active assessments. The status updates by itself as actions are completed."
+msgstr "Όλες οι καταχωρίσεις κινδύνου των ενεργών εκτιμήσεων του οργανισμού. Η κατάσταση ενημερώνεται αυτόματα καθώς ολοκληρώνονται οι ενέργειες."
 
 #: templates/risk/task_detail.html:16
 msgid "Evidence and comments"
@@ -1102,79 +388,654 @@ msgstr "Τεκμήρια και σχόλια"
 msgid "Evidence photo"
 msgstr "Φωτογραφία τεκμηρίωσης"
 
-#: templates/risk/task_detail.html:21
-msgid "No evidence yet."
-msgstr "Δεν υπάρχει ακόμα τεκμηρίωση."
+#: risk/models.py:98
+msgid "Existing control measure"
+msgstr "Υφιστάμενο μέτρο"
 
-#: templates/risk/task_detail.html:27
-msgid "Update"
-msgstr "Ενημέρωση"
+#: templates/risk/risk_task_form.html:50
+msgid "Existing control measures"
+msgstr "Υφιστάμενα μέτρα"
 
-#: templates/risk/task_detail.html:28
-msgid "Progress"
-msgstr "Πρόοδος"
+#: templates/risk/assessment_detail.html:46
+#: templates/risk/assessment_detail.html:52
+msgid "Existing controls"
+msgstr "Υφιστάμενα μέτρα"
 
-#: templates/risk/task_detail.html:29
-msgid "Comment"
-msgstr "Σχόλιο"
+#: templates/risk/assessment_detail.html:8
+msgid "Follows"
+msgstr "Ακολουθεί την"
 
-#: templates/risk/task_detail.html:29
-msgid "What was done?"
-msgstr "Τι έγινε;"
+#: templates/accounts/password_reset_form.html:2
+#: templates/accounts/password_reset_form.html:4
+msgid "Forgot password"
+msgstr "Ξεχάσατε τον κωδικό"
 
-#: templates/risk/task_detail.html:30
-msgid "Photo"
-msgstr "Φωτογραφία"
+#: templates/accounts/login.html:14
+msgid "Forgot password?"
+msgstr "Ξεχάσατε τον κωδικό;"
 
-#: templates/risk/task_detail.html:32
-msgid "Save update"
-msgstr "Αποθήκευση ενημέρωσης"
+#: templates/risk/report.html:38
+#, python-format
+msgid "Generated %(d)s by %(u)s."
+msgstr "Δημιουργήθηκε %(d)s από %(u)s."
+
+#: risk/models.py:95 templates/risk/_compare.html:3
+#: templates/risk/assessment_detail.html:46 templates/risk/report.html:24
+#: templates/risk/risk_task_form.html:23 templates/risk/risk_task_form.html:24
+#: templates/risk/task_detail.html:8
+msgid "Hazard"
+msgstr "Κίνδυνος"
+
+#: templates/risk/risk_task_form.html:30
+msgid "Hazard (manual)"
+msgstr "Κίνδυνος (χειροκίνητα)"
+
+#: templates/accounts/login.html:10
+msgid "Hide"
+msgstr "Απόκρυψη"
+
+#: templates/risk/assessment_detail.html:33
+msgid "History"
+msgstr "Ιστορικό"
+
+#: templates/accounts/password_reset_done.html:4
+msgid "If that address belongs to an account, a reset link is on its way. The link works once and expires in an hour. Check your spam folder if it doesn't arrive in a few minutes."
+msgstr "Αν η διεύθυνση αντιστοιχεί σε λογαριασμό, ο σύνδεσμος επαναφοράς έχει σταλεί. Λειτουργεί μία φορά και λήγει σε μία ώρα. Ελέγξτε και τα ανεπιθύμητα αν δεν φτάσει σε λίγα λεπτά."
+
+#: risk/views.py:35
+msgid "In progress"
+msgstr "Σε εξέλιξη"
+
+#: templates/risk/_compare.html:8
+msgid "Increased"
+msgstr "Αυξήθηκε"
+
+#: templates/risk/assessment_detail.html:46
+#: templates/risk/assessment_detail.html:51 templates/risk/report.html:24
+msgid "Inherent"
+msgstr "Εκ φύσεως"
+
+#: templates/risk/assessment_detail.html:16
+#: templates/risk/risk_task_form.html:44
+msgid "Inherent risk"
+msgstr "Εκ φύσεως επικινδυνότητα"
+
+#: templates/_toggles.html:1
+msgid "Light / dark mode"
+msgstr "Φωτεινό / σκοτεινό θέμα"
+
+#: templates/risk/_sliders.html:5 templates/risk/_sliders.html:6
+msgid "Likelihood"
+msgstr "Πιθανότητα"
+
+#: templates/risk/matrix.html:5
+msgid "Likelihood and consequence are scored separately; the rating comes from this grid."
+msgstr "Η πιθανότητα και οι συνέπειες βαθμολογούνται χωριστά· η επικινδυνότητα προκύπτει από αυτόν τον πίνακα."
+
+#: templates/risk/matrix.html:8
+msgid "Likelihood ↓ · Consequence →"
+msgstr "Πιθανότητα ↓ · Συνέπειες →"
+
+#: templates/accounts/password_reset_confirm.html:13
+msgid "Link no longer valid"
+msgstr "Ο σύνδεσμος δεν ισχύει πλέον"
+
+#: templates/base.html:46 templates/risk/library.html:2
+#: templates/risk/library.html:4
+msgid "Lists"
+msgstr "Λίστες"
+
+#: templates/risk/_picklist.html:5
+msgid "Manual add (one per line)"
+msgstr "Χειροκίνητη προσθήκη (μία ανά γραμμή)"
+
+#: templates/risk/risk_task_form.html:28 templates/risk/risk_task_form.html:96
+msgid "Manual add…"
+msgstr "Χειροκίνητη προσθήκη…"
 
 #: templates/risk/task_detail.html:33
 msgid "Mark complete"
 msgstr "Ολοκλήρωση"
 
-#: templates/risk/task_detail.html:33
-msgid "Reopen"
-msgstr "Επαναφορά"
+#: templates/risk/report.html:24 templates/risk/risk_task_form.html:92
+msgid "Measure"
+msgstr "Μέτρο"
 
-#: templates/risk/task_detail.html:36
-msgid "This action was carried forward to"
-msgstr "Αυτή η ενέργεια μεταφέρθηκε στην"
-
-#: templates/risk/task_detail.html:36
-msgid "Update it there."
-msgstr "Ενημερώστε την εκεί."
-
-#: templates/risk/task_list.html:5
-msgid ""
-"Every additional measure assigned to a person, linked back to its risk task."
-msgstr ""
-"Κάθε επιπρόσθετο μέτρο που έχει ανατεθεί, συνδεδεμένο με την εργασία "
-"κινδύνου του."
+#: templates/risk/risk_task_form.html:98
+msgid "Measure (manual)"
+msgstr "Μέτρο (χειροκίνητα)"
 
 #: templates/risk/task_list.html:5
 msgid "Measures assigned to you. Open one to update progress or add evidence."
-msgstr ""
-"Μέτρα που σας έχουν ανατεθεί. Ανοίξτε ένα για ενημέρωση προόδου ή τεκμηρίωση."
+msgstr "Μέτρα που σας έχουν ανατεθεί. Ανοίξτε ένα για ενημέρωση προόδου ή τεκμηρίωση."
+
+#: risk/services.py:62
+msgid "Measures in progress"
+msgstr "Μέτρα σε εξέλιξη"
+
+#: templates/base.html:14
+msgid "Menu"
+msgstr "Μενού"
+
+#: templates/base.html:45 templates/risk/task_detail.html:4
+#: templates/risk/task_list.html:4
+msgid "My actions"
+msgstr "Οι ενέργειές μου"
+
+#: risk/views.py:34
+msgid "Needs measures"
+msgstr "Χρειάζεται μέτρα"
+
+#: templates/risk/_compare.html:8
+msgid "New"
+msgstr "Νέα"
+
+#: templates/risk/assessment_form.html:2 templates/risk/assessment_form.html:5
+#: templates/risk/assessment_list.html:6
+msgid "New assessment"
+msgstr "Νέα εκτίμηση"
+
+#: templates/accounts/password_reset_confirm.html:8
+msgid "New password"
+msgstr "Νέος κωδικός"
+
+#: templates/risk/risk_task_form.html:2 templates/risk/risk_task_form.html:6
+msgid "New risk assessment task"
+msgstr "Νέα εργασία εκτίμησης κινδύνου"
+
+#: templates/risk/assessment_detail.html:62 templates/risk/risk_tasks.html:7
+msgid "New task"
+msgstr "Νέα εργασία"
+
+#: templates/risk/risk_task_form.html:16
+msgid "No active assessment yet"
+msgstr "Δεν υπάρχει ακόμα ενεργή εκτίμηση"
+
+#: templates/risk/report.html:34
+msgid "No additional measures required"
+msgstr "Δεν απαιτούνται επιπρόσθετα μέτρα"
+
+#: templates/risk/report.html:12
+msgid "No assessments yet."
+msgstr "Δεν υπάρχουν ακόμα εκτιμήσεις."
+
+#: templates/risk/assessment_list.html:18
+msgid "No assessments yet. Start one with “New assessment”."
+msgstr "Δεν υπάρχουν ακόμα εκτιμήσεις. Ξεκινήστε με «Νέα εκτίμηση»."
+
+#: templates/risk/_compare.html:8
+msgid "No change"
+msgstr "Χωρίς μεταβολή"
+
+#: templates/risk/task_detail.html:21
+msgid "No evidence yet."
+msgstr "Δεν υπάρχει ακόμα τεκμηρίωση."
+
+#: templates/risk/risk_task_form.html:71
+msgid "No measures."
+msgstr "Χωρίς μέτρα."
+
+#: risk/services.py:61
+msgid "No open actions"
+msgstr "Χωρίς ανοιχτές ενέργειες"
+
+#: templates/risk/risk_task_form.html:105
+msgid "No reminder"
+msgstr "Χωρίς υπενθύμιση"
+
+#: templates/risk/risk_tasks.html:23
+msgid "No risk assessment tasks here yet."
+msgstr "Δεν υπάρχουν ακόμα εργασίες εκτίμησης κινδύνου."
+
+#: templates/risk/assessment_detail.html:60
+msgid "No risk tasks yet."
+msgstr "Δεν υπάρχουν ακόμα εργασίες κινδύνου."
+
+#: templates/risk/assessment_detail.html:57
+msgid "None set"
+msgstr "Κανένα"
+
+#: templates/risk/_chip.html:2 templates/risk/_dist.html:1
+msgid "Not scored"
+msgstr "Χωρίς βαθμολογία"
+
+#: templates/risk/search.html:10
+#, python-format
+msgid "Nothing found for “%(q)s”."
+msgstr "Δεν βρέθηκε τίποτα για «%(q)s»."
+
+#: templates/risk/_task_rows.html:11
+msgid "Nothing here. Actions appear when a risk task gets additional measures."
+msgstr "Δεν υπάρχει τίποτα εδώ. Οι ενέργειες εμφανίζονται όταν μια εργασία κινδύνου αποκτήσει επιπρόσθετα μέτρα."
+
+#: templates/risk/updates.html:6
+msgid "Nothing new."
+msgstr "Τίποτα νέο."
 
 #: templates/risk/task_list.html:8
 msgid "Only mine"
 msgstr "Μόνο οι δικές μου"
 
+#: risk/views.py:34 risk/views.py:336 templates/risk/_task_pill.html:1
+msgid "Open"
+msgstr "Ανοιχτή"
+
+#: templates/accounts/otp_setup.html:6
+msgid "Open Microsoft Authenticator, Google Authenticator or any authenticator app."
+msgstr "Ανοίξτε το Microsoft Authenticator, το Google Authenticator ή οποιαδήποτε εφαρμογή επαλήθευσης."
+
+#: risk/views.py:35 risk/views.py:336 templates/risk/_task_pill.html:1
+#: templates/risk/assessment_detail.html:19 templates/risk/report.html:21
+msgid "Overdue"
+msgstr "Εκπρόθεσμη"
+
+#: risk/services.py:252
+msgid "Overdue action"
+msgstr "Εκπρόθεσμη ενέργεια"
+
+#: templates/accounts/login.html:8
+msgid "Password"
+msgstr "Κωδικός"
+
+#: templates/accounts/password_reset_complete.html:2
+#: templates/accounts/password_reset_complete.html:4
+msgid "Password changed"
+msgstr "Ο κωδικός άλλαξε"
+
+#: templates/risk/search.html:18
+msgid "People"
+msgstr "Άτομα"
+
+#: templates/risk/task_detail.html:30
+msgid "Photo"
+msgstr "Φωτογραφία"
+
+#: templates/risk/risk_task_form.html:57
+msgid "Previous version"
+msgstr "Προηγούμενη έκδοση"
+
+#: templates/risk/task_detail.html:28
+msgid "Progress"
+msgstr "Πρόοδος"
+
+#: templates/risk/assessment_detail.html:55
+msgid "Re-score"
+msgstr "Επαναβαθμολόγηση"
+
+#: risk/services.py:57
+msgid "Re-score needed"
+msgstr "Χρειάζεται επαναβαθμολόγηση"
+
+#: templates/risk/_compare.html:8
+msgid "Reduced"
+msgstr "Μειώθηκε"
+
+#: templates/risk/assessment_detail.html:31
+msgid "Register"
+msgstr "Μητρώο"
+
+#: templates/risk/risk_task_form.html:103
+msgid "Reminder"
+msgstr "Υπενθύμιση"
+
+#: templates/risk/task_detail.html:11
+#, python-format
+msgid "Reminder %(n)s day before"
+msgid_plural "Reminder %(n)s days before"
+msgstr[0] "Υπενθύμιση %(n)s ημέρα πριν"
+msgstr[1] "Υπενθύμιση %(n)s ημέρες πριν"
+
+#: templates/risk/risk_task_form.html:85
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: templates/risk/task_detail.html:33
+msgid "Reopen"
+msgstr "Επαναφορά"
+
+#: templates/accounts/password_reset_confirm.html:9
+msgid "Repeat new password"
+msgstr "Επανάληψη νέου κωδικού"
+
+#: templates/risk/report.html:2
+msgid "Report"
+msgstr "Αναφορά"
+
+#: templates/base.html:48 templates/risk/report.html:4
+msgid "Reports"
+msgstr "Αναφορές"
+
+#: templates/accounts/password_reset_confirm.html:14
+msgid "Request a new link"
+msgstr "Νέος σύνδεσμος"
+
+#: templates/risk/assessment_detail.html:46
+#: templates/risk/assessment_detail.html:53 templates/risk/report.html:24
+msgid "Residual"
+msgstr "Υπολειπόμενη"
+
+#: templates/risk/assessment_detail.html:17
+#: templates/risk/assessment_list.html:13 templates/risk/risk_task_form.html:55
+msgid "Residual risk"
+msgstr "Υπολειπόμενη επικινδυνότητα"
+
+#: templates/risk/report.html:19
+msgid "Residual risk profile"
+msgstr "Προφίλ υπολειπόμενης επικινδυνότητας"
+
+#: templates/risk/_compare.html:1
+#, python-format
+msgid "Residual risk, version %(old)s → version %(new)s"
+msgstr "Υπολειπόμενη επικινδυνότητα, έκδοση %(old)s → έκδοση %(new)s"
+
+#: templates/base.html:42 templates/risk/risk_task_form.html:4
+#: templates/risk/risk_tasks.html:2 templates/risk/risk_tasks.html:5
+#: templates/risk/search.html:13
+msgid "Risk Assessment Tasks"
+msgstr "Εργασίες Εκτίμησης Κινδύνου"
+
+#: templates/risk/report.html:15
+msgid "Risk assessment summary"
+msgstr "Σύνοψη εκτίμησης κινδύνου"
+
+#: templates/risk/task_detail.html:9
+msgid "Risk before → after controls"
+msgstr "Επικινδυνότητα πριν → μετά τα μέτρα"
+
+#: templates/risk/assessment_detail.html:27
+msgid "Risk levels never change automatically. When you have reviewed the completed actions, start a new version and re-score each risk task."
+msgstr "Τα επίπεδα επικινδυνότητας δεν αλλάζουν ποτέ αυτόματα. Αφού επανεξετάσετε τις ολοκληρωμένες ενέργειες, ξεκινήστε νέα έκδοση και επαναβαθμολογήστε κάθε εργασία κινδύνου."
+
+#: templates/base.html:47 templates/risk/matrix.html:2
+#: templates/risk/matrix.html:4
+msgid "Risk matrix"
+msgstr "Πίνακας επικινδυνότητας"
+
+#: risk/views.py:262
+msgid "Risk task saved."
+msgstr "Η εργασία κινδύνου αποθηκεύτηκε."
+
+#: templates/risk/assessment_detail.html:15
+msgid "Risk tasks"
+msgstr "Εργασίες κινδύνου"
+
+#: accounts/models.py:49
+msgid "Safety officer"
+msgstr "Υπεύθυνος ασφάλειας"
+
+#: templates/risk/report.html:10
+msgid "Save as PDF"
+msgstr "Αποθήκευση ως PDF"
+
+#: templates/accounts/password_reset_confirm.html:10
+msgid "Save new password"
+msgstr "Αποθήκευση νέου κωδικού"
+
+#: templates/risk/risk_task_form.html:78
+msgid "Save task"
+msgstr "Αποθήκευση εργασίας"
+
+#: templates/risk/task_detail.html:32
+msgid "Save update"
+msgstr "Αποθήκευση ενημέρωσης"
+
+#: templates/risk/matrix.html:4
+msgid "Scoring method"
+msgstr "Μεθοδολογία βαθμολόγησης"
+
+#: templates/base.html:18 templates/base.html:36 templates/risk/search.html:2
+#: templates/risk/search.html:4 templates/risk/search.html:7
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: templates/base.html:18 templates/risk/search.html:7
+msgid "Search tasks, actions, people…"
+msgstr "Αναζήτηση εργασιών, ενεργειών, ατόμων…"
+
+#: templates/base.html:36
+msgid "Search…"
+msgstr "Αναζήτηση…"
+
+#: templates/base.html:31
+msgid "Sections"
+msgstr "Ενότητες"
+
+#: templates/accounts/password_reset_form.html:8
+msgid "Send reset link"
+msgstr "Αποστολή συνδέσμου"
+
+#: templates/accounts/otp_setup.html:2 templates/accounts/otp_setup.html:4
+msgid "Set up two-step verification"
+msgstr "Ρύθμιση επαλήθευσης δύο βημάτων"
+
+#: templates/risk/library.html:4
+msgid "Shared by all tenants"
+msgstr "Κοινές για όλους τους οργανισμούς"
+
+#: templates/accounts/login.html:10
+msgid "Show"
+msgstr "Εμφάνιση"
+
+#: templates/accounts/login.html:3
+#: templates/accounts/password_reset_complete.html:5 templates/base_auth.html:5
+msgid "Sign in"
+msgstr "Σύνδεση"
+
+#: templates/accounts/password_reset_complete.html:4
+msgid "Sign in with your new password. You'll still need the 6-digit code from your authenticator app."
+msgstr "Συνδεθείτε με τον νέο κωδικό. Θα χρειαστείτε ακόμα τον εξαψήφιο κωδικό από την εφαρμογή επαλήθευσης."
+
+#: templates/base.html:26 templates/base.html:51
+msgid "Sign out"
+msgstr "Αποσύνδεση"
+
+#: templates/accounts/locked.html:2 templates/accounts/locked.html:4
+msgid "Sign-in paused"
+msgstr "Η σύνδεση ανεστάλη"
+
+#: templates/risk/assessment_form.html:10
+msgid "Site"
+msgstr "Εγκατάσταση"
+
+#: accounts/models.py:50
+msgid "Staff member"
+msgstr "Εργαζόμενος"
+
+#: templates/risk/assessment_detail.html:25
+#, python-format
+msgid "Start version %(n)s"
+msgstr "Έναρξη έκδοσης %(n)s"
+
+#: templates/risk/assessment_detail.html:46
+#: templates/risk/assessment_detail.html:58 templates/risk/report.html:16
+#: templates/risk/report.html:24
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: risk/models.py:123 risk/services.py:55 templates/risk/search.html:17
+msgid "Superseded"
+msgstr "Αντικαταστάθηκε"
+
+#: templates/risk/assessment_detail.html:27
+msgid "Superseded versions cannot be reassessed."
+msgstr "Οι εκδόσεις που αντικαταστάθηκαν δεν επανεκτιμώνται."
+
+#: templates/_tenant_switch.html:6
+msgid "Switch"
+msgstr "Αλλαγή"
+
+#: templates/_toggles.html:1
+msgid "Switch light / dark mode"
+msgstr "Αλλαγή φωτεινού / σκοτεινού θέματος"
+
+#: templates/_tenant_switch.html:2 templates/_tenant_switch.html:3
+#: templates/_tenant_switch.html:7
+msgid "Tenant"
+msgstr "Οργανισμός"
+
+#: accounts/views.py:101
+msgid "That code did not match. Make sure your phone's clock is correct and try again."
+msgstr "Ο κωδικός δεν ταιριάζει. Βεβαιωθείτε ότι η ώρα του κινητού είναι σωστή και δοκιμάστε ξανά."
+
+#: accounts/views.py:76
+msgid "That code is not valid. Check your authenticator app and try again."
+msgstr "Ο κωδικός δεν είναι έγκυρος. Ελέγξτε την εφαρμογή επαλήθευσης και δοκιμάστε ξανά."
+
+#: templates/risk/library.html:5
+msgid "The dropdown options on the risk task form. Add, rename, reorder or hide entries in the admin panel; each entry can have a Greek and an English text."
+msgstr "Οι επιλογές των λιστών στη φόρμα εργασίας κινδύνου. Προσθήκη, μετονομασία, ταξινόμηση ή απόκρυψη γίνεται στη διαχείριση· κάθε εγγραφή έχει ελληνικό και αγγλικό κείμενο."
+
+#: templates/risk/risk_task_form.html:45
+msgid "The risk before any controls: slide likelihood and consequence, the rating is calculated."
+msgstr "Η επικινδυνότητα πριν από οποιοδήποτε μέτρο: μετακινήστε πιθανότητα και συνέπειες, η βαθμολογία υπολογίζεται αυτόματα."
+
+#: templates/risk/risk_task_form.html:56
+msgid "The risk with the existing controls in place."
+msgstr "Η επικινδυνότητα με τα υφιστάμενα μέτρα σε ισχύ."
+
+#: templates/accounts/locked.html:4
+msgid "There were too many failed attempts for this account. Wait 15 minutes and try again, or ask your administrator to unlock it."
+msgstr "Υπήρξαν πολλές αποτυχημένες προσπάθειες για αυτόν τον λογαριασμό. Περιμένετε 15 λεπτά και δοκιμάστε ξανά ή ζητήστε ξεκλείδωμα από τον διαχειριστή."
+
+#: templates/risk/task_detail.html:36
+msgid "This action was carried forward to"
+msgstr "Αυτή η ενέργεια μεταφέρθηκε στην"
+
+#: templates/risk/assessment_detail.html:43
+msgid "This is the first version. A before-and-after comparison appears once a newer version exists."
+msgstr "Αυτή είναι η πρώτη έκδοση. Η σύγκριση πριν/μετά εμφανίζεται όταν υπάρξει νεότερη έκδοση."
+
+#: templates/accounts/password_reset_confirm.html:13
+msgid "This reset link has expired or was already used. Request a new one."
+msgstr "Ο σύνδεσμος έληξε ή έχει ήδη χρησιμοποιηθεί. Ζητήστε νέο."
+
+#: templates/risk/assessment_detail.html:11
+msgid "This version is read-only. It was replaced by"
+msgstr "Η έκδοση είναι μόνο για ανάγνωση. Αντικαταστάθηκε από την"
+
+#: accounts/views.py:93
+msgid "Too many wrong codes. Wait a few seconds and try again."
+msgstr "Πολλοί λανθασμένοι κωδικοί. Περιμένετε λίγα δευτερόλεπτα και δοκιμάστε ξανά."
+
+#: accounts/views.py:71
+msgid "Too many wrong codes. Wait a moment and try again."
+msgstr "Πολλοί λανθασμένοι κωδικοί. Περιμένετε λίγο και δοκιμάστε ξανά."
+
+#: templates/accounts/otp_verify.html:4
+msgid "Two-step verification"
+msgstr "Επαλήθευση δύο βημάτων"
+
+#: accounts/views.py:98
+msgid "Two-step verification is set up."
+msgstr "Η επαλήθευση δύο βημάτων ρυθμίστηκε."
+
+#: templates/risk/search.html:9
+msgid "Type at least 2 characters."
+msgstr "Πληκτρολογήστε τουλάχιστον 2 χαρακτήρες."
+
+#: templates/accounts/otp_setup.html:8
+msgid "Type the 6-digit code the app shows."
+msgstr "Πληκτρολογήστε τον εξαψήφιο κωδικό που εμφανίζει η εφαρμογή."
+
+#: templates/risk/task_detail.html:27
+msgid "Update"
+msgstr "Ενημέρωση"
+
+#: templates/risk/task_detail.html:36
+msgid "Update it there."
+msgstr "Ενημερώστε την εκεί."
+
+#: risk/views.py:375
+msgid "Update saved."
+msgstr "Η ενημέρωση αποθηκεύτηκε."
+
+#: templates/base.html:23 templates/risk/updates.html:2
 #: templates/risk/updates.html:4
-msgid ""
-"You get assessment-level updates. Individual action changes roll up into "
-"each assessment instead of sending an alert each time."
-msgstr ""
-"Λαμβάνετε ενημερώσεις σε επίπεδο εκτίμησης. Οι αλλαγές σε μεμονωμένες "
-"ενέργειες συγκεντρώνονται στην εκτίμηση αντί για ξεχωριστή ειδοποίηση κάθε "
-"φορά."
+msgid "Updates"
+msgstr "Ενημερώσεις"
+
+#: templates/accounts/otp_verify.html:10
+msgid "Use a different account"
+msgstr "Χρήση άλλου λογαριασμού"
+
+#: templates/accounts/login.html:3
+msgid "Use your work email address."
+msgstr "Χρησιμοποιήστε το email εργασίας σας."
+
+#: templates/accounts/otp_verify.html:2 templates/accounts/otp_verify.html:7
+msgid "Verification code"
+msgstr "Κωδικός επαλήθευσης"
+
+#: templates/accounts/otp_verify.html:9
+msgid "Verify and sign in"
+msgstr "Επαλήθευση και σύνδεση"
+
+#: templates/risk/assessment_detail.html:40 templates/risk/report.html:16
+msgid "Version"
+msgstr "Έκδοση"
+
+#: risk/views.py:131
+#, python-format
+msgid "Version %(new)s created. Version %(old)s is kept as a record. Re-score the risk tasks marked “Re-score”."
+msgstr "Δημιουργήθηκε η έκδοση %(new)s. Η έκδοση %(old)s διατηρείται ως αρχείο. Επαναβαθμολογήστε τις εργασίες με την ένδειξη «Επαναβαθμολόγηση»."
+
+#: templates/risk/task_detail.html:29
+msgid "What was done?"
+msgstr "Τι έγινε;"
+
+#: risk/models.py:96 templates/risk/assessment_detail.html:46
+#: templates/risk/assessment_detail.html:50
+#: templates/risk/risk_task_form.html:34
+msgid "Who is involved"
+msgstr "Ποιος επηρεάζεται"
+
+#: templates/accounts/login.html:7
+#: templates/accounts/password_reset_form.html:7
+msgid "Work email"
+msgstr "Email εργασίας"
 
 #: templates/risk/updates.html:4
-msgid "Actions assigned to you."
-msgstr "Ενέργειες που σας έχουν ανατεθεί."
+msgid "You get assessment-level updates. Individual action changes roll up into each assessment instead of sending an alert each time."
+msgstr "Λαμβάνετε ενημερώσεις σε επίπεδο εκτίμησης. Οι αλλαγές σε μεμονωμένες ενέργειες συγκεντρώνονται στην εκτίμηση αντί για ξεχωριστή ειδοποίηση κάθε φορά."
 
-#: templates/risk/updates.html:6
-msgid "Nothing new."
-msgstr "Τίποτα νέο."
+#: accounts/views.py:116
+msgid "You have been signed out."
+msgstr "Αποσυνδεθήκατε."
+
+#: templates/risk/no_company.html:2
+msgid "Your account is not linked to a tenant yet. Ask your administrator to set it up."
+msgstr "Ο λογαριασμός σας δεν έχει συνδεθεί ακόμα με οργανισμό. Ζητήστε από τον διαχειριστή να τον ρυθμίσει."
+
+#: templates/risk/assessment_detail.html:6
+msgid "created"
+msgstr "δημιουργήθηκε"
+
+#: templates/risk/risk_task_form.html:65
+msgid "due"
+msgstr "προθεσμία"
+
+#: templates/risk/assessment_form.html:10
+msgid "e.g. Head office"
+msgstr "π.χ. Κεντρικά γραφεία"
+
+#: templates/risk/assessment_form.html:9
+msgid "e.g. Kitchen and food preparation"
+msgstr "π.χ. Κουζίνα και προετοιμασία φαγητού"
+
+#: templates/risk/assessment_detail.html:52
+msgid "in place"
+msgstr "σε ισχύ"
+
+#: templates/risk/report.html:8
+msgid "superseded"
+msgstr "αντικαταστάθηκε"
+
+#: templates/risk/assessment_detail.html:8
+#: templates/risk/assessment_detail.html:11 templates/risk/task_detail.html:36
+msgid "version"
+msgstr "έκδοση"
+
+#: templates/risk/assessment_detail.html:53
+msgid "was"
+msgstr "ήταν"
+

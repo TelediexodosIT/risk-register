@@ -7,7 +7,6 @@ urlpatterns = [
     path("assessments/", views.assessment_list, name="assessment_list"),
     path("assessments/new/", views.assessment_create, name="assessment_create"),
     path("assessments/<int:pk>/", views.assessment_detail, name="assessment_detail"),
-    path("assessments/<int:pk>/rule/", views.assessment_rule, name="assessment_rule"),
     path("assessments/<int:pk>/reassess/", views.assessment_reassess, name="assessment_reassess"),
     path("risk-tasks/", views.risk_tasks, name="risk_tasks"),
     path("risk-tasks/new/", views.hazard_create, name="risk_task_new"),
