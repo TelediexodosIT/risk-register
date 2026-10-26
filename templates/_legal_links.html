@@ -1,0 +1,1 @@
+{% load i18n %}<nav class="legal-links" aria-label="{% translate 'Legal' %}"><span>© {% now "Y" %} {{ LEGAL.entity }}</span><a href="{% url 'legal_privacy' %}">{% translate "Privacy" %}</a><a href="{% url 'legal_terms' %}">{% translate "Terms" %}</a><a href="{% url 'legal_cookies' %}">{% translate "Cookies" %}</a></nav>

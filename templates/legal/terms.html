@@ -1,0 +1,40 @@
+{% extends "legal/base_legal.html" %}{% load i18n %}
+{% block title %}{% translate "Terms of use" %}{% endblock %}
+{% block doc %}
+<h1>Terms of use</h1>
+<p class="meta">Last updated {{ LEGAL.updated }}</p>
+
+<p>These terms apply to everyone who signs in to {{ APP_NAME }}, provided by {{ LEGAL.entity }}. Your organisation's use of the service is also covered by its own agreement with {{ LEGAL.entity }}; where the two differ, that agreement applies.</p>
+
+<h2>Your account</h2>
+<ul>
+  <li>Accounts are created by your organisation for work use only. Do not share your password or let anyone else use your authenticator app.</li>
+  <li>If you think someone else has accessed your account, change your password and tell your administrator straight away.</li>
+  <li>Your organisation can change your role or close your account at any time.</li>
+</ul>
+
+<h2>Using the service</h2>
+<ul>
+  <li>Record accurate information and upload only content you have the right to share and that the task needs.</li>
+  <li>Do not try to access other organisations' data, test the security of the service without written permission, or disrupt it.</li>
+  <li>We may suspend an account that puts the service or other users at risk.</li>
+</ul>
+
+<h2>Risk ratings and professional judgement</h2>
+<p>{{ APP_NAME }} calculates risk ratings from the scoring method configured for your organisation and tracks the actions you assign. It supports, but does not replace, the judgement of a competent person. Decisions about whether work is safe to carry out, and compliance with health and safety law, remain the responsibility of your organisation.</p>
+
+<h2>Your content</h2>
+<p>Your organisation owns the assessments, actions, comments and photos it adds. {{ LEGAL.entity }} uses them only to provide the service, as described in the <a href="{% url 'legal_privacy' %}">privacy notice</a>.</p>
+
+<h2>Availability and changes</h2>
+<p>We work to keep the service available and secure, but it may be unavailable during maintenance or for reasons outside our control. We improve the service over time and may change or remove features, giving notice of significant changes to your organisation.</p>
+
+<h2>Liability</h2>
+<p>To the extent the law allows, {{ LEGAL.entity }}'s liability is limited as set out in its agreement with your organisation. Nothing in these terms limits liability that cannot be limited by law.</p>
+
+<h2>Law</h2>
+<p>These terms are governed by the laws of the Republic of Cyprus, and the courts of Cyprus have jurisdiction.</p>
+
+<h2>Contact</h2>
+<p>{{ LEGAL.entity }}, {{ LEGAL.address }} · <b>{{ LEGAL.email }}</b></p>
+{% endblock %}

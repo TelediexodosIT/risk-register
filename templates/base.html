@@ -12,7 +12,7 @@
 {% with nav=request.resolver_match.url_name %}
 <header class="top">
   <button class="iconbtn menu-btn" type="button" data-menu aria-label="{% translate 'Menu' %}" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-  <a class="brand" href="{% url 'home' %}"><img class="logo" src="{% static 'img/brainertek.png' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small>by BrainerTek</small></span></a>
+  <a class="brand" href="{% url 'home' %}"><img class="logo" src="{% static 'img/brainertek.svg' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small>by BrainerTek</small></span></a>
   <form class="search d-only" method="get" action="{% url 'search' %}" role="search">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input type="search" name="q" value="{{ request.GET.q|default:'' }}" placeholder="{% translate 'Search tasks, actions, people…' %}" aria-label="{% translate 'Search' %}">
@@ -46,7 +46,8 @@
     {% if user.can_manage %}<a class="nav {% if nav == 'library' %}on{% endif %}" href="{% url 'library' %}">{% translate "Lists" %}</a>{% endif %}
     <a class="nav {% if nav == 'matrix' %}on{% endif %}" href="{% url 'matrix' %}">{% translate "Risk matrix" %}</a>
     {% if user.can_manage %}<a class="nav {% if nav in 'report report_detail' %}on{% endif %}" href="{% url 'report' %}">{% translate "Reports" %}</a>{% endif %}
-    <div class="side-extra" style="margin-top:auto;border:0;padding-top:12px">
+    <div class="side-legal">{% include "_legal_links.html" %}</div>
+    <div class="side-extra" style="border:0;padding-top:12px">
       {% if user.is_staff %}<a class="btn" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>{% endif %}
       <a class="btn" href="{% url 'logout' %}">{% translate "Sign out" %}</a>
     </div>

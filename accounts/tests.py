@@ -75,3 +75,14 @@ class PasswordResetTests(TestCase):
         r = self.client.post("/login/forgot/", {"email": "nobody@nowhere.demo"})
         self.assertRedirects(r, "/login/forgot/sent/")
         self.assertEqual(len(mail.outbox), 0)
+
+
+class LegalPagesTests(TestCase):
+    def test_legal_pages_are_public_and_linked_from_sign_in(self):
+        for url in ("/legal/privacy/", "/legal/terms/", "/legal/cookies/"):
+            r = self.client.get(url)
+            self.assertEqual(r.status_code, 200, url)
+        r = self.client.get("/login/")
+        for url in ("/legal/privacy/", "/legal/terms/", "/legal/cookies/"):
+            self.assertContains(r, url)
+        self.assertContains(r, 'id="cookie-note"')

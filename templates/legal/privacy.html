@@ -1,0 +1,58 @@
+{% extends "legal/base_legal.html" %}{% load i18n %}
+{% block title %}{% translate "Privacy notice" %}{% endblock %}
+{% block doc %}
+<h1>Privacy notice</h1>
+<p class="meta">Last updated {{ LEGAL.updated }}</p>
+
+<p>{{ APP_NAME }} is a web application for health and safety risk assessments. Organisations use it to record hazards, rate risks, assign safety actions to their staff and keep evidence that the actions were done. This notice explains what personal data the application handles, why, and what your rights are.</p>
+
+<h2>Who is responsible for your data</h2>
+<p>{{ APP_NAME }} is provided by <b>{{ LEGAL.entity }}</b>{% if LEGAL.reg_no %} (registration {{ LEGAL.reg_no }}){% endif %}, {{ LEGAL.address }}.</p>
+<ul>
+  <li><b>Your organisation</b> (the company or consultant that gave you an account) decides what is recorded in its assessments. For that content it is the <b>controller</b>, and {{ LEGAL.entity }} processes it on its behalf as a <b>processor</b>, under the agreement between them.</li>
+  <li><b>{{ LEGAL.entity }}</b> is the controller for the data it needs to run and secure the service itself, such as sign-in records.</li>
+</ul>
+<p>Questions about this notice: <b>{{ LEGAL.email }}</b>.</p>
+
+<h2>What we process</h2>
+<ul>
+  <li><b>Account details:</b> your name, work email address, job title, role and the organisation you belong to.</li>
+  <li><b>Two-step verification:</b> a secret key linked to your authenticator app. We never see the codes on your phone.</li>
+  <li><b>Content you or your colleagues add:</b> risk assessments, hazards, actions assigned to you, deadlines, comments and photos uploaded as evidence. Photos can show people or places, so upload only what the action needs.</li>
+  <li><b>Security records:</b> sign-in attempts with the time, email address used, IP address and browser type, used to detect and block password guessing.</li>
+  <li><b>Email notifications:</b> when an action is assigned to you, before its deadline and when it is overdue.</li>
+</ul>
+<p>We do not use analytics, advertising or tracking tools, and we do not sell personal data.</p>
+
+<h2>Why and on what legal basis</h2>
+<ul>
+  <li>To provide the service your organisation signed up for: creating your account, showing you your actions and sending you reminders (GDPR Article 6(1)(b), and your organisation's legitimate interest in managing workplace safety, Article 6(1)(f)).</li>
+  <li>To keep the service secure: two-step verification, sign-in lockout and security records (legitimate interest, Article 6(1)(f)).</li>
+  <li>To meet legal obligations, for example if a public authority lawfully asks for information (Article 6(1)(c)).</li>
+</ul>
+
+<h2>Who else handles the data</h2>
+<ul>
+  <li><b>Hosting:</b> the application and its database run on servers in a data centre in Cyprus (European Union).</li>
+  <li><b>Cloudflare:</b> sits in front of the site to protect it from attacks and to deliver it securely. It processes your IP address and the pages you request, and may do so outside the EU under the European Commission's Standard Contractual Clauses.</li>
+  <li><b>Microsoft:</b> notification emails are sent through Microsoft 365.</li>
+  <li><b>Your organisation:</b> people in your organisation with a manager role (safety officer or consultant) can see the actions assigned to you and the updates you add.</li>
+</ul>
+
+<h2>How long we keep it</h2>
+<ul>
+  <li>Account details and content are kept while your organisation uses the service. Your organisation can remove users and records at any time. When the agreement ends, the data is deleted or returned as set out in that agreement.</li>
+  <li>Earlier versions of an assessment are kept unchanged on purpose, because they are the audit record of how risks were managed.</li>
+  <li>Security records are kept only as long as needed to protect accounts and investigate incidents.</li>
+</ul>
+
+<h2>How we protect it</h2>
+<p>All traffic is encrypted with HTTPS. Every account needs a password and a 6-digit code from an authenticator app. Sign-in is paused after repeated failed attempts, sessions end when idle, and each organisation can only see its own data. Evidence photos are never public; they are shown only to people allowed to see the action they belong to.</p>
+
+<h2>Your rights</h2>
+<p>Under the GDPR you can ask to access, correct or delete your personal data, to restrict or object to its use, and to receive it in a portable format. Because your organisation controls the content of its assessments, contact your organisation first; you can also contact us at <b>{{ LEGAL.email }}</b> and we will help or pass your request on.</p>
+<p>You have the right to complain to the Office of the Commissioner for Personal Data Protection in Cyprus (<a href="https://www.dataprotection.gov.cy" rel="noopener" target="_blank">dataprotection.gov.cy</a>) or the data protection authority where you live.</p>
+
+<h2>Changes</h2>
+<p>We will update this notice when the service changes. The date at the top shows the latest version.</p>
+{% endblock %}

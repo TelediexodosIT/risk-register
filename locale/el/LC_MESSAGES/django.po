@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Risk Register VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 10:16+0300\n"
+"POT-Creation-Date: 2026-10-26 16:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.16.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: risk/services.py:244
 #, python-format
@@ -153,7 +153,7 @@ msgstr "Επιπρόσθετο μέτρο"
 msgid "Additional measures"
 msgstr "Επιπρόσθετα μέτρα"
 
-#: templates/base.html:25 templates/base.html:50
+#: templates/base.html:25 templates/base.html:51
 msgid "Admin"
 msgstr "Διαχείριση"
 
@@ -310,6 +310,15 @@ msgstr "Σύμβουλος"
 msgid "Continue"
 msgstr "Συνέχεια"
 
+#: templates/_cookie_notice.html:2 templates/legal/cookies.html:2
+msgid "Cookie policy"
+msgstr "Πολιτική cookies"
+
+#: templates/_cookie_notice.html:1 templates/_legal_links.html:1
+#: templates/legal/base_legal.html:19
+msgid "Cookies"
+msgstr "Cookies"
+
 #: templates/risk/risk_task_form.html:18
 msgid "Create an assessment first"
 msgstr "Δημιουργήστε πρώτα μια εκτίμηση"
@@ -459,6 +468,10 @@ msgstr "Εκ φύσεως"
 #: templates/risk/risk_task_form.html:44
 msgid "Inherent risk"
 msgstr "Εκ φύσεως επικινδυνότητα"
+
+#: templates/_legal_links.html:1 templates/legal/base_legal.html:15
+msgid "Legal"
+msgstr "Νομικά"
 
 #: templates/_toggles.html:1
 msgid "Light / dark mode"
@@ -612,6 +625,10 @@ msgstr "Δεν υπάρχει τίποτα εδώ. Οι ενέργειες εμ�
 msgid "Nothing new."
 msgstr "Τίποτα νέο."
 
+#: templates/_cookie_notice.html:3
+msgid "OK"
+msgstr "Εντάξει"
+
 #: templates/risk/task_list.html:8
 msgid "Only mine"
 msgstr "Μόνο οι δικές μου"
@@ -653,6 +670,14 @@ msgstr "Φωτογραφία"
 #: templates/risk/risk_task_form.html:57
 msgid "Previous version"
 msgstr "Προηγούμενη έκδοση"
+
+#: templates/_legal_links.html:1 templates/legal/base_legal.html:17
+msgid "Privacy"
+msgstr "Απόρρητο"
+
+#: templates/legal/privacy.html:2
+msgid "Privacy notice"
+msgstr "Ενημέρωση απορρήτου"
 
 #: templates/risk/task_detail.html:28
 msgid "Progress"
@@ -825,7 +850,7 @@ msgstr "Σύνδεση"
 msgid "Sign in with your new password. You'll still need the 6-digit code from your authenticator app."
 msgstr "Συνδεθείτε με τον νέο κωδικό. Θα χρειαστείτε ακόμα τον εξαψήφιο κωδικό από την εφαρμογή επαλήθευσης."
 
-#: templates/base.html:26 templates/base.html:51
+#: templates/base.html:26 templates/base.html:52
 msgid "Sign out"
 msgstr "Αποσύνδεση"
 
@@ -872,6 +897,14 @@ msgstr "Αλλαγή φωτεινού / σκοτεινού θέματος"
 #: templates/_tenant_switch.html:7
 msgid "Tenant"
 msgstr "Οργανισμός"
+
+#: templates/_legal_links.html:1 templates/legal/base_legal.html:18
+msgid "Terms"
+msgstr "Όροι"
+
+#: templates/legal/terms.html:2
+msgid "Terms of use"
+msgstr "Όροι χρήσης"
 
 #: accounts/views.py:101
 msgid "That code did not match. Make sure your phone's clock is correct and try again."
@@ -978,6 +1011,10 @@ msgstr "Έκδοση"
 #, python-format
 msgid "Version %(new)s created. Version %(old)s is kept as a record. Re-score the risk tasks marked “Re-score”."
 msgstr "Δημιουργήθηκε η έκδοση %(new)s. Η έκδοση %(old)s διατηρείται ως αρχείο. Επαναβαθμολογήστε τις εργασίες με την ένδειξη «Επαναβαθμολόγηση»."
+
+#: templates/_cookie_notice.html:2
+msgid "We use only essential cookies, to keep you signed in, protect forms and remember your language. No tracking or advertising."
+msgstr "Χρησιμοποιούμε μόνο απαραίτητα cookies, για να παραμένετε συνδεδεμένοι, για την προστασία των φορμών και για να θυμόμαστε τη γλώσσα σας. Καμία παρακολούθηση ή διαφήμιση."
 
 #: templates/risk/task_detail.html:29
 msgid "What was done?"

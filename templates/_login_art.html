@@ -1,0 +1,29 @@
+{% comment %}Faint risk-themed graphics behind the logo on the sign-in page: a risk matrix, a falling risk trend and a grid. Decorative only.{% endcomment %}
+<svg class="login-art" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="la-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-width="1"/></pattern>
+    <linearGradient id="la-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".16"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient>
+    <radialGradient id="la-vignette" cx="50%" cy="46%" r="38%"><stop offset="0" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <mask id="la-mask"><rect width="800" height="800" fill="#fff"/><rect width="800" height="800" fill="url(#la-vignette)"/></mask>
+  </defs>
+  <g mask="url(#la-mask)">
+    <rect class="la-grid" width="800" height="800" fill="url(#la-grid)"/>
+    <!-- 4 x 4 risk matrix, top right -->
+    <g class="la-matrix" transform="translate(560 96)">
+      <rect x="0"  y="0"  width="34" height="34" rx="4" fill="#c94c1a"/><rect x="40" y="0"  width="34" height="34" rx="4" fill="#9b1a33"/><rect x="80" y="0"  width="34" height="34" rx="4" fill="#9b1a33"/><rect x="120" y="0"  width="34" height="34" rx="4" fill="#9b1a33"/>
+      <rect x="0"  y="40" width="34" height="34" rx="4" fill="#b67a04"/><rect x="40" y="40" width="34" height="34" rx="4" fill="#c94c1a"/><rect x="80" y="40" width="34" height="34" rx="4" fill="#c94c1a"/><rect x="120" y="40" width="34" height="34" rx="4" fill="#9b1a33"/>
+      <rect x="0"  y="80" width="34" height="34" rx="4" fill="#2a8749"/><rect x="40" y="80" width="34" height="34" rx="4" fill="#b67a04"/><rect x="80" y="80" width="34" height="34" rx="4" fill="#c94c1a"/><rect x="120" y="80" width="34" height="34" rx="4" fill="#c94c1a"/>
+      <rect x="0"  y="120" width="34" height="34" rx="4" fill="#2a8749"/><rect x="40" y="120" width="34" height="34" rx="4" fill="#2a8749"/><rect x="80" y="120" width="34" height="34" rx="4" fill="#b67a04"/><rect x="120" y="120" width="34" height="34" rx="4" fill="#c94c1a"/>
+    </g>
+    <!-- risk falling over time, bottom -->
+    <g class="la-trend">
+      <path d="M60 560 L160 548 L260 590 L360 612 L460 640 L560 668 L660 688 L760 700 L760 800 L60 800Z" fill="url(#la-fade)"/>
+      <path class="la-line" pathLength="1" d="M60 560 L160 548 L260 590 L360 612 L460 640 L560 668 L660 688 L760 700" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <g fill="currentColor"><circle cx="160" cy="548" r="3.5"/><circle cx="360" cy="612" r="3.5"/><circle cx="560" cy="668" r="3.5"/><circle cx="760" cy="700" r="5"/></g>
+    </g>
+    <!-- version markers along the bottom -->
+    <g class="la-ticks" fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="1">
+      <text x="152" y="740">v1</text><text x="352" y="740">v2</text><text x="552" y="740">v3</text>
+    </g>
+  </g>
+</svg>

@@ -29,6 +29,13 @@ CSRF_TRUSTED_ORIGINS = [o.strip() for o in env("CSRF_TRUSTED_ORIGINS", "").split
 # Name shown in the top bar and on reports.
 APP_NAME = env("APP_NAME", "Risk Register")
 
+# Who runs this install. Shown on the Privacy, Terms and Cookies pages (/legal/...).
+LEGAL_ENTITY = env("LEGAL_ENTITY", "BrainerTek")
+LEGAL_ADDRESS = env("LEGAL_ADDRESS", "Larnaca, Cyprus")
+LEGAL_EMAIL = env("LEGAL_EMAIL", "privacy@brainertek.com")
+LEGAL_REG_NO = env("LEGAL_REG_NO", "")
+LEGAL_UPDATED = env("LEGAL_UPDATED", "26 October 2026")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

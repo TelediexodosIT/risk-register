@@ -1,0 +1,30 @@
+{% load static i18n %}{% get_current_language as LANG %}<!doctype html>
+<html lang="{{ LANG }}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %} · {{ APP_NAME }}</title>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+<body>
+<div class="legal-page" style="padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))">
+  <header class="legal-head">
+    <a class="brand" href="{% if user.is_authenticated %}{% url 'home' %}{% else %}{% url 'login' %}{% endif %}"><img src="{% static 'img/brainertek.svg' %}" alt="BrainerTek"><span><b>{{ APP_NAME }}</b><small>by BrainerTek</small></span></a>
+    <nav class="legal-tabs" aria-label="{% translate 'Legal' %}">
+      {% with n=request.resolver_match.url_name %}
+      <a class="fchip {% if n == 'legal_privacy' %}on{% endif %}" href="{% url 'legal_privacy' %}">{% translate "Privacy" %}</a>
+      <a class="fchip {% if n == 'legal_terms' %}on{% endif %}" href="{% url 'legal_terms' %}">{% translate "Terms" %}</a>
+      <a class="fchip {% if n == 'legal_cookies' %}on{% endif %}" href="{% url 'legal_cookies' %}">{% translate "Cookies" %}</a>
+      {% endwith %}
+    </nav>
+  </header>
+  <article class="legal-doc">
+    {% block doc %}{% endblock %}
+  </article>
+  <footer class="legal-links-wrap">{% include "_legal_links.html" %}
+    <p class="legal-links" style="margin-top:6px">{{ LEGAL.entity }}{% if LEGAL.reg_no %} · {{ LEGAL.reg_no }}{% endif %} · {{ LEGAL.address }} · <span>{{ LEGAL.email }}</span></p></footer>
+</div>
+</body>
+</html>

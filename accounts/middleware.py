@@ -18,6 +18,7 @@ class RequireTwoStepMiddleware:
             and user.is_authenticated
             and not user.is_verified()
             and not request.path.startswith("/static/")
+            and not request.path.startswith("/legal/")
             and request.path not in [reverse(n) for n in self.ALLOWED]
         ):
             return redirect("otp_verify")

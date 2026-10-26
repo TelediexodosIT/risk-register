@@ -1,0 +1,8 @@
+{% load i18n %}<div class="cookie-note" id="cookie-note" role="region" aria-label="{% translate 'Cookies' %}" hidden>
+  <p>{% translate "We use only essential cookies, to keep you signed in, protect forms and remember your language. No tracking or advertising." %} <a href="{% url 'legal_cookies' %}">{% translate "Cookie policy" %}</a></p>
+  <button type="button" class="btn sm primary" id="cookie-ok">{% translate "OK" %}</button>
+</div>
+<script>(function(){var n=document.getElementById("cookie-note");if(!n)return;
+  try{if(localStorage.getItem("cookie-note"))return}catch(e){}
+  n.hidden=false;document.getElementById("cookie-ok").addEventListener("click",function(){
+    n.hidden=true;try{localStorage.setItem("cookie-note","1")}catch(e){}});})();</script>
