@@ -7,7 +7,7 @@
 /* Collaboration splash: once per browser session */
 try{if(!sessionStorage.getItem("rr-splash")){document.documentElement.classList.add("rr-show");sessionStorage.setItem("rr-splash","1")}}catch(e){}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="{% static 'css/app.css' %}">
+<link rel="stylesheet" href="{% static 'css/app.css' %}?v={{ ASSET_V }}">
 <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
 </head>
 <body>
@@ -31,6 +31,6 @@ try{if(!sessionStorage.getItem("rr-splash")){document.documentElement.classList.
   if(!document.documentElement.classList.contains("rr-show")){s.remove();return}
   s.addEventListener("animationend",function(e){if(e.target===s)s.remove()});
   setTimeout(function(){if(s.isConnected)s.remove()},3500)})();</script>
-<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/app.js' %}?v={{ ASSET_V }}"></script>
 </body>
 </html>
