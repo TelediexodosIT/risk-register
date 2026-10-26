@@ -2,7 +2,7 @@
 {% block title %}{% translate "Lists" %}{% endblock %}
 {% block content %}
 <header class="page-h"><div><p class="eyebrow">{% translate "Shared by all tenants" %}</p><h1>{% translate "Lists" %}</h1>
-  <p class="sub">{% translate "The dropdown options on the risk task form. Add, rename, reorder or hide entries in the admin panel; each entry can have a Greek and an English text." %}</p></div>
+  <p class="sub">{% translate "The dropdown options on the hazard form. Add, rename, reorder or hide entries in the admin panel; each entry can have a Greek and an English text." %}</p></div>
   {% if user.is_staff %}<a class="btn primary" href="{% url 'admin:risk_listitem_add' %}">+ {% translate "Add entry" %}</a>{% endif %}</header>
 <div class="lib">{% for g in groups %}
   <details class="libcard" {% if forloop.first %}open{% endif %}><summary><b>{% translate g.label %}</b><small>{{ g.items|length }}</small></summary>

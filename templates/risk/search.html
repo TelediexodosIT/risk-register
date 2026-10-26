@@ -10,7 +10,7 @@
 {% elif not total %}<p class="empty">{% blocktranslate %}Nothing found for “{{ q }}”.{% endblocktranslate %}</p>
 {% else %}
 <div class="results">
-  {% if risk_tasks %}<section><h2>{% translate "Risk Assessment Tasks" %}</h2><ul class="rtasks">{% for h in risk_tasks %}
+  {% if risk_tasks %}<section><h2>{% translate "Hazards" %}</h2><ul class="rtasks">{% for h in risk_tasks %}
     <li><a class="rtask" href="{% url 'hazard_edit' h.assessment_id h.id %}"><span><b>{{ h.name|ltr }}</b><small>{{ h.assessment }}</small></span><span class="pill p-{{ h.life_css }}">{{ h.life_label }}</span></a></li>{% endfor %}</ul></section>{% endif %}
   {% if actions %}<section><h2>{% translate "Actions" %}</h2>{% include "risk/_task_rows.html" with tasks=actions show_assessment=True %}</section>{% endif %}
   {% if assessments %}<section><h2>{% translate "Assessments" %}</h2><ul class="tasks">{% for x in assessments %}

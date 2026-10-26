@@ -9,10 +9,10 @@
   {% include "risk/_state.html" %}
 </header>
 {% if not a.is_active and a.next_version %}<div class="banner">{% translate "This version is read-only. It was replaced by" %} <a href="{% url 'assessment_detail' a.next_version.id %}">{% translate "version" %} {{ a.next_version.version }}</a>.</div>{% endif %}
-{% if state.rescore and a.is_active %}<div class="banner warn">{% translate "Completed actions from the previous version now count as existing controls. Open each risk task marked “Re-score” and confirm its residual risk." %}</div>{% endif %}
+{% if state.rescore and a.is_active %}<div class="banner warn">{% translate "Completed actions from the previous version now count as existing controls. Open each hazard marked “Re-score” and confirm its residual risk." %}</div>{% endif %}
 
 <section class="strip">
-  <div class="stat"><span>{% translate "Risk tasks" %}</span><b>{{ hazards|length }}</b></div>
+  <div class="stat"><span>{% translate "Hazards" %}</span><b>{{ hazards|length }}</b></div>
   <div class="stat wide"><span>{% translate "Inherent risk" %}</span>{% include "risk/_dist.html" with counts=inherent %}</div>
   <div class="stat wide"><span>{% translate "Residual risk" %}</span>{% include "risk/_dist.html" with counts=residual %}</div>
   <div class="stat"><span>{% translate "Actions done" %}</span><b>{{ state.done }}/{{ state.total }}</b><div class="prog"><i style="width:{% widthratio state.done state.total|default:1 100 %}%"></i></div></div>
@@ -24,7 +24,7 @@
     {% csrf_token %}
     <button class="btn {% if state.ready and can_edit %}primary{% endif %}" {% if not can_edit %}disabled{% endif %}>{% blocktranslate with n=a.version|add:1 %}Start version {{ n }}{% endblocktranslate %}</button>
   </form>
-  <small>{% if not a.is_active %}{% translate "Superseded versions cannot be reassessed." %}{% elif state.ready %}{% translate "All actions are complete. Review each risk task and decide its new risk level; starting a new version keeps this one as a record." %}{% else %}{% translate "Risk levels never change automatically. When you have reviewed the completed actions, start a new version and re-score each risk task." %}{% endif %}</small>
+  <small>{% if not a.is_active %}{% translate "Superseded versions cannot be reassessed." %}{% elif state.ready %}{% translate "All actions are complete. Review each hazard and decide its new risk level; starting a new version keeps this one as a record." %}{% else %}{% translate "Risk levels never change automatically. When you have reviewed the completed actions, start a new version and re-score each hazard." %}{% endif %}</small>
 </section>
 
 <nav class="tabs">
@@ -57,8 +57,8 @@
           <small>{% blocktranslate with done=h.state.done total=h.state.total %}{{ done }} of {{ total }} done{% endblocktranslate %}</small>{% else %}<small>{% translate "None set" %}</small>{% endif %}</div></td>
         <td data-label="{% translate 'Status' %}"><div><span class="pill p-{{ h.life_css }}">{{ h.life_label }}</span></div></td>
       </tr>
-    {% empty %}<tr><td colspan="7" class="muted">{% translate "No risk tasks yet." %}</td></tr>{% endfor %}</tbody>
+    {% empty %}<tr><td colspan="7" class="muted">{% translate "No hazards yet." %}</td></tr>{% endfor %}</tbody>
   </table></div>
-  {% if can_edit %}<p><a class="btn" href="{% url 'hazard_create' a.id %}">+ {% translate "New task" %}</a></p>{% endif %}
+  {% if can_edit %}<p><a class="btn" href="{% url 'hazard_create' a.id %}">+ {% translate "New hazard" %}</a></p>{% endif %}
 {% endif %}
 {% endblock %}

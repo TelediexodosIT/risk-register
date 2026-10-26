@@ -37,9 +37,9 @@ class RiskFlowTests(TestCase):
                         "/library/", "/matrix/", "/reports/", "/updates/", "/assessments/new/", "/search/?q=first",
                         f"/tasks/{Task.objects.first().id}/"):
                 self.assertEqual(self.client.get(url).status_code, 200, url)
-        self.assertContains(self.client.get("/risk-tasks/"), "Εργασίες Εκτίμησης Κινδύνου")
+        self.assertContains(self.client.get("/risk-tasks/"), "Κίνδυνοι")
         self.client.post("/i18n/setlang/", {"language": "en", "next": "/"})
-        self.assertContains(self.client.get("/risk-tasks/"), "Risk Assessment Tasks")
+        self.assertContains(self.client.get("/risk-tasks/"), "Every hazard from all your current assessments")
         self.assertEqual(self.client.get("/admin/").status_code, 200)
 
     def test_tenant_switch(self):
@@ -177,3 +177,16 @@ class ManualReassessmentTests(TestCase):
         self.client.force_login(User.objects.get(email="maria.kyriakou@telediexodos.demo"))
         a = Assessment.objects.get(company__name="Telediexodos")
         self.assertEqual(self.client.post(f"/assessments/{a.id}/reassess/").status_code, 404)
+
+
+@override_settings(REQUIRE_TWO_STEP=False)
+class DemoExamplesTests(TestCase):
+    def test_demo_examples_add_a_second_area_and_hazards_list_combines_them(self):
+        call_command("seed_demo", password=PW, stdout=open("/dev/null", "w"))
+        call_command("demo_examples", stdout=open("/dev/null", "w"))
+        call_command("demo_examples", stdout=open("/dev/null", "w"))  # safe to run twice
+        self.assertEqual(Assessment.objects.filter(company__name="Telediexodos", title="Warehouse").count(), 1)
+        self.client.force_login(User.objects.get(email="andreas.pavlou@telediexodos.demo"))
+        r = self.client.get("/risk-tasks/")
+        self.assertContains(r, "Office and workshop")
+        self.assertContains(r, "Warehouse")

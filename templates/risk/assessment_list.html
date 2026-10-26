@@ -2,14 +2,15 @@
 {% block title %}{% translate "Assessments" %}{% endblock %}
 {% block content %}
 <header class="page-h">
-  <div><p class="eyebrow">{{ company.sector }}</p><h1>{{ company.name }}</h1></div>
+  <div><p class="eyebrow">{{ company.name }}</p><h1>{% translate "Assessments" %}</h1>
+    <p class="sub">{% translate "One risk assessment per area or activity, like the Word documents you used to write. Open one to see its hazards, versions and report." %}</p></div>
   {% if user.can_manage %}<a class="btn primary" href="{% url 'assessment_create' %}">+ {% translate "New assessment" %}</a>{% endif %}
 </header>
 <div class="cards">
 {% for r in active %}
   <a class="card" href="{% url 'assessment_detail' r.a.id %}">
     <div class="card-top"><span class="ver">v{{ r.a.version }}</span>{% include "risk/_state.html" with state=r.state %}</div>
-    <div><h2>{{ r.a.title }}</h2><small>{{ r.a.site }} · {% blocktranslate count n=r.hazard_count %}{{ n }} risk task{% plural %}{{ n }} risk tasks{% endblocktranslate %} · {{ r.a.created_at|date:"d/m/Y" }}</small></div>
+    <div><h2>{{ r.a.title }}</h2><small>{{ r.a.site }} · {% blocktranslate count n=r.hazard_count %}{{ n }} hazard{% plural %}{{ n }} hazards{% endblocktranslate %} · {{ r.a.created_at|date:"d/m/Y" }}</small></div>
     <div><span class="lbl">{% translate "Residual risk" %}</span>{% include "risk/_dist.html" with counts=r.residual %}</div>
     <div><span class="lbl">{% blocktranslate with d=r.state.done t=r.state.total %}Actions {{ d }} of {{ t }} done{% endblocktranslate %}{% if r.state.overdue %} · <span class="bad">{% blocktranslate with n=r.state.overdue %}{{ n }} overdue{% endblocktranslate %}</span>{% endif %}</span>
       <div class="prog"><i style="width:{% widthratio r.state.done r.state.total|default:1 100 %}%"></i></div></div>

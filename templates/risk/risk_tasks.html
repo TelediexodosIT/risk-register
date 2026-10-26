@@ -1,10 +1,10 @@
 {% extends "base.html" %}{% load i18n risk_tags %}
-{% block title %}{% translate "Risk Assessment Tasks" %}{% endblock %}
+{% block title %}{% translate "Hazards" %}{% endblock %}
 {% block content %}
 <header class="page-h">
-  <div><p class="eyebrow">{{ company.name }}</p><h1>{% translate "Risk Assessment Tasks" %}</h1>
-    <p class="sub">{% translate "Every risk entry of this tenant's active assessments. The status updates by itself as actions are completed." %}</p></div>
-  <a class="btn primary" href="{% url 'risk_task_new' %}">+ {% translate "New task" %}</a>
+  <div><p class="eyebrow">{{ company.name }}</p><h1>{% translate "Hazards" %}</h1>
+    <p class="sub">{% translate "Every hazard from all your current assessments, in one list. Use the filters to see what still needs fixing." %}</p></div>
+  <a class="btn primary" href="{% url 'risk_task_new' %}">+ {% translate "New hazard" %}</a>
 </header>
 <div class="filters">{% for key, label, n in filters %}<a class="fchip {% if f == key %}on{% endif %}" href="?f={{ key }}">{{ label }}<span class="count-chip">{{ n }}</span></a>{% endfor %}</div>
 {% if hazards %}
@@ -20,5 +20,5 @@
     </span>
   </a></li>{% endfor %}
 </ul>
-{% else %}<p class="empty">{% translate "No risk assessment tasks here yet." %} <a href="{% url 'risk_task_new' %}">{% translate "Create the first one" %}</a>.</p>{% endif %}
+{% else %}<p class="empty">{% translate "No hazards here yet." %} <a href="{% url 'risk_task_new' %}">{% translate "Create the first one" %}</a>.</p>{% endif %}
 {% endblock %}

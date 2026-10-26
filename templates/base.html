@@ -39,8 +39,8 @@
       <div class="row">{% include "_toggles.html" %}</div>
     </div>
     {% if user.can_manage %}
-    <a class="nav {% if nav in 'risk_tasks risk_task_new hazard_create hazard_edit' %}on{% endif %}" href="{% url 'risk_tasks' %}">{% translate "Risk Assessment Tasks" %}</a>
     <a class="nav {% if nav in 'assessment_list assessment_detail assessment_create' %}on{% endif %}" href="{% url 'assessment_list' %}">{% translate "Assessments" %}</a>
+    <a class="nav {% if nav in 'risk_tasks risk_task_new hazard_create hazard_edit' %}on{% endif %}" href="{% url 'risk_tasks' %}">{% translate "Hazards" %}</a>
     {% endif %}
     <a class="nav {% if nav in 'task_list task_detail' %}on{% endif %}" href="{% url 'task_list' %}">{% if user.can_manage %}{% translate "Actions" %}{% else %}{% translate "My actions" %}{% endif %}</a>
     {% if user.can_manage %}<a class="nav {% if nav == 'library' %}on{% endif %}" href="{% url 'library' %}">{% translate "Lists" %}</a>{% endif %}

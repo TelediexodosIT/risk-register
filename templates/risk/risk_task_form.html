@@ -1,9 +1,9 @@
 {% extends "base.html" %}{% load i18n risk_tags %}
-{% block title %}{% if hazard %}{{ hazard.name|ltr }}{% else %}{% translate "New risk assessment task" %}{% endif %}{% endblock %}
+{% block title %}{% if hazard %}{{ hazard.name|ltr }}{% else %}{% translate "New hazard" %}{% endif %}{% endblock %}
 {% block content %}
-{% if a %}<a class="back" href="{% url 'assessment_detail' a.id %}">← {{ a }}</a>{% else %}<a class="back" href="{% url 'risk_tasks' %}">← {% translate "Risk Assessment Tasks" %}</a>{% endif %}
+{% if a %}<a class="back" href="{% url 'assessment_detail' a.id %}">← {{ a }}</a>{% else %}<a class="back" href="{% url 'risk_tasks' %}">← {% translate "Hazards" %}</a>{% endif %}
 <header class="page-h"><div><p class="eyebrow">{{ company.name }}{% if a %} · {{ a }}{% endif %}</p>
-  <h1>{% if hazard %}{{ hazard.name|ltr }}{% else %}{% translate "New risk assessment task" %}{% endif %}</h1></div></header>
+  <h1>{% if hazard %}{{ hazard.name|ltr }}{% else %}{% translate "New hazard" %}{% endif %}</h1></div></header>
 {% for e in errors %}<div class="banner bad">{{ e }}</div>{% endfor %}
 
 <form method="post" class="formpage" id="risk-task-form">
@@ -75,7 +75,7 @@
   {% if user.is_staff %}<label class="ck"><input type="checkbox" name="save_to_lists"> {% translate "Also save my manual entries to the dropdown lists" %}</label>{% endif %}
   <div class="actions sticky-actions">
     <a class="btn" href="{% if a %}{% url 'assessment_detail' a.id %}{% else %}{% url 'risk_tasks' %}{% endif %}">{% translate "Cancel" %}</a>
-    <button class="btn primary">{% translate "Save task" %}</button>
+    <button class="btn primary">{% translate "Save hazard" %}</button>
   </div>
   {% endif %}
 

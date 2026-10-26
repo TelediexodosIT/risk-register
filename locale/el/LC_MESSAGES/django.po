@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Risk Register VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 16:30+0200\n"
+"POT-Creation-Date: 2026-10-26 16:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -46,17 +46,18 @@ msgid_plural "%(n)d overdue actions"
 msgstr[0] "%(n)d εκπρόθεσμη ενέργεια"
 msgstr[1] "%(n)d εκπρόθεσμες ενέργειες"
 
-#: templates/risk/assessment_list.html:14
+# | msgid "%(n)s overdue"
+#: templates/risk/assessment_list.html:13
+#, python-format
+msgid "%(n)s hazard"
+msgid_plural "%(n)s hazards"
+msgstr[0] "%(n)s κίνδυνος"
+msgstr[1] "%(n)s κίνδυνοι"
+
+#: templates/risk/assessment_list.html:15
 #, python-format
 msgid "%(n)s overdue"
 msgstr "%(n)s εκπρόθεσμες"
-
-#: templates/risk/assessment_list.html:12
-#, python-format
-msgid "%(n)s risk task"
-msgid_plural "%(n)s risk tasks"
-msgstr[0] "%(n)s εργασία κινδύνου"
-msgstr[1] "%(n)s εργασίες κινδύνου"
 
 #: templates/risk/_task_pill.html:1
 #, python-format
@@ -98,7 +99,7 @@ msgstr "Η ενέργεια σημειώθηκε ως ολοκληρωμένη."
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: templates/risk/assessment_list.html:14
+#: templates/risk/assessment_list.html:15
 #, python-format
 msgid "Actions %(d)s of %(t)s done"
 msgstr "Ενέργειες: %(d)s από %(t)s ολοκληρώθηκαν"
@@ -164,9 +165,11 @@ msgstr "Όλες"
 # | msgid ""
 # | "Every risk task with actions has met the rule. Starting a new version "
 # | "keeps this one as a record."
+# | "All actions are complete. Review each risk task and decide its new risk "
+# | "level; starting a new version keeps this one as a record."
 #: templates/risk/assessment_detail.html:27
-msgid "All actions are complete. Review each risk task and decide its new risk level; starting a new version keeps this one as a record."
-msgstr "Όλες οι ενέργειες ολοκληρώθηκαν. Επανεξετάστε κάθε εργασία κινδύνου και αποφασίστε το νέο επίπεδο επικινδυνότητας· η νέα έκδοση διατηρεί την τρέχουσα ως αρχείο."
+msgid "All actions are complete. Review each hazard and decide its new risk level; starting a new version keeps this one as a record."
+msgstr "Όλες οι ενέργειες ολοκληρώθηκαν. Εξετάστε κάθε κίνδυνο και αποφασίστε το νέο επίπεδο επικινδυνότητας· η νέα έκδοση διατηρεί την τρέχουσα ως αρχείο."
 
 #: risk/views.py:372
 msgid "All actions of this assessment are complete. Review the risk levels and start a new version when ready."
@@ -193,12 +196,13 @@ msgstr "Χώρος ή δραστηριότητα"
 msgid "Assessment"
 msgstr "Εκτίμηση"
 
+# | msgid "Assessment created. Add the first risk task."
 #: risk/views.py:96
-msgid "Assessment created. Add the first risk task."
-msgstr "Η εκτίμηση δημιουργήθηκε. Προσθέστε την πρώτη εργασία κινδύνου."
+msgid "Assessment created. Add the first hazard."
+msgstr "Η εκτίμηση δημιουργήθηκε. Προσθέστε τον πρώτο κίνδυνο."
 
-#: templates/base.html:43 templates/risk/assessment_list.html:2
-#: templates/risk/search.html:16
+#: templates/base.html:42 templates/risk/assessment_list.html:2
+#: templates/risk/assessment_list.html:5 templates/risk/search.html:16
 msgid "Assessments"
 msgstr "Εκτιμήσεις"
 
@@ -265,9 +269,10 @@ msgstr "Επιλέξτε νέο κωδικό"
 msgid "Choose or type a measure and pick a person."
 msgstr "Επιλέξτε ή πληκτρολογήστε μέτρο και επιλέξτε υπεύθυνο."
 
+# | msgid "Choose the assessment this task belongs to."
 #: risk/views.py:221
-msgid "Choose the assessment this task belongs to."
-msgstr "Επιλέξτε την εκτίμηση στην οποία ανήκει η εργασία."
+msgid "Choose the assessment this hazard belongs to."
+msgstr "Επιλέξτε την εκτίμηση στην οποία ανήκει ο κίνδυνος."
 
 #: templates/risk/report.html:4
 msgid "Client summary"
@@ -285,9 +290,14 @@ msgstr "Σχόλιο"
 msgid "Completed"
 msgstr "Ολοκληρώθηκε"
 
+# | msgid ""
+# | "Completed actions from the previous version now count as existing "
+# | "controls. Open each risk task marked “Re-score” and confirm its residual
+# "
+# | "risk."
 #: templates/risk/assessment_detail.html:12
-msgid "Completed actions from the previous version now count as existing controls. Open each risk task marked “Re-score” and confirm its residual risk."
-msgstr "Οι ολοκληρωμένες ενέργειες της προηγούμενης έκδοσης θεωρούνται πλέον υφιστάμενα μέτρα. Ανοίξτε κάθε εργασία με την ένδειξη «Επαναβαθμολόγηση» και επιβεβαιώστε την υπολειπόμενη επικινδυνότητα."
+msgid "Completed actions from the previous version now count as existing controls. Open each hazard marked “Re-score” and confirm its residual risk."
+msgstr "Οι ολοκληρωμένες ενέργειες της προηγούμενης έκδοσης θεωρούνται πλέον υφιστάμενα μέτρα. Ανοίξτε κάθε κίνδυνο με την ένδειξη «Επαναβαθμολόγηση» και επιβεβαιώστε την υπολειπόμενη επικινδυνότητα."
 
 #: templates/accounts/otp_setup.html:16
 msgid "Confirm and sign in"
@@ -352,7 +362,7 @@ msgstr "Πρόχειρο"
 msgid "Each measure is assigned to a person, who gets an email and reminders before the deadline."
 msgstr "Κάθε μέτρο ανατίθεται σε ένα άτομο, που λαμβάνει email και υπενθυμίσεις πριν την προθεσμία."
 
-#: templates/risk/assessment_list.html:22
+#: templates/risk/assessment_list.html:23
 msgid "Earlier versions"
 msgstr "Προηγούμενες εκδόσεις"
 
@@ -381,13 +391,9 @@ msgstr "Εισάγετε το email εργασίας. Αν αντιστοιχε�
 msgid "Every account needs this. It takes a minute and only happens once."
 msgstr "Απαιτείται για κάθε λογαριασμό. Χρειάζεται ένα λεπτό και γίνεται μόνο μία φορά."
 
-#: templates/risk/task_list.html:5
-msgid "Every additional measure assigned to a person, linked back to its risk task."
-msgstr "Κάθε επιπρόσθετο μέτρο που έχει ανατεθεί, συνδεδεμένο με την εργασία κινδύνου του."
-
 #: templates/risk/risk_tasks.html:6
-msgid "Every risk entry of this tenant's active assessments. The status updates by itself as actions are completed."
-msgstr "Όλες οι καταχωρίσεις κινδύνου των ενεργών εκτιμήσεων του οργανισμού. Η κατάσταση ενημερώνεται αυτόματα καθώς ολοκληρώνονται οι ενέργειες."
+msgid "Every hazard from all your current assessments, in one list. Use the filters to see what still needs fixing."
+msgstr "Όλοι οι κίνδυνοι από όλες τις τρέχουσες εκτιμήσεις σας, σε μία λίστα. Χρησιμοποιήστε τα φίλτρα για να δείτε τι χρειάζεται ακόμα διόρθωση."
 
 #: templates/risk/task_detail.html:16
 msgid "Evidence and comments"
@@ -438,6 +444,18 @@ msgstr "Κίνδυνος"
 #: templates/risk/risk_task_form.html:30
 msgid "Hazard (manual)"
 msgstr "Κίνδυνος (χειροκίνητα)"
+
+# | msgid "Hazard"
+#: risk/views.py:262
+msgid "Hazard saved."
+msgstr "Ο κίνδυνος αποθηκεύτηκε."
+
+# | msgid "Hazard"
+#: templates/base.html:43 templates/risk/assessment_detail.html:15
+#: templates/risk/risk_task_form.html:4 templates/risk/risk_tasks.html:2
+#: templates/risk/risk_tasks.html:5 templates/risk/search.html:13
+msgid "Hazards"
+msgstr "Κίνδυνοι"
 
 #: templates/accounts/login.html:10
 msgid "Hide"
@@ -544,21 +562,20 @@ msgid "New"
 msgstr "Νέα"
 
 #: templates/risk/assessment_form.html:2 templates/risk/assessment_form.html:5
-#: templates/risk/assessment_list.html:6
+#: templates/risk/assessment_list.html:7
 msgid "New assessment"
 msgstr "Νέα εκτίμηση"
+
+# | msgid "New password"
+#: templates/risk/assessment_detail.html:62
+#: templates/risk/risk_task_form.html:2 templates/risk/risk_task_form.html:6
+#: templates/risk/risk_tasks.html:7
+msgid "New hazard"
+msgstr "Νέος κίνδυνος"
 
 #: templates/accounts/password_reset_confirm.html:8
 msgid "New password"
 msgstr "Νέος κωδικός"
-
-#: templates/risk/risk_task_form.html:2 templates/risk/risk_task_form.html:6
-msgid "New risk assessment task"
-msgstr "Νέα εργασία εκτίμησης κινδύνου"
-
-#: templates/risk/assessment_detail.html:62 templates/risk/risk_tasks.html:7
-msgid "New task"
-msgstr "Νέα εργασία"
 
 #: templates/risk/risk_task_form.html:16
 msgid "No active assessment yet"
@@ -572,7 +589,7 @@ msgstr "Δεν απαιτούνται επιπρόσθετα μέτρα"
 msgid "No assessments yet."
 msgstr "Δεν υπάρχουν ακόμα εκτιμήσεις."
 
-#: templates/risk/assessment_list.html:18
+#: templates/risk/assessment_list.html:19
 msgid "No assessments yet. Start one with “New assessment”."
 msgstr "Δεν υπάρχουν ακόμα εκτιμήσεις. Ξεκινήστε με «Νέα εκτίμηση»."
 
@@ -583,6 +600,16 @@ msgstr "Χωρίς μεταβολή"
 #: templates/risk/task_detail.html:21
 msgid "No evidence yet."
 msgstr "Δεν υπάρχει ακόμα τεκμηρίωση."
+
+# | msgid "No assessments yet."
+#: templates/risk/risk_tasks.html:23
+msgid "No hazards here yet."
+msgstr "Δεν υπάρχουν ακόμα κίνδυνοι εδώ."
+
+# | msgid "No risk tasks yet."
+#: templates/risk/assessment_detail.html:60
+msgid "No hazards yet."
+msgstr "Δεν υπάρχουν ακόμα κίνδυνοι."
 
 #: templates/risk/risk_task_form.html:71
 msgid "No measures."
@@ -595,14 +622,6 @@ msgstr "Χωρίς ανοιχτές ενέργειες"
 #: templates/risk/risk_task_form.html:105
 msgid "No reminder"
 msgstr "Χωρίς υπενθύμιση"
-
-#: templates/risk/risk_tasks.html:23
-msgid "No risk assessment tasks here yet."
-msgstr "Δεν υπάρχουν ακόμα εργασίες εκτίμησης κινδύνου."
-
-#: templates/risk/assessment_detail.html:60
-msgid "No risk tasks yet."
-msgstr "Δεν υπάρχουν ακόμα εργασίες κινδύνου."
 
 #: templates/risk/assessment_detail.html:57
 msgid "None set"
@@ -617,9 +636,11 @@ msgstr "Χωρίς βαθμολογία"
 msgid "Nothing found for “%(q)s”."
 msgstr "Δεν βρέθηκε τίποτα για «%(q)s»."
 
+# | msgid ""
+# | "Nothing here. Actions appear when a risk task gets additional measures."
 #: templates/risk/_task_rows.html:11
-msgid "Nothing here. Actions appear when a risk task gets additional measures."
-msgstr "Δεν υπάρχει τίποτα εδώ. Οι ενέργειες εμφανίζονται όταν μια εργασία κινδύνου αποκτήσει επιπρόσθετα μέτρα."
+msgid "Nothing here. Actions appear when a hazard gets additional measures."
+msgstr "Δεν υπάρχει τίποτα εδώ. Οι ενέργειες εμφανίζονται όταν ένας κίνδυνος αποκτήσει επιπρόσθετα μέτρα."
 
 #: templates/risk/updates.html:6
 msgid "Nothing new."
@@ -628,6 +649,10 @@ msgstr "Τίποτα νέο."
 #: templates/_cookie_notice.html:3
 msgid "OK"
 msgstr "Εντάξει"
+
+#: templates/risk/assessment_list.html:6
+msgid "One risk assessment per area or activity, like the Word documents you used to write. Open one to see its hazards, versions and report."
+msgstr "Μία εκτίμηση κινδύνου ανά χώρο ή δραστηριότητα, όπως τα έγγραφα Word που γράφατε. Ανοίξτε μία για να δείτε τους κινδύνους, τις εκδόσεις και την αναφορά της."
 
 #: templates/risk/task_list.html:8
 msgid "Only mine"
@@ -740,7 +765,7 @@ msgid "Residual"
 msgstr "Υπολειπόμενη"
 
 #: templates/risk/assessment_detail.html:17
-#: templates/risk/assessment_list.html:13 templates/risk/risk_task_form.html:55
+#: templates/risk/assessment_list.html:14 templates/risk/risk_task_form.html:55
 msgid "Residual risk"
 msgstr "Υπολειπόμενη επικινδυνότητα"
 
@@ -753,12 +778,6 @@ msgstr "Προφίλ υπολειπόμενης επικινδυνότητας"
 msgid "Residual risk, version %(old)s → version %(new)s"
 msgstr "Υπολειπόμενη επικινδυνότητα, έκδοση %(old)s → έκδοση %(new)s"
 
-#: templates/base.html:42 templates/risk/risk_task_form.html:4
-#: templates/risk/risk_tasks.html:2 templates/risk/risk_tasks.html:5
-#: templates/risk/search.html:13
-msgid "Risk Assessment Tasks"
-msgstr "Εργασίες Εκτίμησης Κινδύνου"
-
 #: templates/risk/report.html:15
 msgid "Risk assessment summary"
 msgstr "Σύνοψη εκτίμησης κινδύνου"
@@ -767,22 +786,17 @@ msgstr "Σύνοψη εκτίμησης κινδύνου"
 msgid "Risk before → after controls"
 msgstr "Επικινδυνότητα πριν → μετά τα μέτρα"
 
+# | msgid ""
+# | "Risk levels never change automatically. When you have reviewed the "
+# | "completed actions, start a new version and re-score each risk task."
 #: templates/risk/assessment_detail.html:27
-msgid "Risk levels never change automatically. When you have reviewed the completed actions, start a new version and re-score each risk task."
-msgstr "Τα επίπεδα επικινδυνότητας δεν αλλάζουν ποτέ αυτόματα. Αφού επανεξετάσετε τις ολοκληρωμένες ενέργειες, ξεκινήστε νέα έκδοση και επαναβαθμολογήστε κάθε εργασία κινδύνου."
+msgid "Risk levels never change automatically. When you have reviewed the completed actions, start a new version and re-score each hazard."
+msgstr "Τα επίπεδα επικινδυνότητας δεν αλλάζουν ποτέ αυτόματα. Αφού εξετάσετε τις ολοκληρωμένες ενέργειες, ξεκινήστε νέα έκδοση και επαναβαθμολογήστε κάθε κίνδυνο."
 
 #: templates/base.html:47 templates/risk/matrix.html:2
 #: templates/risk/matrix.html:4
 msgid "Risk matrix"
 msgstr "Πίνακας επικινδυνότητας"
-
-#: risk/views.py:262
-msgid "Risk task saved."
-msgstr "Η εργασία κινδύνου αποθηκεύτηκε."
-
-#: templates/risk/assessment_detail.html:15
-msgid "Risk tasks"
-msgstr "Εργασίες κινδύνου"
 
 #: accounts/models.py:49
 msgid "Safety officer"
@@ -792,13 +806,14 @@ msgstr "Υπεύθυνος ασφάλειας"
 msgid "Save as PDF"
 msgstr "Αποθήκευση ως PDF"
 
+# | msgid "Save task"
+#: templates/risk/risk_task_form.html:78
+msgid "Save hazard"
+msgstr "Αποθήκευση κινδύνου"
+
 #: templates/accounts/password_reset_confirm.html:10
 msgid "Save new password"
 msgstr "Αποθήκευση νέου κωδικού"
-
-#: templates/risk/risk_task_form.html:78
-msgid "Save task"
-msgstr "Αποθήκευση εργασίας"
 
 #: templates/risk/task_detail.html:32
 msgid "Save update"
@@ -914,9 +929,18 @@ msgstr "Ο κωδικός δεν ταιριάζει. Βεβαιωθείτε ότ
 msgid "That code is not valid. Check your authenticator app and try again."
 msgstr "Ο κωδικός δεν είναι έγκυρος. Ελέγξτε την εφαρμογή επαλήθευσης και δοκιμάστε ξανά."
 
+# | msgid ""
+# | "The dropdown options on the risk task form. Add, rename, reorder or hide
+# "
+# | "entries in the admin panel; each entry can have a Greek and an English "
+# | "text."
 #: templates/risk/library.html:5
-msgid "The dropdown options on the risk task form. Add, rename, reorder or hide entries in the admin panel; each entry can have a Greek and an English text."
-msgstr "Οι επιλογές των λιστών στη φόρμα εργασίας κινδύνου. Προσθήκη, μετονομασία, ταξινόμηση ή απόκρυψη γίνεται στη διαχείριση· κάθε εγγραφή έχει ελληνικό και αγγλικό κείμενο."
+msgid "The dropdown options on the hazard form. Add, rename, reorder or hide entries in the admin panel; each entry can have a Greek and an English text."
+msgstr "Οι επιλογές των λιστών στη φόρμα κινδύνου. Προσθήκη, μετονομασία, ταξινόμηση ή απόκρυψη γίνεται στη διαχείριση· κάθε εγγραφή έχει ελληνικό και αγγλικό κείμενο."
+
+#: templates/risk/task_list.html:5
+msgid "The jobs given to people to make a hazard safer. Each action has one person responsible and a deadline."
+msgstr "Οι εργασίες που ανατίθενται σε άτομα για να γίνει ένας κίνδυνος ασφαλέστερος. Κάθε ενέργεια έχει έναν υπεύθυνο και μια προθεσμία."
 
 #: templates/risk/risk_task_form.html:45
 msgid "The risk before any controls: slide likelihood and consequence, the rating is calculated."
@@ -1007,10 +1031,13 @@ msgstr "Επαλήθευση και σύνδεση"
 msgid "Version"
 msgstr "Έκδοση"
 
+# | msgid ""
+# | "Version %(new)s created. Version %(old)s is kept as a record. Re-score "
+# | "the risk tasks marked “Re-score”."
 #: risk/views.py:131
 #, python-format
-msgid "Version %(new)s created. Version %(old)s is kept as a record. Re-score the risk tasks marked “Re-score”."
-msgstr "Δημιουργήθηκε η έκδοση %(new)s. Η έκδοση %(old)s διατηρείται ως αρχείο. Επαναβαθμολογήστε τις εργασίες με την ένδειξη «Επαναβαθμολόγηση»."
+msgid "Version %(new)s created. Version %(old)s is kept as a record. Re-score the hazards marked “Re-score”."
+msgstr "Δημιουργήθηκε η έκδοση %(new)s. Η έκδοση %(old)s διατηρείται ως αρχείο. Επαναβαθμολογήστε τους κινδύνους με την ένδειξη «Επαναβαθμολόγηση»."
 
 #: templates/_cookie_notice.html:2
 msgid "We use only essential cookies, to keep you signed in, protect forms and remember your language. No tracking or advertising."

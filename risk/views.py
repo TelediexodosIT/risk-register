@@ -93,7 +93,7 @@ def assessment_create(request):
         a.created_by = request.user
         a.save()
         a.log("Version 1 created")
-        messages.success(request, _("Assessment created. Add the first risk task."))
+        messages.success(request, _("Assessment created. Add the first hazard."))
         return redirect("hazard_create", a.id)
     return render(request, "risk/assessment_form.html", {"form": form, "company": company})
 
@@ -129,7 +129,7 @@ def assessment_reassess(request, pk):
         raise Http404
     new = services.create_next_version(a, request.user)
     messages.success(request, _("Version %(new)s created. Version %(old)s is kept as a record. "
-                                "Re-score the risk tasks marked “Re-score”.") % {"new": new.version, "old": a.version})
+                                "Re-score the hazards marked “Re-score”.") % {"new": new.version, "old": a.version})
     return redirect("assessment_detail", new.id)
 
 
@@ -218,7 +218,7 @@ def _risk_task_page(request, company, assessment=None, hazard=None):
         if a is None:
             a = company.assessments.filter(status=Assessment.Status.ACTIVE, id=request.POST.get("assessment")).first()
             if a is None:
-                errors.append(_("Choose the assessment this task belongs to."))
+                errors.append(_("Choose the assessment this hazard belongs to."))
         name = request.POST.get("hazard", "").strip()
         if name == "__manual__":
             name = request.POST.get("hazard_manual", "").strip()
@@ -258,8 +258,8 @@ def _risk_task_page(request, company, assessment=None, hazard=None):
             if request.POST.get("save_to_lists") and request.user.is_staff:
                 _save_new_entries(h, controls, [t.text for t in h.tasks.all()])
             if is_new:
-                a.log(f"Risk task added: {h.name}")
-            msg = _("Risk task saved.")
+                a.log(f"Hazard added: {h.name}")
+            msg = _("Hazard saved.")
             if created:
                 msg += " " + ngettext("%(n)d action assigned; the person responsible was notified.",
                                       "%(n)d actions assigned; the people responsible were notified.", created) % {"n": created}
