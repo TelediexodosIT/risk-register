@@ -1,0 +1,13 @@
+{% load static %}{% comment %}
+Collaboration intro shown once per browser session on the sign-in pages.
+It only appears when <html> has the "rr-show" class (set in base_auth.html); styles are in app.css under "Collaboration splash".
+{% endcomment %}<div class="rr-splash" id="rr-splash" role="status" aria-label="BrainerTek and Mind the Gap: {{ APP_NAME }}">
+  <div class="rr-stage">
+    <div class="rr-pair">
+      <img class="rr-logo rr-bt" alt="BrainerTek" src="{% static 'img/brainertek.png' %}">
+      <div class="rr-gap" aria-hidden="true"></div>
+      <img class="rr-logo rr-mtg" alt="Mind the Gap" src="{% static 'img/mindthegap.png' %}">
+    </div>
+    <div class="rr-caption"><b>BrainerTek × Mind the Gap</b><small>{{ APP_NAME }}</small></div>
+  </div>
+</div>
