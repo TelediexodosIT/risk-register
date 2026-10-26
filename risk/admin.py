@@ -4,6 +4,7 @@ Admin panel at /admin/. Use it to:
   - change the scoring method (likelihood/consequence levels, ratings, matrix cells)
   - fix data by hand (assessments, risk tasks, actions)
 """
+from django import forms
 from django.contrib import admin
 
 from .models import (
@@ -36,6 +37,12 @@ class ConsequenceAdmin(admin.ModelAdmin):
 class RiskRatingAdmin(admin.ModelAdmin):
     list_display = ("code", "label", "label_el", "severity", "color")
     list_editable = ("label", "label_el", "severity", "color")
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        # Show the browser's colour picker instead of a text box for the hex colour.
+        if db_field.name == "color":
+            kwargs["widget"] = forms.TextInput(attrs={"type": "color", "style": "width:64px;height:34px;padding:2px;cursor:pointer"})
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
 
 
 @admin.register(MatrixCell)
